@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contatti — Space World Air</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--c:#31BEF0;--ck:#0097C4;--y:#FFB320;--p:#FF3D8E;--g:#00C864;--bg:#07070f;--bg2:#0d0d1b;--bg3:#13132a;--bdr:rgba(49,190,240,.1);--txt:rgba(255,255,255,.9);--muted:rgba(255,255,255,.38);--fn:'Anybody',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fn);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fn)}
+input,select,textarea{font-family:var(--fn)}
+
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c),var(--p));z-index:9999;width:0}
+
+#nav{position:fixed;top:3px;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
+.nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
+.ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
+.ncart:hover{border-color:var(--c);color:var(--c)}
+#cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+/* HERO */
+.contact-hero{padding:7rem 2rem 4rem;background:var(--bg2);border-bottom:1px solid var(--bdr);text-align:center;position:relative;overflow:hidden}
+.contact-hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(49,190,240,.06) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);border:1px solid rgba(49,190,240,.3);padding:.4rem 1rem;border-radius:2px;margin-bottom:1rem}
+.contact-hero h1{font-size:clamp(2rem,5vw,3.5rem);font-variation-settings:'wght' 900,'wdth' 115;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:.8rem;line-height:1.05}
+.contact-hero h1 span{color:var(--c)}
+.contact-hero p{font-size:.85rem;color:var(--muted);max-width:550px;margin:0 auto;line-height:1.7}
+
+/* MAIN LAYOUT */
+.contact-layout{max-width:1200px;margin:0 auto;padding:4rem 2rem 5rem;display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start}
+.contact-form-card{min-width:0}
+
+/* FORM */
+.contact-form-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:2.5rem}
+.form-title{font-size:1rem;font-variation-settings:'wght' 800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.8rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:.44rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-variation-settings:'wght' 600}
+.form-input{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.75rem 1rem;border-radius:4px;font-size:.72rem;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--c)}
+.form-input::placeholder{color:rgba(255,255,255,.18)}
+.form-select{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.75rem 1rem;border-radius:4px;font-size:.72rem;outline:none;transition:border-color .2s;width:100%;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,.4)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+.form-select:focus{border-color:var(--c)}
+.form-select option{background:var(--bg2)}
+.form-textarea{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.75rem 1rem;border-radius:4px;font-size:.72rem;outline:none;resize:vertical;transition:border-color .2s;min-height:130px}
+.form-textarea:focus{border-color:var(--c)}
+.form-textarea::placeholder{color:rgba(255,255,255,.18)}
+.btn-submit{width:100%;background:var(--c);color:#000;border:none;padding:1rem 2rem;font-family:var(--fn);font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 800;border-radius:4px;margin-top:1.2rem;transition:background .2s,transform .15s}
+.btn-submit:hover{background:var(--ck);transform:translateY(-2px)}
+
+/* CONTACT INFO CARD */
+.contact-info{display:flex;flex-direction:column;gap:1rem;position:sticky;top:5.5rem}
+.info-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:1.8rem}
+.info-card-title{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1.2rem}
+.info-row{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem;font-size:.68rem;color:var(--muted)}
+.info-row:last-child{margin-bottom:0}
+.info-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.info-row strong{color:var(--txt);font-variation-settings:'wght' 600}
+.info-row a{color:var(--muted);transition:color .2s}
+.info-row a:hover{color:var(--c)}
+
+.whatsapp-btn{display:flex;align-items:center;justify-content:center;gap:.7rem;background:#25D366;color:#fff;padding:.9rem 1.5rem;border-radius:8px;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 800;transition:background .2s,transform .15s}
+.whatsapp-btn:hover{background:#20bd5a;transform:translateY(-2px)}
+.whatsapp-icon{font-size:1.2rem}
+
+.map-placeholder{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;position:relative;overflow:hidden}
+.map-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(49,190,240,.04) 0%,rgba(255,59,142,.04) 100%)}
+.map-pin{font-size:2rem}
+.map-text{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-variation-settings:'wght' 600;text-align:center;line-height:1.5}
+.map-sub{font-size:.45rem;color:rgba(255,255,255,.2);letter-spacing:.1em;text-transform:uppercase}
+
+/* RESPONSE TIME BADGE */
+.response-badge{background:var(--bg3);border:1px solid rgba(0,200,100,.2);border-radius:8px;padding:1rem;display:flex;align-items:center;gap:.8rem}
+.rb-dot{width:8px;height:8px;border-radius:50%;background:var(--g);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.rb-text{font-size:.55rem;color:var(--muted);line-height:1.5}
+.rb-text strong{color:var(--g);font-variation-settings:'wght' 700}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--g);color:#000;padding:.75rem 1.8rem;border-radius:4px;font-size:.6rem;font-variation-settings:'wght' 700;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .25s,transform .25s;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.sr{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.sr.visible{opacity:1;transform:none}
+
+footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo .nbrand>span{color:var(--c)}
+.fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
+.fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:.5rem}
+.fc ul li a{font-size:.65rem;color:var(--muted);transition:color .2s}
+.fc ul li a:hover{color:var(--c)}
+.foot-bottom{border-top:1px solid var(--bdr);padding-top:2rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-bottom p{font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.foot-bottom a{color:rgba(255,255,255,.3);transition:color .2s}
+.foot-bottom a:hover{color:var(--c)}
+
+/* ── HAMBURGER / MOBILE NAV ──────────────────── */
+.hambtn{display:none;background:none;border:none;color:var(--txt);
+  padding:.5rem;cursor:pointer;flex-direction:column;gap:5px;margin-left:.5rem;
+  flex-shrink:0}
+.hambtn span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .3s,opacity .3s;height:2.5px}
+#mnav{position:fixed;inset:0;z-index:998;
+  background:rgba(5,5,12,.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:2rem}
+#mnav.open{opacity:1;pointer-events:all}
+.mnav-link{font-size:clamp(1.8rem,8vw,2.5rem);font-variation-settings:'wght' 800,'wdth' 110;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--txt);
+  transition:color .2s;text-align:center;display:block}
+.mnav-link:hover{color:var(--c)}
+.mnav-cart-btn{display:inline-block;margin-top:1rem;padding:.75rem 2.5rem;
+  border:1px solid var(--c);border-radius:4px;color:var(--c);font-size:.75rem;
+  letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;
+  text-align:center;transition:background .2s}
+.mnav-cart-btn:hover{background:rgba(49,190,240,.1)}
+.mnav-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;padding:.5rem;
+  transition:color .2s;line-height:1;font-family:var(--fn)}
+.mnav-close:hover{color:var(--txt)}
+@media(max-width:768px){.mnav-close{display:none}}
+
+@media(max-width:900px){
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .checkout-layout{grid-template-columns:1fr}
+  .checkout-summary{position:static;order:-1}
+  .cart-layout{grid-template-columns:1fr}
+  .order-summary{position:static}
+}
+@media(max-width:768px){
+  .hambtn{display:flex}
+  #nav{gap:.5rem}
+  .nlogo{font-size:.9rem}
+  .nlinks{display:none}
+  /* Hero fixes */
+  #hero-sub{font-size:.75rem;letter-spacing:.2em}
+  .hero-tag{font-size:.6rem;letter-spacing:.15em;margin-bottom:1.2rem}
+  #hero-title{font-size:clamp(3.2rem,17vw,4.5rem)}
+  #hero-cta{gap:.75rem;flex-direction:column;align-items:center}
+  /* Buttons touch-friendly */
+  .btn-primary,.btn-outline{font-size:.65rem;padding:.9rem 1.6rem;min-height:48px;width:min(100%,240px)}
+  /* Typography */
+  .section-tag{font-size:.55rem}
+  .section-sub{font-size:.82rem}
+  .cpill{font-size:.55rem}
+  .clients-label{font-size:.5rem}
+  /* Layout */
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-columns:1fr}
+  .about-inner{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:3.5rem 1.2rem}
+  /* Product cards */
+  .btn-cart{padding:.75rem 1rem;font-size:1.1rem;min-width:44px;min-height:44px}
+  .btn-view{padding:.75rem;min-height:44px}
+  /* Cart page */
+  .cart-item{grid-template-columns:80px 1fr;gap:.8rem}
+  .cart-item-right{display:none}
+  /* Checkout */
+  .form-grid{grid-template-columns:1fr}
+  .step-line{width:40px}
+  /* Catalog page */
+  .catalog-layout{padding:2rem 1rem}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  /* Contatti layout mobile */
+  .contact-layout{grid-template-columns:1fr;padding:2.5rem 1.2rem 3rem;gap:2rem}
+  .contact-info{position:static;top:auto}
+  .contact-form-card{padding:1.8rem 1.4rem}
+  .contact-hero{padding:5rem 1.2rem 2.5rem}
+}
+@media(max-width:480px){
+  #hero-title{font-size:clamp(2.8rem,20vw,4rem)}
+  .cats-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .pcard-body h3{font-size:.78rem}
+  /* Contatti form ottimizzato */
+  .contact-form-card{padding:1.4rem 1rem}
+  .form-title{font-size:.85rem;margin-bottom:1.2rem}
+  .form-label{font-size:.46rem;letter-spacing:.15em}
+  .form-input,.form-select,.form-textarea{font-size:.76rem;padding:.7rem .85rem}
+  .btn-submit{font-size:.52rem;letter-spacing:.18em;padding:.9rem 1.5rem}
+  .info-card{padding:1.4rem 1.2rem}
+  .info-row{font-size:.7rem}
+  .whatsapp-btn{font-size:.52rem;padding:.85rem 1.2rem}
+  .pprice{font-size:1rem}
+  section{padding:3rem 1rem}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ── FLOATING WHATSAPP ──────────────────────── */
+#wa-fab{position:fixed;bottom:1.8rem;right:1.2rem;z-index:990;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;font-size:1.5rem}
+#wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+#wa-fab-tooltip{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  background:rgba(5,5,12,.92);color:#fff;font-size:.55rem;letter-spacing:.12em;
+  text-transform:uppercase;font-variation-settings:'wght' 700;
+  white-space:nowrap;padding:.4rem .9rem;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:var(--fn)}
+#wa-fab:hover #wa-fab-tooltip{opacity:1}
+
+/* ── BACK TO TOP ────────────────────────────── */
+#btt{position:fixed;bottom:1.8rem;left:1.2rem;z-index:990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(49,190,240,.12);border:1px solid rgba(49,190,240,.3);
+  color:var(--c);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:.9rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:rgba(49,190,240,.22);transform:translateY(-2px)}
+
+/* ── GLOBAL MOBILE TEXT SAFETY ─────────────────── */
+*,*::before,*::after{overflow-wrap:break-word;word-break:break-word}
+img,svg,canvas{word-break:normal;overflow-wrap:normal}
+h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="heading"]{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+/* ── READABILITY: body text minimum sizes ── */
+.fdesc{font-size:.75rem}
+.fcontact p{font-size:.72rem}
+.fc ul li a{font-size:.72rem}
+
+@media(max-width:768px){
+  /* iOS Safari: prevent auto-zoom on form focus (requires ≥16px = 1rem) */
+  input,select,textarea,.form-input,.form-select,.form-textarea{font-size:1rem!important}
+}
+
+@media(max-width:480px){
+  /* Headings */
+  h1{font-size:clamp(1.4rem,7.5vw,2.8rem)}
+  h2{font-size:clamp(1.2rem,6.5vw,2rem)}
+  h3{font-size:clamp(1rem,5.5vw,1.5rem)}
+  /* Page-level hero headings */
+  .about-hero h1{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  .contact-hero-title{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  /* Section titles */
+  .section-h2,.sec-title,.page-header h1{font-size:clamp(1.2rem,6.5vw,2rem)!important}
+  /* Reduce excessive letter-spacing */
+  .section-tag,.hero-kicker,.hero-tag,.sidebar-title,.pcat-tag,
+  .clients-label,.hero-scroll,.foot-bottom p{letter-spacing:.12em!important}
+  /* Section padding */
+  section{padding:3rem 1rem!important}
+  /* Page wraps */
+  .page-wrap,.checkout-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* About hero */
+  .about-hero-content{padding:0 1rem!important}
+  /* Contact hero */
+  .contact-hero,.contact-hero-inner{padding-left:1rem!important;padding-right:1rem!important}
+  /* Product detail page */
+  .product-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* Breadcrumb */
+  .breadcrumb{font-size:.5rem;letter-spacing:.08em}
+  /* Chips/pills on gallery */
+  .filter-btn,.cpill{font-size:.52rem;letter-spacing:.1em;padding:.4rem .7rem}
+  /* Cart */
+  .cart-item{gap:.6rem}
+  /* Checkout steps */
+  .step-label{font-size:.4rem;letter-spacing:.08em}
+  /* Form labels */
+  .form-label{font-size:.5rem;letter-spacing:.12em}
+  /* Buttons width */
+  .hero-ctas,.btn-hero,.btn-ghost{width:100%;max-width:260px}
+}
+
+@media(max-width:360px){
+  h1{font-size:clamp(1.2rem,7vw,2rem)!important}
+  h2,.section-h2,.sec-title{font-size:clamp(1.1rem,6.5vw,1.8rem)!important}
+  .nlogo{font-size:.78rem}
+  .nbrand{font-size:.78rem}
+  section{padding:2.5rem .85rem!important}
+  .page-wrap,.checkout-wrap{padding-left:.85rem!important;padding-right:.85rem!important}
+  .about-hero-content{padding:0 .85rem!important}
+  .hero-kicker,.hero-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .section-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .btn-primary,.btn-outline{font-size:.6rem!important;padding:.85rem 1rem!important}
+  .gallery-filter-bar{gap:.4rem}
+  .filter-btn{font-size:.48rem!important;padding:.35rem .55rem!important}
+}
+
+@media(max-width:320px){
+  h1{font-size:clamp(1.1rem,7.5vw,1.8rem)!important}
+  h2{font-size:clamp(1rem,7vw,1.6rem)!important}
+  .nlogo{font-size:.7rem}
+  #nav{padding:0 .7rem}
+  section{padding:2rem .75rem!important}
+}
+
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nlogo">
+    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+  <ul class="nlinks">
+    <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">Chi siamo</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="ncart" onclick="location.href='carrello.html'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count">0</span>
+    </button>
+    <button class="hambtn" id="hambtn" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating WhatsApp -->
+<a id="wa-fab" href="https://wa.me/393933350212" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  💬<span id="wa-fab-tooltip">Scrivici su WhatsApp</span>
+</a>
+<!-- Back to top -->
+<button id="btt" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="mnav" role="dialog" aria-modal="true" aria-label="Menu principale">
+  <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
+  <a href="index.html" class="mnav-link">Home</a>
+  <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="about.html" class="mnav-link">Chi siamo</a>
+  <a href="contatti.html" class="mnav-link">Contatti</a>
+  <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
+</div>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="hero-tag">Parlaci del tuo progetto</div>
+  <h1>Parliamo del<br><span>tuo progetto</span></h1>
+  <p>Che si tratti di un gonfiabile personalizzato, di un allestimento per un grande evento o di una consulenza creativa, siamo qui per trasformare la tua idea in realtà.</p>
+</div>
+
+<!-- MAIN -->
+<div class="contact-layout">
+  <!-- FORM -->
+  <div class="contact-form-card sr">
+    <div class="form-title">Invia una richiesta</div>
+    <form id="contact-form" onsubmit="submitForm(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nome e Cognome</label>
+          <input type="text" class="form-input" id="f-nome" placeholder="Mario Rossi" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="f-email" placeholder="mario@azienda.it" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefono</label>
+          <input type="tel" class="form-input" id="f-tel" placeholder="+39 393 000 0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Azienda / Organizzazione</label>
+          <input type="text" class="form-input" id="f-azienda" placeholder="Acme Events Srl">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Tipo di richiesta</label>
+          <select class="form-select" id="f-tipo">
+            <option value="">Seleziona tipo di richiesta</option>
+            <option value="preventivo">Preventivo prodotto</option>
+            <option value="noleggio">Noleggio evento</option>
+            <option value="brand">Brand activation</option>
+            <option value="info">Informazioni</option>
+            <option value="altro">Altro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Prodotto di interesse</label>
+          <input type="text" class="form-input" id="f-prodotto" placeholder="es. Arco circolare, Sky Dancer...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Budget indicativo</label>
+          <select class="form-select" id="f-budget">
+            <option value="">Seleziona budget</option>
+            <option value="<500">Sotto €500</option>
+            <option value="500-2000">€500 – €2.000</option>
+            <option value="2000-10000">€2.000 – €10.000</option>
+            <option value="10000+">€10.000+</option>
+            <option value="tbd">Da definire</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Messaggio</label>
+          <textarea class="form-textarea" id="f-msg" rows="5" placeholder="Descrivi il tuo progetto: tipo di evento, data, luogo, dimensioni desiderate, esigenze particolari..." required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit">Invia richiesta →</button>
+    </form>
+  </div>
+
+  <!-- CONTACT INFO -->
+  <div class="contact-info">
+    <div class="info-card sr">
+      <div class="info-card-title">Contatti diretti</div>
+      <div class="info-row">
+        <span class="info-icon">📍</span>
+        <div>Via Cervese 238<br>47010 Carpinello (FC)<br>Italy</div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📞</span>
+        <div><strong><a href="tel:+393933350212">+39 393.3350212</a></strong></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📠</span>
+        <div><a href="tel:+390543728277">+39 0543 728277</a></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">🌐</span>
+        <div><a href="https://spaceworldair.com" target="_blank" rel="noopener">spaceworldair.com</a></div>
+      </div>
+    </div>
+
+    <a href="https://wa.me/393933350212" target="_blank" rel="noopener" class="whatsapp-btn sr">
+      <span class="whatsapp-icon">💬</span>
+      Scrivici su WhatsApp
+    </a>
+
+    <div class="response-badge sr">
+      <div class="rb-dot"></div>
+      <div class="rb-text"><strong>Risposta entro 24 ore</strong><br>Il nostro team è disponibile dal lunedì al venerdì, 9:00–18:00.</div>
+    </div>
+
+    <div class="info-card sr">
+      <div class="info-card-title">Dove siamo</div>
+      <div class="map-placeholder">
+        <div class="map-pin">📍</div>
+        <div class="map-text">Forlì, Emilia-Romagna<br>Via Cervese 238, Carpinello (FC)</div>
+        <div class="map-sub">Italia · Spedizioni in tutta Europa</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="foot-grid">
+    <div class="fc">
+      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
+      <div class="fcontact">
+        <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
+        <p>📞 +39 393.3350212</p>
+        <p>📠 +39 0543 728277</p>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Navigazione</h4>
+      <ul><li><a href="index.html">Home</a></li><li><a href="prodotti.html">Prodotti</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">Chi siamo</a></li><li><a href="contatti.html">Contatti</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Categorie</h4>
+      <ul><li><a href="prodotti.html?cat=personalizzati">Gonfiabili Personalizzati</a></li><li><a href="prodotti.html?cat=giochi">Giochi Gonfiabili</a></li><li><a href="prodotti.html?cat=stand">Stand Gonfiabili</a></li><li><a href="prodotti.html?cat=effetti">Effetti Speciali</a></li><li><a href="prodotti.html?cat=stagionale">Stagionale</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Pagamento sicuro</h4>
+      <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" style="max-width:220px;opacity:.8;margin-bottom:1rem" loading="lazy">
+      <p style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Pagamenti sicuri SSL · IVA inclusa</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── MOBILE NAV ────────────────────────────────── */
+(function(){
+  var btn=document.getElementById('hambtn');
+  var nav=document.getElementById('mnav');
+  var cls=document.getElementById('mnav-close');
+  function openNav(){
+    if(!nav||!btn)return;
+    nav.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    var sp=btn.querySelectorAll('span');
+    if(sp[0])sp[0].style.transform='translateY(7px) rotate(45deg)';
+    if(sp[1])sp[1].style.opacity='0';
+    if(sp[2])sp[2].style.transform='translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    if(!nav||!btn)return;
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+    document.body.style.overflow='';
+  }
+  if(btn)btn.addEventListener('click',function(){if(nav&&nav.classList.contains('open'))closeNav();else openNav();});
+  if(cls)cls.addEventListener('click',closeNav);
+  if(nav)nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeNav);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
+
+const SWA_PRODUCTS = [];
+
+function submitForm(e){
+  e.preventDefault();
+  const nome = document.getElementById('f-nome').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg = document.getElementById('f-msg').value.trim();
+  if(!nome || !email || !msg){
+    showToast('Compila tutti i campi obbligatori');
+    return;
+  }
+  // Reset form
+  document.getElementById('contact-form').reset();
+  showToast('Messaggio inviato! Ti risponderemo entro 24 ore.');
+}
+
+function showToast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),50);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300);},3000);
+}
+
+function updateCartBadge(){
+  const cart=JSON.parse(localStorage.getItem('swa_cart')||'[]');
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const el=document.getElementById('cart-count');
+  if(el){el.textContent=total;el.style.display=total>0?'flex':'none';}
+}
+updateCartBadge();
+
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('prog');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(h>0?(scrollY/h*100):0)+'%';
+});
+
+const srObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.sr').forEach(el=>srObserver.observe(el));
+
+/* ── BACK TO TOP ────────────────────── */
+(function(){
+  var btt=document.getElementById('btt');
+  if(!btt)return;
+  window.addEventListener('scroll',function(){
+    btt.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

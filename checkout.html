@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout — Space World Air</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--c:#31BEF0;--ck:#0097C4;--y:#FFB320;--p:#FF3D8E;--g:#00C864;--bg:#07070f;--bg2:#0d0d1b;--bg3:#13132a;--bdr:rgba(49,190,240,.1);--txt:rgba(255,255,255,.9);--muted:rgba(255,255,255,.38);--fn:'Anybody',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fn);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fn)}
+input,select,textarea{font-family:var(--fn)}
+
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c),var(--p));z-index:9999;width:0}
+
+#nav{position:fixed;top:3px;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
+.nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
+.ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
+.ncart:hover{border-color:var(--c);color:var(--c)}
+#cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+.checkout-wrap{max-width:1100px;margin:0 auto;padding:7rem 2rem 5rem}
+.breadcrumb{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem}
+.breadcrumb a{color:var(--muted);transition:color .2s}
+.breadcrumb a:hover{color:var(--c)}
+.breadcrumb span{color:var(--c)}
+
+/* STEP INDICATOR */
+.step-bar{display:flex;align-items:center;justify-content:center;margin-bottom:3rem;gap:0}
+.step{display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-variation-settings:'wght' 800;color:var(--muted);background:var(--bg2);transition:all .3s;z-index:1;position:relative}
+.step.active .step-num{border-color:var(--c);color:var(--c);background:rgba(49,190,240,.1)}
+.step.done .step-num{border-color:var(--g);color:var(--g);background:rgba(0,200,100,.1)}
+.step-lbl{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-variation-settings:'wght' 600}
+.step.active .step-lbl{color:var(--c)}
+.step.done .step-lbl{color:var(--g)}
+.step-line{width:80px;height:1px;background:var(--bdr);margin:0 .5rem;margin-bottom:1.5rem;transition:background .3s}
+.step-line.done{background:var(--g)}
+
+/* CHECKOUT LAYOUT */
+.checkout-layout{display:grid;grid-template-columns:1fr 340px;gap:2rem;align-items:start}
+
+/* FORM */
+.form-panel{background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:2rem}
+.form-panel h2{font-size:1rem;font-variation-settings:'wght' 800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+.form-step{display:none}
+.form-step.active{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-variation-settings:'wght' 600}
+.form-label .opt{font-variation-settings:'wght' 400;font-size:.38rem;margin-left:.3rem}
+.form-input{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.7rem .9rem;border-radius:4px;font-size:.7rem;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--c)}
+.form-input::placeholder{color:rgba(255,255,255,.2)}
+.form-select{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.7rem .9rem;border-radius:4px;font-size:.7rem;outline:none;transition:border-color .2s;width:100%}
+.form-select:focus{border-color:var(--c)}
+.form-select option{background:var(--bg2)}
+.form-textarea{background:var(--bg3);border:1px solid var(--bdr);color:var(--txt);padding:.7rem .9rem;border-radius:4px;font-size:.7rem;outline:none;resize:vertical;transition:border-color .2s;min-height:100px}
+.form-textarea:focus{border-color:var(--c)}
+.form-textarea::placeholder{color:rgba(255,255,255,.2)}
+
+.checkbox-row{display:flex;align-items:flex-start;gap:.7rem;padding:.9rem;background:var(--bg3);border:1px solid var(--bdr);border-radius:6px;cursor:pointer;transition:border-color .2s}
+.checkbox-row:hover{border-color:rgba(49,190,240,.3)}
+.checkbox-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--c);margin-top:2px;flex-shrink:0}
+.checkbox-text{font-size:.75rem;color:var(--muted);line-height:1.5}
+.checkbox-text strong{color:var(--txt);font-variation-settings:'wght' 700}
+
+/* PAYMENT OPTIONS */
+.payment-options{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.pay-option{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--bg3);border:2px solid var(--bdr);border-radius:8px;cursor:pointer;transition:border-color .2s,background .2s}
+.pay-option:hover{border-color:rgba(49,190,240,.3)}
+.pay-option.selected{border-color:var(--c);background:rgba(49,190,240,.05)}
+.pay-option input[type=radio]{display:none}
+.pay-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
+.pay-option.selected .pay-radio{border-color:var(--c)}
+.pay-radio-dot{width:8px;height:8px;border-radius:50%;background:var(--c);display:none}
+.pay-option.selected .pay-radio-dot{display:block}
+.pay-icon{font-size:1.3rem;width:32px;text-align:center}
+.pay-info{}
+.pay-name{font-size:.7rem;font-variation-settings:'wght' 700;margin-bottom:.15rem}
+.pay-sub{font-size:.48rem;color:var(--muted)}
+
+/* CARD FORM */
+.card-form{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;margin-top:.8rem;display:none}
+.card-form.visible{display:block}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.7rem}
+
+/* STEP NAV */
+.step-nav{display:flex;gap:.7rem;margin-top:1.5rem;justify-content:space-between;align-items:center}
+.btn-back{background:none;border:1px solid var(--bdr);color:var(--muted);padding:.75rem 1.5rem;font-family:var(--fn);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 700;border-radius:4px;transition:border-color .2s,color .2s}
+.btn-back:hover{border-color:rgba(49,190,240,.3);color:var(--txt)}
+.btn-next{background:var(--c);color:#000;border:none;padding:.75rem 2rem;font-family:var(--fn);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;font-variation-settings:'wght' 800;border-radius:4px;transition:background .2s,transform .15s}
+.btn-next:hover{background:var(--ck);transform:translateY(-2px)}
+.btn-confirm{background:var(--g);color:#000;border:none;padding:.85rem 2.5rem;font-family:var(--fn);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;font-variation-settings:'wght' 800;border-radius:4px;transition:background .2s,transform .15s}
+.btn-confirm:hover{background:#00a852;transform:translateY(-2px)}
+
+/* ORDER SUMMARY SIDEBAR */
+.checkout-summary{background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:1.8rem;position:sticky;top:5.5rem}
+.summary-title{font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1.2rem}
+.co-items{margin-bottom:1.2rem}
+.co-item{display:flex;gap:.8rem;align-items:center;margin-bottom:.8rem}
+.co-item-img{width:44px;height:36px;object-fit:cover;border-radius:4px;flex-shrink:0}
+.co-item-info{flex:1;min-width:0}
+.co-item-name{font-size:.55rem;font-variation-settings:'wght' 600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.co-item-qty{font-size:.45rem;color:var(--muted)}
+.co-item-price{font-size:.6rem;font-variation-settings:'wght' 700;color:var(--c);flex-shrink:0}
+.summary-line{display:flex;justify-content:space-between;margin-bottom:.6rem;font-size:.72rem}
+.summary-line .lbl{color:var(--muted)}
+.summary-line.free .val{color:var(--g)}
+.summary-divider{border:none;border-top:1px solid var(--bdr);margin:.8rem 0}
+.summary-total{display:flex;justify-content:space-between;align-items:center}
+.summary-total .lbl{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;font-variation-settings:'wght' 700}
+.summary-total .val{font-size:1.3rem;font-variation-settings:'wght' 900;color:var(--c)}
+.iva-note{font-size:.42rem;color:var(--muted);text-align:right;margin-top:.3rem}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--g);color:#000;padding:.75rem 1.8rem;border-radius:4px;font-size:.6rem;font-variation-settings:'wght' 700;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .25s,transform .25s;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo .nbrand>span{color:var(--c)}
+.fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
+.fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:.5rem}
+.fc ul li a{font-size:.65rem;color:var(--muted);transition:color .2s}
+.fc ul li a:hover{color:var(--c)}
+.foot-bottom{border-top:1px solid var(--bdr);padding-top:2rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-bottom p{font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.foot-bottom a{color:rgba(255,255,255,.3);transition:color .2s}
+.foot-bottom a:hover{color:var(--c)}
+
+/* ── HAMBURGER / MOBILE NAV ──────────────────── */
+.hambtn{display:none;background:none;border:none;color:var(--txt);
+  padding:.5rem;cursor:pointer;flex-direction:column;gap:5px;margin-left:.5rem;
+  flex-shrink:0}
+.hambtn span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .3s,opacity .3s;height:2.5px}
+#mnav{position:fixed;inset:0;z-index:998;
+  background:rgba(5,5,12,.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:2rem}
+#mnav.open{opacity:1;pointer-events:all}
+.mnav-link{font-size:clamp(1.8rem,8vw,2.5rem);font-variation-settings:'wght' 800,'wdth' 110;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--txt);
+  transition:color .2s;text-align:center;display:block}
+.mnav-link:hover{color:var(--c)}
+.mnav-cart-btn{display:inline-block;margin-top:1rem;padding:.75rem 2.5rem;
+  border:1px solid var(--c);border-radius:4px;color:var(--c);font-size:.75rem;
+  letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;
+  text-align:center;transition:background .2s}
+.mnav-cart-btn:hover{background:rgba(49,190,240,.1)}
+.mnav-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;padding:.5rem;
+  transition:color .2s;line-height:1;font-family:var(--fn)}
+.mnav-close:hover{color:var(--txt)}
+@media(max-width:768px){.mnav-close{display:none}}
+
+@media(max-width:900px){
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .checkout-layout{grid-template-columns:1fr}
+  .checkout-summary{position:static;order:-1}
+  .cart-layout{grid-template-columns:1fr}
+  .order-summary{position:static}
+}
+@media(max-width:768px){
+  .hambtn{display:flex}
+  #nav{gap:.5rem}
+  .nlogo{font-size:.9rem}
+  .nlinks{display:none}
+  /* Hero fixes */
+  #hero-sub{font-size:.75rem;letter-spacing:.2em}
+  .hero-tag{font-size:.6rem;letter-spacing:.15em;margin-bottom:1.2rem}
+  #hero-title{font-size:clamp(3.2rem,17vw,4.5rem)}
+  #hero-cta{gap:.75rem;flex-direction:column;align-items:center}
+  /* Buttons touch-friendly */
+  .btn-primary,.btn-outline{font-size:.65rem;padding:.9rem 1.6rem;min-height:48px;width:min(100%,240px)}
+  /* Typography */
+  .section-tag{font-size:.55rem}
+  .section-sub{font-size:.82rem}
+  .cpill{font-size:.55rem}
+  .clients-label{font-size:.5rem}
+  /* Layout */
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-columns:1fr}
+  .about-inner{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:3.5rem 1.2rem}
+  /* Product cards */
+  .btn-cart{padding:.75rem 1rem;font-size:1.1rem;min-width:44px;min-height:44px}
+  .btn-view{padding:.75rem;min-height:44px}
+  /* Cart page */
+  .cart-item{grid-template-columns:80px 1fr;gap:.8rem}
+  .cart-item-right{display:none}
+  /* Checkout */
+  .form-grid{grid-template-columns:1fr}
+  .step-line{width:40px}
+  /* Catalog page */
+  .catalog-layout{padding:2rem 1rem}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  #hero-title{font-size:clamp(2.8rem,20vw,4rem)}
+  .cats-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .pcard-body h3{font-size:.78rem}
+  .pprice{font-size:1rem}
+  section{padding:3rem 1rem}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ── FLOATING WHATSAPP ──────────────────────── */
+#wa-fab{position:fixed;bottom:1.8rem;right:1.2rem;z-index:990;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;font-size:1.5rem}
+#wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+#wa-fab-tooltip{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  background:rgba(5,5,12,.92);color:#fff;font-size:.55rem;letter-spacing:.12em;
+  text-transform:uppercase;font-variation-settings:'wght' 700;
+  white-space:nowrap;padding:.4rem .9rem;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:var(--fn)}
+#wa-fab:hover #wa-fab-tooltip{opacity:1}
+
+/* ── BACK TO TOP ────────────────────────────── */
+#btt{position:fixed;bottom:1.8rem;left:1.2rem;z-index:990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(49,190,240,.12);border:1px solid rgba(49,190,240,.3);
+  color:var(--c);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:.9rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:rgba(49,190,240,.22);transform:translateY(-2px)}
+
+/* ── GLOBAL MOBILE TEXT SAFETY ─────────────────── */
+*,*::before,*::after{overflow-wrap:break-word;word-break:break-word}
+img,svg,canvas{word-break:normal;overflow-wrap:normal}
+h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="heading"]{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+/* ── READABILITY: body text minimum sizes ── */
+.fdesc{font-size:.75rem}
+.fcontact p{font-size:.72rem}
+.fc ul li a{font-size:.72rem}
+
+@media(max-width:768px){
+  /* iOS Safari: prevent auto-zoom on form focus (requires ≥16px = 1rem) */
+  input,select,textarea,.form-input,.form-select,.form-textarea{font-size:1rem!important}
+}
+
+@media(max-width:480px){
+  /* Headings */
+  h1{font-size:clamp(1.4rem,7.5vw,2.8rem)}
+  h2{font-size:clamp(1.2rem,6.5vw,2rem)}
+  h3{font-size:clamp(1rem,5.5vw,1.5rem)}
+  /* Page-level hero headings */
+  .about-hero h1{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  .contact-hero-title{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  /* Section titles */
+  .section-h2,.sec-title,.page-header h1{font-size:clamp(1.2rem,6.5vw,2rem)!important}
+  /* Reduce excessive letter-spacing */
+  .section-tag,.hero-kicker,.hero-tag,.sidebar-title,.pcat-tag,
+  .clients-label,.hero-scroll,.foot-bottom p{letter-spacing:.12em!important}
+  /* Section padding */
+  section{padding:3rem 1rem!important}
+  /* Page wraps */
+  .page-wrap,.checkout-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* About hero */
+  .about-hero-content{padding:0 1rem!important}
+  /* Contact hero */
+  .contact-hero,.contact-hero-inner{padding-left:1rem!important;padding-right:1rem!important}
+  /* Product detail page */
+  .product-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* Breadcrumb */
+  .breadcrumb{font-size:.5rem;letter-spacing:.08em}
+  /* Chips/pills on gallery */
+  .filter-btn,.cpill{font-size:.52rem;letter-spacing:.1em;padding:.4rem .7rem}
+  /* Cart */
+  .cart-item{gap:.6rem}
+  /* Checkout steps */
+  .step-label{font-size:.4rem;letter-spacing:.08em}
+  /* Form labels */
+  .form-label{font-size:.5rem;letter-spacing:.12em}
+  /* Buttons width */
+  .hero-ctas,.btn-hero,.btn-ghost{width:100%;max-width:260px}
+}
+
+@media(max-width:360px){
+  h1{font-size:clamp(1.2rem,7vw,2rem)!important}
+  h2,.section-h2,.sec-title{font-size:clamp(1.1rem,6.5vw,1.8rem)!important}
+  .nlogo{font-size:.78rem}
+  .nbrand{font-size:.78rem}
+  section{padding:2.5rem .85rem!important}
+  .page-wrap,.checkout-wrap{padding-left:.85rem!important;padding-right:.85rem!important}
+  .about-hero-content{padding:0 .85rem!important}
+  .hero-kicker,.hero-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .section-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .btn-primary,.btn-outline{font-size:.6rem!important;padding:.85rem 1rem!important}
+  .gallery-filter-bar{gap:.4rem}
+  .filter-btn{font-size:.48rem!important;padding:.35rem .55rem!important}
+}
+
+@media(max-width:320px){
+  h1{font-size:clamp(1.1rem,7.5vw,1.8rem)!important}
+  h2{font-size:clamp(1rem,7vw,1.6rem)!important}
+  .nlogo{font-size:.7rem}
+  #nav{padding:0 .7rem}
+  section{padding:2rem .75rem!important}
+}
+
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nlogo">
+    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+  <ul class="nlinks">
+    <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">Chi siamo</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="ncart" onclick="location.href='carrello.html'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count">0</span>
+    </button>
+    <button class="hambtn" id="hambtn" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating WhatsApp -->
+<a id="wa-fab" href="https://wa.me/393933350212" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  💬<span id="wa-fab-tooltip">Scrivici su WhatsApp</span>
+</a>
+<!-- Back to top -->
+<button id="btt" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="mnav" role="dialog" aria-modal="true" aria-label="Menu principale">
+  <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
+  <a href="index.html" class="mnav-link">Home</a>
+  <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="about.html" class="mnav-link">Chi siamo</a>
+  <a href="contatti.html" class="mnav-link">Contatti</a>
+  <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
+</div>
+
+<div class="checkout-wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; <a href="carrello.html">Carrello</a> &rsaquo; <span>Checkout</span></div>
+
+  <!-- STEP BAR -->
+  <div class="step-bar">
+    <div class="step active" id="s1">
+      <div class="step-num">1</div>
+      <div class="step-lbl">Dati</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="s2">
+      <div class="step-num">2</div>
+      <div class="step-lbl">Spedizione</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="s3">
+      <div class="step-num">3</div>
+      <div class="step-lbl">Pagamento</div>
+    </div>
+  </div>
+
+  <div class="checkout-layout">
+    <!-- FORM PANEL -->
+    <div class="form-panel">
+      <!-- STEP 1 -->
+      <div class="form-step active" id="step1">
+        <h2>Dati personali</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input type="text" class="form-input" id="f-nome" placeholder="Mario">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cognome</label>
+            <input type="text" class="form-input" id="f-cognome" placeholder="Rossi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="f-email" placeholder="mario@azienda.it">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefono</label>
+            <input type="tel" class="form-input" id="f-tel" placeholder="+39 000 000 0000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Azienda / Organizzazione <span class="opt">(opzionale)</span></label>
+            <input type="text" class="form-input" id="f-azienda" placeholder="Acme Srl">
+          </div>
+          <div class="form-group">
+            <label class="form-label">P.IVA <span class="opt">(opzionale)</span></label>
+            <input type="text" class="form-input" id="f-piva" placeholder="IT00000000000">
+          </div>
+        </div>
+        <div class="step-nav">
+          <span></span>
+          <button class="btn-next" onclick="goStep(2)">Continua →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="form-step" id="step2">
+        <h2>Indirizzo di spedizione</h2>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Indirizzo</label>
+            <input type="text" class="form-input" id="f-indirizzo" placeholder="Via Roma 1">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Città</label>
+            <input type="text" class="form-input" id="f-citta" placeholder="Milano">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CAP</label>
+            <input type="text" class="form-input" id="f-cap" placeholder="20100">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Provincia</label>
+            <input type="text" class="form-input" id="f-prov" placeholder="MI">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Note spedizione <span class="opt">(opzionale)</span></label>
+            <textarea class="form-textarea" id="f-note" placeholder="Indicazioni per la consegna, piano, citofono..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="checkbox-row" id="montaggio-row">
+              <input type="checkbox" id="f-montaggio">
+              <div class="checkbox-text"><strong>Montaggio professionale richiesto (+€150)</strong><br>Il nostro team si occuperà dell'installazione e del gonfiaggio in loco.</div>
+            </label>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(1)">← Indietro</button>
+          <button class="btn-next" onclick="goStep(3)">Continua →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="form-step" id="step3">
+        <h2>Metodo di pagamento</h2>
+        <div class="payment-options">
+          <div class="pay-option selected" data-method="carta" onclick="selectPay(this)">
+            <div class="pay-radio"><div class="pay-radio-dot"></div></div>
+            <div class="pay-icon">💳</div>
+            <div class="pay-info">
+              <div class="pay-name">Carta di credito / debito</div>
+              <div class="pay-sub">Visa · Mastercard · American Express</div>
+            </div>
+          </div>
+          <div class="pay-option" data-method="paypal" onclick="selectPay(this)">
+            <div class="pay-radio"><div class="pay-radio-dot"></div></div>
+            <div class="pay-icon" style="font-weight:900;color:#003087;background:#fff;border-radius:3px;padding:2px 5px;font-size:.75rem">PP</div>
+            <div class="pay-info">
+              <div class="pay-name">PayPal</div>
+              <div class="pay-sub">Paga in sicurezza con il tuo account PayPal</div>
+            </div>
+          </div>
+          <div class="pay-option" data-method="bonifico" onclick="selectPay(this)">
+            <div class="pay-radio"><div class="pay-radio-dot"></div></div>
+            <div class="pay-icon">🏦</div>
+            <div class="pay-info">
+              <div class="pay-name">Bonifico Bancario</div>
+              <div class="pay-sub">Riceverai i dati bancari via email</div>
+            </div>
+          </div>
+          <div class="pay-option" data-method="digital" onclick="selectPay(this)">
+            <div class="pay-radio"><div class="pay-radio-dot"></div></div>
+            <div class="pay-icon">📱</div>
+            <div class="pay-info">
+              <div class="pay-name">Apple Pay / Google Pay</div>
+              <div class="pay-sub">Pagamento rapido con dispositivo mobile</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CREDIT CARD FORM -->
+        <div class="card-form visible" id="card-form">
+          <div style="font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c);margin-bottom:.8rem;font-variation-settings:'wght' 700">Dati carta</div>
+          <div class="form-group full">
+            <label class="form-label">Numero carta</label>
+            <input type="text" class="form-input" id="f-cardnum" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)">
+          </div>
+          <div class="card-row">
+            <div class="form-group">
+              <label class="form-label">Scadenza</label>
+              <input type="text" class="form-input" id="f-expiry" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVV</label>
+              <input type="text" class="form-input" id="f-cvv" placeholder="123" maxlength="4">
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:.7rem">
+            <label class="form-label">Intestatario carta</label>
+            <input type="text" class="form-input" id="f-cardholder" placeholder="MARIO ROSSI">
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(2)">← Indietro</button>
+          <button class="btn-confirm" onclick="confirmOrder()">Conferma ordine ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY SIDEBAR -->
+    <div class="checkout-summary" id="checkout-summary"></div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="foot-grid">
+    <div class="fc">
+      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
+      <div class="fcontact">
+        <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
+        <p>📞 +39 393.3350212</p>
+        <p>📠 +39 0543 728277</p>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Navigazione</h4>
+      <ul><li><a href="index.html">Home</a></li><li><a href="prodotti.html">Prodotti</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">Chi siamo</a></li><li><a href="contatti.html">Contatti</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Categorie</h4>
+      <ul><li><a href="prodotti.html?cat=personalizzati">Gonfiabili Personalizzati</a></li><li><a href="prodotti.html?cat=giochi">Giochi Gonfiabili</a></li><li><a href="prodotti.html?cat=stand">Stand Gonfiabili</a></li><li><a href="prodotti.html?cat=effetti">Effetti Speciali</a></li><li><a href="prodotti.html?cat=stagionale">Stagionale</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Pagamento sicuro</h4>
+      <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" style="max-width:220px;opacity:.8;margin-bottom:1rem" loading="lazy">
+      <p style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Pagamenti sicuri SSL · IVA inclusa</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── MOBILE NAV ────────────────────────────────── */
+(function(){
+  var btn=document.getElementById('hambtn');
+  var nav=document.getElementById('mnav');
+  var cls=document.getElementById('mnav-close');
+  function openNav(){
+    if(!nav||!btn)return;
+    nav.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    var sp=btn.querySelectorAll('span');
+    if(sp[0])sp[0].style.transform='translateY(7px) rotate(45deg)';
+    if(sp[1])sp[1].style.opacity='0';
+    if(sp[2])sp[2].style.transform='translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    if(!nav||!btn)return;
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+    document.body.style.overflow='';
+  }
+  if(btn)btn.addEventListener('click',function(){if(nav&&nav.classList.contains('open'))closeNav();else openNav();});
+  if(cls)cls.addEventListener('click',closeNav);
+  if(nav)nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeNav);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
+
+const SWA_PRODUCTS = [{id:1,name:'Arco Circolare',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg'},{id:2,name:'Arco Rettangolo',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg'},{id:3,name:'Arco Decagono',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg'},{id:4,name:'Bottiglia Gigante',price:690,from:true,img:'https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg'},{id:5,name:'Cactus Gonfiabile 3M',price:600,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/LITTLE_ITALY_OK__1.jpg'},{id:6,name:'A-Stand Pressurizzato',price:685,from:true,img:'https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png'},{id:7,name:'Castello Giraffa',price:198,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/9/4/9403.jpg'},{id:8,name:'Castello Draghetto',price:478,from:false,img:'https://spaceworldair.com/media/wysiwyg/circus1.jpg'},{id:9,name:'Castello Jungle',price:650,from:false,img:'https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG'},{id:10,name:'Castello Medioevo',price:690,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/9/0/9021_u8wqvjot.jpg'},{id:11,name:'Castello Bunker',price:265,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg'},{id:12,name:'Castello Bunker XXL',price:722,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg'},{id:13,name:'Bumper Ball',price:300,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/i/m/img_2573a_87jlj6ez.jpg'},{id:14,name:'Bubble Ring',price:14300,from:false,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg'},{id:15,name:'Bolla con Tunnel',price:4160,from:true,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg'},{id:16,name:'Bar Pub Gonfiabile 8×4m',price:3315,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/prima_foto_pool_party.jpg'},{id:17,name:'Bar Desk Gonfiabile',price:640,from:true,img:'https://spaceworldair.com/media/wysiwyg/mirror1.jpg'},{id:18,name:'Big House',price:595,from:false,img:'https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg'},{id:19,name:'Casetta Base 3×3m',price:3350,from:true,img:'https://spaceworldair.com/media/wysiwyg/Misano/bolla_B.jpg'},{id:20,name:'Casetta Natalizia',price:2965,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/l/albero_di_natale_in_oxford_spaceworldair_1.jpg'},{id:21,name:'Cannone CO₂ Fisso',price:420,from:false,img:'https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg'},{id:22,name:'Bolla di Neve Pneumatica',price:2990,from:false,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg'},{id:23,name:'Bolla di Neve Base Legno',price:3900,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg'},{id:24,name:'Barra LED RGB',price:105,from:false,img:'https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png'},{id:25,name:'Albero di Natale Gonfiabile',price:730,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/l/albero_di_natale_in_oxford_spaceworldair_1.jpg'},{id:26,name:'Bomboletta Gas Elio',price:10,from:false,img:'https://spaceworldair.com/media/wysiwyg/love1.jpg'},{id:27,name:'Arena Gonfiabile Completa',price:16510,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/r/e/render_arena_quadrata.jpg'},{id:28,name:'Bandiera Vela Piuma',price:280,from:true,img:'https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg'},{id:29,name:'Bretzel Gonfiabile',price:29,from:false,img:'https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG'},{id:30,name:'Sky Dancer (Air Dancer)',price:320,from:true,img:'https://spaceworldair.com/media/wysiwyg/P1066124.jpg'}];
+
+let currentStep = 1;
+
+function fmt(n){ return n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function getCart(){ return JSON.parse(localStorage.getItem('swa_cart')||'[]'); }
+
+function renderSummary(){
+  const cart = getCart();
+  const montaggio = document.getElementById('f-montaggio') ? document.getElementById('f-montaggio').checked : false;
+  const subtotale = cart.reduce((s,i)=>s+(i.price*i.qty),0) + (montaggio?150:0);
+  const iva = subtotale * 0.22;
+  const spedizione = subtotale >= 500 ? 0 : 25;
+  const totale = subtotale + iva + spedizione;
+
+  const itemsHtml = cart.slice(0,4).map(item => `
+  <div class="co-item">
+    <img src="${item.img}" alt="${item.name}" class="co-item-img" loading="lazy">
+    <div class="co-item-info">
+      <div class="co-item-name">${item.name}</div>
+      <div class="co-item-qty">Qta: ${item.qty}</div>
+    </div>
+    <div class="co-item-price">€${fmt(item.price*item.qty)}</div>
+  </div>`).join('');
+
+  const extra = cart.length > 4 ? `<div style="font-size:.48rem;color:var(--muted);text-align:center;margin-bottom:.5rem">+ altri ${cart.length-4} prodotti</div>` : '';
+
+  document.getElementById('checkout-summary').innerHTML = `
+  <div class="summary-title">Riepilogo ordine</div>
+  <div class="co-items">${itemsHtml}${extra}</div>
+  <div class="summary-line"><span class="lbl">Subtotale${montaggio?' (inc. montaggio)':''}</span><span class="val">€${fmt(subtotale)}</span></div>
+  <div class="summary-line"><span class="lbl">IVA (22%)</span><span class="val">€${fmt(iva)}</span></div>
+  <div class="summary-line ${spedizione===0?'free':''}"><span class="lbl">Spedizione</span><span class="val">${spedizione===0?'Gratuita':'€'+fmt(spedizione)}</span></div>
+  <hr class="summary-divider">
+  <div class="summary-total"><span class="lbl">Totale</span><span class="val">€${fmt(totale)}</span></div>
+  <div class="iva-note">IVA inclusa</div>`;
+}
+
+function goStep(n){
+  // Validate step 1
+  if(n > 1 && currentStep === 1){
+    if(!document.getElementById('f-nome').value || !document.getElementById('f-email').value){
+      showToast('Compila Nome ed Email per continuare');
+      return;
+    }
+  }
+  // Validate step 2
+  if(n > 2 && currentStep === 2){
+    if(!document.getElementById('f-indirizzo').value || !document.getElementById('f-citta').value){
+      showToast('Compila Indirizzo e Città per continuare');
+      return;
+    }
+  }
+
+  document.getElementById('step'+currentStep).classList.remove('active');
+  document.getElementById('s'+currentStep).classList.remove('active');
+  if(n > currentStep){ document.getElementById('s'+currentStep).classList.add('done'); document.getElementById('line'+(n-1)).classList.add('done'); }
+  else { document.getElementById('s'+n).classList.remove('done'); document.getElementById('line'+n).classList.remove('done'); }
+
+  currentStep = n;
+  document.getElementById('step'+currentStep).classList.add('active');
+  document.getElementById('s'+currentStep).classList.add('active');
+  renderSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectPay(el){
+  document.querySelectorAll('.pay-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  const cf = document.getElementById('card-form');
+  cf.classList.toggle('visible', el.dataset.method === 'carta');
+}
+
+function formatCard(input){
+  let v = input.value.replace(/\D/g,'').substring(0,16);
+  input.value = v.match(/.{1,4}/g)?.join(' ') || v;
+}
+function formatExpiry(input){
+  let v = input.value.replace(/\D/g,'').substring(0,4);
+  if(v.length >= 2) v = v.substring(0,2)+'/'+v.substring(2);
+  input.value = v;
+}
+
+function confirmOrder(){
+  const cart = getCart();
+  if(cart.length === 0){ showToast('Il carrello è vuoto'); return; }
+  const orderNum = 'SWA-' + Math.floor(10000 + Math.random()*90000);
+  localStorage.removeItem('swa_cart');
+  updateCartBadge();
+  window.location.href = 'conferma.html?order=' + orderNum;
+}
+
+function showToast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),50);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300);},2500);
+}
+function updateCartBadge(){
+  const cart=getCart();
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const el=document.getElementById('cart-count');
+  if(el){el.textContent=total;el.style.display=total>0?'flex':'none';}
+}
+
+renderSummary();
+updateCartBadge();
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('prog');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(h>0?(scrollY/h*100):0)+'%';
+});
+
+/* ── BACK TO TOP ────────────────────── */
+(function(){
+  var btt=document.getElementById('btt');
+  if(!btt)return;
+  window.addEventListener('scroll',function(){
+    btt.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

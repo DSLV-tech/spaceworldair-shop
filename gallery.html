@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery — Space World Air</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--c:#31BEF0;--ck:#0097C4;--y:#FFB320;--p:#FF3D8E;--g:#00C864;--bg:#07070f;--bg2:#0d0d1b;--bg3:#13132a;--bdr:rgba(49,190,240,.1);--txt:rgba(255,255,255,.9);--muted:rgba(255,255,255,.38);--fn:'Anybody',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fn);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fn)}
+
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c),var(--p));z-index:9999;width:0}
+
+#nav{position:fixed;top:3px;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
+.nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
+.ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
+.ncart:hover{border-color:var(--c);color:var(--c)}
+#cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+.page-header{padding:7rem 2rem 3rem;background:var(--bg2);border-bottom:1px solid var(--bdr);text-align:center}
+.breadcrumb{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.breadcrumb a{color:var(--muted);transition:color .2s}
+.breadcrumb a:hover{color:var(--c)}
+.breadcrumb span{color:var(--c)}
+.page-header h1{font-size:clamp(2rem,5vw,3.5rem);font-variation-settings:'wght' 900,'wdth' 115;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:.5rem}
+.page-header p{font-size:.8rem;color:var(--muted)}
+
+/* FILTERS */
+.filters-bar{padding:2rem;background:var(--bg);border-bottom:1px solid var(--bdr);display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;position:sticky;top:3px;z-index:99;background:rgba(7,7,15,.96);backdrop-filter:blur(12px)}
+.filter-btn{background:none;border:1px solid var(--bdr);color:var(--muted);font-family:var(--fn);font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;padding:.5rem 1.2rem;border-radius:20px;transition:all .2s}
+.filter-btn:hover{border-color:rgba(49,190,240,.3);color:var(--txt)}
+.filter-btn.active{background:var(--c);border-color:var(--c);color:#000}
+
+/* GALLERY GRID */
+.gallery-section{padding:2.5rem 2rem 5rem;max-width:1400px;margin:0 auto}
+.count-bar{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;text-align:center}
+.count-bar span{color:var(--c);font-variation-settings:'wght' 700}
+
+.gallery-grid{columns:4 260px;gap:1rem}
+.gallery-card{break-inside:avoid;margin-bottom:1rem;position:relative;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid transparent;transition:border-color .2s}
+.gallery-card.hidden{display:none}
+.gallery-card:hover{border-color:rgba(49,190,240,.2)}
+.gallery-card img{width:100%;display:block;object-fit:cover;transition:transform .5s,filter .3s;filter:brightness(.85)}
+.gallery-card:hover img{transform:scale(1.04);filter:brightness(1)}
+.gallery-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 45%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem}
+.gallery-card:hover .gallery-card-overlay{opacity:1}
+.gallery-card-name{font-size:.7rem;font-variation-settings:'wght' 700;text-transform:uppercase;letter-spacing:.05em;line-height:1.3;margin-bottom:.3rem}
+.gallery-card-type{font-size:.4rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
+
+/* TYPE COLORS */
+.gallery-card[data-type="brand"] .gallery-card-type{color:var(--y)}
+.gallery-card[data-type="moda"] .gallery-card-type{color:var(--p)}
+.gallery-card[data-type="sport"] .gallery-card-type{color:var(--g)}
+.gallery-card[data-type="natale"] .gallery-card-type{color:var(--y)}
+.gallery-card[data-type="party"] .gallery-card-type{color:var(--p)}
+.gallery-card[data-type="arte"] .gallery-card-type{color:var(--c)}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:2rem}
+.lightbox.open{display:flex}
+.lb-inner{position:relative;max-width:1100px;width:100%;max-height:90vh}
+.lb-img{width:100%;max-height:80vh;object-fit:contain;border-radius:8px}
+.lb-caption{text-align:center;margin-top:1rem}
+.lb-caption-name{font-size:.8rem;font-variation-settings:'wght' 700;margin-bottom:.2rem}
+.lb-caption-type{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
+.lb-close{position:absolute;top:-40px;right:0;background:none;border:none;color:var(--muted);font-size:1.5rem;transition:color .2s}
+.lb-close:hover{color:var(--txt)}
+.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(7,7,15,.8);border:1px solid var(--bdr);color:var(--txt);width:44px;height:44px;border-radius:50%;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s}
+.lb-prev{left:-60px}
+.lb-next{right:-60px}
+.lb-prev:hover,.lb-next:hover{border-color:var(--c);background:rgba(49,190,240,.1)}
+
+footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo .nbrand>span{color:var(--c)}
+.fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
+.fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:.5rem}
+.fc ul li a{font-size:.65rem;color:var(--muted);transition:color .2s}
+.fc ul li a:hover{color:var(--c)}
+.foot-bottom{border-top:1px solid var(--bdr);padding-top:2rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-bottom p{font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.foot-bottom a{color:rgba(255,255,255,.3);transition:color .2s}
+.foot-bottom a:hover{color:var(--c)}
+
+/* ── HAMBURGER / MOBILE NAV ──────────────────── */
+.hambtn{display:none;background:none;border:none;color:var(--txt);
+  padding:.5rem;cursor:pointer;flex-direction:column;gap:5px;margin-left:.5rem;
+  flex-shrink:0}
+.hambtn span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .3s,opacity .3s;height:2.5px}
+#mnav{position:fixed;inset:0;z-index:998;
+  background:rgba(5,5,12,.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:2rem}
+#mnav.open{opacity:1;pointer-events:all}
+.mnav-link{font-size:clamp(1.8rem,8vw,2.5rem);font-variation-settings:'wght' 800,'wdth' 110;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--txt);
+  transition:color .2s;text-align:center;display:block}
+.mnav-link:hover{color:var(--c)}
+.mnav-cart-btn{display:inline-block;margin-top:1rem;padding:.75rem 2.5rem;
+  border:1px solid var(--c);border-radius:4px;color:var(--c);font-size:.75rem;
+  letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;
+  text-align:center;transition:background .2s}
+.mnav-cart-btn:hover{background:rgba(49,190,240,.1)}
+.mnav-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;padding:.5rem;
+  transition:color .2s;line-height:1;font-family:var(--fn)}
+.mnav-close:hover{color:var(--txt)}
+@media(max-width:768px){.mnav-close{display:none}}
+
+@media(max-width:900px){
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .checkout-layout{grid-template-columns:1fr}
+  .checkout-summary{position:static;order:-1}
+  .cart-layout{grid-template-columns:1fr}
+  .order-summary{position:static}
+}
+@media(max-width:768px){
+  .hambtn{display:flex}
+  #nav{gap:.5rem}
+  .nlogo{font-size:.9rem}
+  .nlinks{display:none}
+  /* Hero fixes */
+  #hero-sub{font-size:.75rem;letter-spacing:.2em}
+  .hero-tag{font-size:.6rem;letter-spacing:.15em;margin-bottom:1.2rem}
+  #hero-title{font-size:clamp(3.2rem,17vw,4.5rem)}
+  #hero-cta{gap:.75rem;flex-direction:column;align-items:center}
+  /* Buttons touch-friendly */
+  .btn-primary,.btn-outline{font-size:.65rem;padding:.9rem 1.6rem;min-height:48px;width:min(100%,240px)}
+  /* Typography */
+  .section-tag{font-size:.55rem}
+  .section-sub{font-size:.82rem}
+  .cpill{font-size:.55rem}
+  .clients-label{font-size:.5rem}
+  /* Layout */
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-columns:1fr}
+  .about-inner{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:3.5rem 1.2rem}
+  /* Product cards */
+  .btn-cart{padding:.75rem 1rem;font-size:1.1rem;min-width:44px;min-height:44px}
+  .btn-view{padding:.75rem;min-height:44px}
+  /* Cart page */
+  .cart-item{grid-template-columns:80px 1fr;gap:.8rem}
+  .cart-item-right{display:none}
+  /* Checkout */
+  .form-grid{grid-template-columns:1fr}
+  .step-line{width:40px}
+  /* Catalog page */
+  .catalog-layout{padding:2rem 1rem}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  #hero-title{font-size:clamp(2.8rem,20vw,4rem)}
+  .cats-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .pcard-body h3{font-size:.78rem}
+  .pprice{font-size:1rem}
+  section{padding:3rem 1rem}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ── FLOATING WHATSAPP ──────────────────────── */
+#wa-fab{position:fixed;bottom:1.8rem;right:1.2rem;z-index:990;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;font-size:1.5rem}
+#wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+#wa-fab-tooltip{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  background:rgba(5,5,12,.92);color:#fff;font-size:.55rem;letter-spacing:.12em;
+  text-transform:uppercase;font-variation-settings:'wght' 700;
+  white-space:nowrap;padding:.4rem .9rem;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:var(--fn)}
+#wa-fab:hover #wa-fab-tooltip{opacity:1}
+
+/* ── BACK TO TOP ────────────────────────────── */
+#btt{position:fixed;bottom:1.8rem;left:1.2rem;z-index:990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(49,190,240,.12);border:1px solid rgba(49,190,240,.3);
+  color:var(--c);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:.9rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:rgba(49,190,240,.22);transform:translateY(-2px)}
+
+/* ── GLOBAL MOBILE TEXT SAFETY ─────────────────── */
+*,*::before,*::after{overflow-wrap:break-word;word-break:break-word}
+img,svg,canvas{word-break:normal;overflow-wrap:normal}
+h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="heading"]{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+/* ── READABILITY: body text minimum sizes ── */
+.fdesc{font-size:.75rem}
+.fcontact p{font-size:.72rem}
+.fc ul li a{font-size:.72rem}
+
+@media(max-width:768px){
+  /* iOS Safari: prevent auto-zoom on form focus (requires ≥16px = 1rem) */
+  input,select,textarea,.form-input,.form-select,.form-textarea{font-size:1rem!important}
+}
+
+@media(max-width:480px){
+  /* Headings */
+  h1{font-size:clamp(1.4rem,7.5vw,2.8rem)}
+  h2{font-size:clamp(1.2rem,6.5vw,2rem)}
+  h3{font-size:clamp(1rem,5.5vw,1.5rem)}
+  /* Page-level hero headings */
+  .about-hero h1{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  .contact-hero-title{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  /* Section titles */
+  .section-h2,.sec-title,.page-header h1{font-size:clamp(1.2rem,6.5vw,2rem)!important}
+  /* Reduce excessive letter-spacing */
+  .section-tag,.hero-kicker,.hero-tag,.sidebar-title,.pcat-tag,
+  .clients-label,.hero-scroll,.foot-bottom p{letter-spacing:.12em!important}
+  /* Section padding */
+  section{padding:3rem 1rem!important}
+  /* Page wraps */
+  .page-wrap,.checkout-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* About hero */
+  .about-hero-content{padding:0 1rem!important}
+  /* Contact hero */
+  .contact-hero,.contact-hero-inner{padding-left:1rem!important;padding-right:1rem!important}
+  /* Product detail page */
+  .product-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* Breadcrumb */
+  .breadcrumb{font-size:.5rem;letter-spacing:.08em}
+  /* Chips/pills on gallery */
+  .filter-btn,.cpill{font-size:.52rem;letter-spacing:.1em;padding:.4rem .7rem}
+  /* Cart */
+  .cart-item{gap:.6rem}
+  /* Checkout steps */
+  .step-label{font-size:.4rem;letter-spacing:.08em}
+  /* Form labels */
+  .form-label{font-size:.5rem;letter-spacing:.12em}
+  /* Buttons width */
+  .hero-ctas,.btn-hero,.btn-ghost{width:100%;max-width:260px}
+}
+
+@media(max-width:360px){
+  h1{font-size:clamp(1.2rem,7vw,2rem)!important}
+  h2,.section-h2,.sec-title{font-size:clamp(1.1rem,6.5vw,1.8rem)!important}
+  .nlogo{font-size:.78rem}
+  .nbrand{font-size:.78rem}
+  section{padding:2.5rem .85rem!important}
+  .page-wrap,.checkout-wrap{padding-left:.85rem!important;padding-right:.85rem!important}
+  .about-hero-content{padding:0 .85rem!important}
+  .hero-kicker,.hero-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .section-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .btn-primary,.btn-outline{font-size:.6rem!important;padding:.85rem 1rem!important}
+  .gallery-filter-bar{gap:.4rem}
+  .filter-btn{font-size:.48rem!important;padding:.35rem .55rem!important}
+}
+
+@media(max-width:320px){
+  h1{font-size:clamp(1.1rem,7.5vw,1.8rem)!important}
+  h2{font-size:clamp(1rem,7vw,1.6rem)!important}
+  .nlogo{font-size:.7rem}
+  #nav{padding:0 .7rem}
+  section{padding:2rem .75rem!important}
+}
+
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nlogo">
+    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+  <ul class="nlinks">
+    <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">Chi siamo</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="ncart" onclick="location.href='carrello.html'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count">0</span>
+    </button>
+    <button class="hambtn" id="hambtn" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating WhatsApp -->
+<a id="wa-fab" href="https://wa.me/393933350212" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  💬<span id="wa-fab-tooltip">Scrivici su WhatsApp</span>
+</a>
+<!-- Back to top -->
+<button id="btt" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="mnav" role="dialog" aria-modal="true" aria-label="Menu principale">
+  <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
+  <a href="index.html" class="mnav-link">Home</a>
+  <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="about.html" class="mnav-link">Chi siamo</a>
+  <a href="contatti.html" class="mnav-link">Contatti</a>
+  <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
+</div>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; <span>Gallery</span></div>
+  <h1>Gallery</h1>
+  <p>Oltre 1.000 eventi in tutta Europa. Ecco alcuni dei nostri lavori.</p>
+</div>
+
+<div class="filters-bar">
+  <button class="filter-btn active" data-filter="all">Tutti</button>
+  <button class="filter-btn" data-filter="brand">Brand Activation</button>
+  <button class="filter-btn" data-filter="moda">Moda</button>
+  <button class="filter-btn" data-filter="sport">Sport</button>
+  <button class="filter-btn" data-filter="arte">Arte & Cultura</button>
+  <button class="filter-btn" data-filter="party">Club & Party</button>
+  <button class="filter-btn" data-filter="natale">Natale</button>
+</div>
+
+<div class="gallery-section">
+  <div class="count-bar">Visualizzando <span id="gallery-count">28</span> eventi</div>
+  <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(0)">
+      <img src="https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png" alt="Lighting Arches Installation" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Lighting Arches Installation</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(1)">
+      <img src="https://spaceworldair.com/media/wysiwyg/mirror1.jpg" alt="Sfere Metallizzate" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Sfere Metallizzate — Evento privato</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(2)">
+      <img src="https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg" alt="Gazometro Roma" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Gazometro Roma</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(3)">
+      <img src="https://spaceworldair.com/media/wysiwyg/img_4739.jpeg" alt="FAR Nilufar Gallery" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">FAR · Nilufar Gallery Milano</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="brand" onclick="openLightbox(4)">
+      <img src="https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg" alt="Red Bull After Show" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Red Bull After Show</div><div class="gallery-card-type">Brand Activation</div></div>
+    </div>
+    <div class="gallery-card" data-type="moda" onclick="openLightbox(5)">
+      <img src="https://spaceworldair.com/media/wysiwyg/EF20ANNIVERSARY/EF20ANNIVERSARY_ATMOSPHERE_05-843246.jpg" alt="Elisabetta Franchi" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Elisabetta Franchi 20° Anniversary</div><div class="gallery-card-type">Moda</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(6)">
+      <img src="https://spaceworldair.com/media/wysiwyg/MR11.jpeg" alt="Mare Pineta Resort" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Mare Pineta Resort</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="sport" onclick="openLightbox(7)">
+      <img src="https://spaceworldair.com/media/wysiwyg/uefa1.jpg" alt="UEFA Euro 2020" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">UEFA Euro 2020 — Opening Show</div><div class="gallery-card-type">Sport</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(8)">
+      <img src="https://spaceworldair.com/media/wysiwyg/ZeppelinZB008.jpg" alt="Zeppelin" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Zeppelin · Galleria Luisa Delle Piane</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="moda" onclick="openLightbox(9)">
+      <img src="https://spaceworldair.com/media/wysiwyg/PHILIPPPLEIN/download-2.jpeg" alt="Philipp Plein" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Philipp Plein Fashion Show</div><div class="gallery-card-type">Moda</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(10)">
+      <img src="https://spaceworldair.com/media/wysiwyg/Blow/IMG_7812.JPG" alt="Blow Bologna" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Blow — Bologna</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(11)">
+      <img src="https://spaceworldair.com/media/wysiwyg/luna12.png" alt="Moonlight Shadow" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Moonlight Shadow</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(12)">
+      <img src="https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG" alt="Goat Serious Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Goat Serious Party</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(13)">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg" alt="Elenissima Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Elenissima Party — Milano</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="brand" onclick="openLightbox(14)">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/LITTLE_ITALY_OK__1.jpg" alt="Little Italy Helsinki" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Little Italy — Helsinki, Finland</div><div class="gallery-card-type">Brand Activation</div></div>
+    </div>
+    <div class="gallery-card" data-type="sport" onclick="openLightbox(15)">
+      <img src="https://spaceworldair.com/media/wysiwyg/WORLCUP/WORLD_CUP_DUBAI.jpeg" alt="World Cup Dubai" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">World Cup — Dubai</div><div class="gallery-card-type">Sport</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(16)">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/prima_foto_pool_party.jpg" alt="Private Pool Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Private Pool Party</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="party" onclick="openLightbox(17)">
+      <img src="https://spaceworldair.com/media/wysiwyg/GALACTICA/galactica_party_prima_foto_gallery.jpg" alt="Galactica Party Capri" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Galactica Party — Capri</div><div class="gallery-card-type">Club & Party</div></div>
+    </div>
+    <div class="gallery-card" data-type="natale" onclick="openLightbox(18)">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg" alt="Xmas Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Xmas Party — Evento Privato</div><div class="gallery-card-type">Natale</div></div>
+    </div>
+    <div class="gallery-card" data-type="sport" onclick="openLightbox(19)">
+      <img src="https://spaceworldair.com/media/wysiwyg/moon_motogp.jpg" alt="Moto GP After Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Moto GP After Party</div><div class="gallery-card-type">Sport</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(20)">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/foto_gallery_idomeneo.jpeg" alt="Idomeneo Salzburg" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Idomeneo · Salzburger Festspiele</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(21)">
+      <img src="https://spaceworldair.com/media/wysiwyg/circus1.jpg" alt="Paradise Circus" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Paradise Circus</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(22)">
+      <img src="https://spaceworldair.com/media/wysiwyg/arte_fiera_9.jpg" alt="Arte Fiera 2020" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Arte Fiera 2020 — Eva Marisaldi</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="brand" onclick="openLightbox(23)">
+      <img src="https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg" alt="Red Bull White Party" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Red Bull White Party — Rimini</div><div class="gallery-card-type">Brand Activation</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(24)">
+      <img src="https://spaceworldair.com/media/wysiwyg/P1066124.jpg" alt="Rossetti Design Park" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Rossetti Design Park</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="arte" onclick="openLightbox(25)">
+      <img src="https://spaceworldair.com/media/wysiwyg/love1.jpg" alt="Love Is In The Air" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Love Is In The Air</div><div class="gallery-card-type">Arte & Cultura</div></div>
+    </div>
+    <div class="gallery-card" data-type="natale" onclick="openLightbox(26)">
+      <img src="https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg" alt="Boule de Neige" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Boule de Neige</div><div class="gallery-card-type">Natale</div></div>
+    </div>
+    <div class="gallery-card" data-type="sport" onclick="openLightbox(27)">
+      <img src="https://spaceworldair.com/media/wysiwyg/Misano/bolla_B.jpg" alt="Misano World Circuit" loading="lazy">
+      <div class="gallery-card-overlay"><div class="gallery-card-name">Misano World Circuit</div><div class="gallery-card-type">Sport</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <button class="lb-prev" onclick="navLb(-1);event.stopPropagation()">‹</button>
+    <img id="lb-img" src="" alt="" class="lb-img" loading="lazy">
+    <button class="lb-next" onclick="navLb(1);event.stopPropagation()">›</button>
+    <div class="lb-caption">
+      <div class="lb-caption-name" id="lb-name"></div>
+      <div class="lb-caption-type" id="lb-type"></div>
+    </div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="foot-grid">
+    <div class="fc">
+      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
+      <div class="fcontact">
+        <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
+        <p>📞 +39 393.3350212</p>
+        <p>📠 +39 0543 728277</p>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Navigazione</h4>
+      <ul><li><a href="index.html">Home</a></li><li><a href="prodotti.html">Prodotti</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">Chi siamo</a></li><li><a href="contatti.html">Contatti</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Categorie</h4>
+      <ul><li><a href="prodotti.html?cat=personalizzati">Gonfiabili Personalizzati</a></li><li><a href="prodotti.html?cat=giochi">Giochi Gonfiabili</a></li><li><a href="prodotti.html?cat=stand">Stand Gonfiabili</a></li><li><a href="prodotti.html?cat=effetti">Effetti Speciali</a></li><li><a href="prodotti.html?cat=stagionale">Stagionale</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Pagamento sicuro</h4>
+      <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" style="max-width:220px;opacity:.8;margin-bottom:1rem" loading="lazy">
+      <p style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Pagamenti sicuri SSL · IVA inclusa</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── MOBILE NAV ────────────────────────────────── */
+(function(){
+  var btn=document.getElementById('hambtn');
+  var nav=document.getElementById('mnav');
+  var cls=document.getElementById('mnav-close');
+  function openNav(){
+    if(!nav||!btn)return;
+    nav.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    var sp=btn.querySelectorAll('span');
+    if(sp[0])sp[0].style.transform='translateY(7px) rotate(45deg)';
+    if(sp[1])sp[1].style.opacity='0';
+    if(sp[2])sp[2].style.transform='translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    if(!nav||!btn)return;
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+    document.body.style.overflow='';
+  }
+  if(btn)btn.addEventListener('click',function(){if(nav&&nav.classList.contains('open'))closeNav();else openNav();});
+  if(cls)cls.addEventListener('click',closeNav);
+  if(nav)nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeNav);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
+
+const SWA_PRODUCTS = [];
+
+// Gallery data for lightbox
+const galleryItems = [
+  {name:'Lighting Arches Installation',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png'},
+  {name:'Sfere Metallizzate — Evento privato',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/mirror1.jpg'},
+  {name:'Gazometro Roma',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg'},
+  {name:'FAR · Nilufar Gallery Milano',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/img_4739.jpeg'},
+  {name:'Red Bull After Show',type:'Brand Activation',img:'https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg'},
+  {name:'Elisabetta Franchi 20° Anniversary',type:'Moda',img:'https://spaceworldair.com/media/wysiwyg/EF20ANNIVERSARY/EF20ANNIVERSARY_ATMOSPHERE_05-843246.jpg'},
+  {name:'Mare Pineta Resort',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/MR11.jpeg'},
+  {name:'UEFA Euro 2020 — Opening Show',type:'Sport',img:'https://spaceworldair.com/media/wysiwyg/uefa1.jpg'},
+  {name:'Zeppelin · Galleria Luisa Delle Piane',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/ZeppelinZB008.jpg'},
+  {name:'Philipp Plein Fashion Show',type:'Moda',img:'https://spaceworldair.com/media/wysiwyg/PHILIPPPLEIN/download-2.jpeg'},
+  {name:'Blow — Bologna',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/Blow/IMG_7812.JPG'},
+  {name:'Moonlight Shadow',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/luna12.png'},
+  {name:'Goat Serious Party',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG'},
+  {name:'Elenissima Party — Milano',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg'},
+  {name:'Little Italy — Helsinki, Finland',type:'Brand Activation',img:'https://spaceworldair.com/media/wysiwyg/gallery/LITTLE_ITALY_OK__1.jpg'},
+  {name:'World Cup — Dubai',type:'Sport',img:'https://spaceworldair.com/media/wysiwyg/WORLCUP/WORLD_CUP_DUBAI.jpeg'},
+  {name:'Private Pool Party',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/gallery/prima_foto_pool_party.jpg'},
+  {name:'Galactica Party — Capri',type:'Club & Party',img:'https://spaceworldair.com/media/wysiwyg/GALACTICA/galactica_party_prima_foto_gallery.jpg'},
+  {name:'Xmas Party — Evento Privato',type:'Natale',img:'https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg'},
+  {name:'Moto GP After Party',type:'Sport',img:'https://spaceworldair.com/media/wysiwyg/moon_motogp.jpg'},
+  {name:'Idomeneo · Salzburger Festspiele',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/gallery/foto_gallery_idomeneo.jpeg'},
+  {name:'Paradise Circus',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/circus1.jpg'},
+  {name:'Arte Fiera 2020 — Eva Marisaldi',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/arte_fiera_9.jpg'},
+  {name:'Red Bull White Party — Rimini',type:'Brand Activation',img:'https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg'},
+  {name:'Rossetti Design Park',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/P1066124.jpg'},
+  {name:'Love Is In The Air',type:'Arte & Cultura',img:'https://spaceworldair.com/media/wysiwyg/love1.jpg'},
+  {name:'Boule de Neige',type:'Natale',img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg'},
+  {name:'Misano World Circuit',type:'Sport',img:'https://spaceworldair.com/media/wysiwyg/Misano/bolla_B.jpg'},
+];
+
+let currentLbIndex = 0;
+let visibleIndices = [];
+
+function openLightbox(idx){
+  currentLbIndex = idx;
+  const item = galleryItems[idx];
+  document.getElementById('lb-img').src = item.img;
+  document.getElementById('lb-name').textContent = item.name;
+  document.getElementById('lb-type').textContent = item.type;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Build visible indices
+  visibleIndices = [];
+  document.querySelectorAll('.gallery-card:not(.hidden)').forEach(card => {
+    visibleIndices.push(parseInt(card.getAttribute('onclick').match(/\d+/)[0]));
+  });
+}
+function closeLightbox(e){
+  if(e && e.target !== document.getElementById('lightbox') && !e.currentTarget.className.includes('lb-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navLb(dir){
+  const pos = visibleIndices.indexOf(currentLbIndex);
+  const newPos = (pos + dir + visibleIndices.length) % visibleIndices.length;
+  openLightbox(visibleIndices[newPos]);
+}
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key === 'ArrowLeft') navLb(-1);
+    else if(e.key === 'ArrowRight') navLb(1);
+    else if(e.key === 'Escape'){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+  }
+});
+
+// Filter
+const filterMap = {'brand':'brand','moda':'moda','sport':'sport','arte':'arte','party':'party','natale':'natale'};
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    const cards = document.querySelectorAll('.gallery-card');
+    let visible = 0;
+    cards.forEach(card => {
+      if(filter === 'all' || card.dataset.type === filter){
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    document.getElementById('gallery-count').textContent = visible;
+  });
+});
+
+function updateCartBadge(){
+  const cart=JSON.parse(localStorage.getItem('swa_cart')||'[]');
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const el=document.getElementById('cart-count');
+  if(el){el.textContent=total;el.style.display=total>0?'flex':'none';}
+}
+updateCartBadge();
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('prog');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(h>0?(scrollY/h*100):0)+'%';
+});
+
+/* ── BACK TO TOP ────────────────────── */
+(function(){
+  var btt=document.getElementById('btt');
+  if(!btt)return;
+  window.addEventListener('scroll',function(){
+    btt.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

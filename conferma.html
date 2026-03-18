@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ordine Confermato — Space World Air</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--c:#31BEF0;--ck:#0097C4;--y:#FFB320;--p:#FF3D8E;--g:#00C864;--bg:#07070f;--bg2:#0d0d1b;--bg3:#13132a;--bdr:rgba(49,190,240,.1);--txt:rgba(255,255,255,.9);--muted:rgba(255,255,255,.38);--fn:'Anybody',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fn);overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fn)}
+
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
+.nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
+.ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
+.ncart:hover{border-color:var(--c);color:var(--c)}
+#cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+.confirm-page{min-height:calc(100vh - 200px);display:flex;align-items:center;justify-content:center;padding:7rem 2rem 5rem}
+
+.confirm-card{background:var(--bg2);border:1px solid rgba(0,200,100,.2);border-radius:16px;padding:3.5rem;max-width:620px;width:100%;text-align:center;position:relative;overflow:hidden}
+.confirm-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,200,100,.08) 0%,transparent 60%);pointer-events:none}
+
+.check-circle{width:80px;height:80px;border-radius:50%;background:rgba(0,200,100,.12);border:2px solid rgba(0,200,100,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 1.8rem;position:relative}
+.check-circle svg{width:40px;height:40px;stroke:var(--g)}
+.check-ring{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(0,200,100,.2);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.5}}
+
+.confirm-tag{font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--g);margin-bottom:.8rem}
+.confirm-h1{font-size:clamp(1.8rem,4vw,2.6rem);font-variation-settings:'wght' 900,'wdth' 110;text-transform:uppercase;margin-bottom:.5rem;line-height:1.1}
+.confirm-sub{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:2rem}
+
+.order-num-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem 2rem;display:inline-block;margin-bottom:2rem}
+.order-num-lbl{font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.order-num{font-size:1.4rem;font-variation-settings:'wght' 900,'wdth' 115;color:var(--c);letter-spacing:.08em}
+
+.timeline-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.5rem;margin-bottom:2rem;text-align:left}
+.tl-title{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c);font-variation-settings:'wght' 700;margin-bottom:1rem}
+.tl-steps{display:flex;flex-direction:column;gap:.8rem}
+.tl-step{display:flex;gap:.9rem;align-items:flex-start}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--g);flex-shrink:0;margin-top:3px}
+.tl-dot.muted{background:var(--bdr)}
+.tl-info{}
+.tl-step-name{font-size:.65rem;font-variation-settings:'wght' 700;margin-bottom:.1rem}
+.tl-step-desc{font-size:.55rem;color:var(--muted)}
+
+.confirm-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--c);color:#000;padding:.85rem 2rem;font-family:var(--fn);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 800;border:none;border-radius:3px;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--ck);transform:translateY(-2px)}
+.btn-outline{background:none;color:var(--txt);padding:.85rem 2rem;font-family:var(--fn);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;border:1px solid rgba(255,255,255,.25);border-radius:3px;transition:border-color .2s,color .2s}
+.btn-outline:hover{border-color:var(--c);color:var(--c)}
+
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.dot{position:absolute;width:8px;height:8px;border-radius:50%;animation:fall linear forwards}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo .nbrand>span{color:var(--c)}
+.fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
+.fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:.5rem}
+.fc ul li a{font-size:.65rem;color:var(--muted);transition:color .2s}
+.fc ul li a:hover{color:var(--c)}
+.foot-bottom{border-top:1px solid var(--bdr);padding-top:2rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-bottom p{font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.foot-bottom a{color:rgba(255,255,255,.3);transition:color .2s}
+.foot-bottom a:hover{color:var(--c)}
+
+/* ── HAMBURGER / MOBILE NAV ──────────────────── */
+.hambtn{display:none;background:none;border:none;color:var(--txt);
+  padding:.5rem;cursor:pointer;flex-direction:column;gap:5px;margin-left:.5rem;
+  flex-shrink:0}
+.hambtn span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .3s,opacity .3s;height:2.5px}
+#mnav{position:fixed;inset:0;z-index:998;
+  background:rgba(5,5,12,.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:2rem}
+#mnav.open{opacity:1;pointer-events:all}
+.mnav-link{font-size:clamp(1.8rem,8vw,2.5rem);font-variation-settings:'wght' 800,'wdth' 110;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--txt);
+  transition:color .2s;text-align:center;display:block}
+.mnav-link:hover{color:var(--c)}
+.mnav-cart-btn{display:inline-block;margin-top:1rem;padding:.75rem 2.5rem;
+  border:1px solid var(--c);border-radius:4px;color:var(--c);font-size:.75rem;
+  letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;
+  text-align:center;transition:background .2s}
+.mnav-cart-btn:hover{background:rgba(49,190,240,.1)}
+.mnav-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;padding:.5rem;
+  transition:color .2s;line-height:1;font-family:var(--fn)}
+.mnav-close:hover{color:var(--txt)}
+@media(max-width:768px){.mnav-close{display:none}}
+
+@media(max-width:900px){
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .checkout-layout{grid-template-columns:1fr}
+  .checkout-summary{position:static;order:-1}
+  .cart-layout{grid-template-columns:1fr}
+  .order-summary{position:static}
+}
+@media(max-width:768px){
+  .hambtn{display:flex}
+  #nav{gap:.5rem}
+  .nlogo{font-size:.9rem}
+  .nlinks{display:none}
+  /* Hero fixes */
+  #hero-sub{font-size:.75rem;letter-spacing:.2em}
+  .hero-tag{font-size:.6rem;letter-spacing:.15em;margin-bottom:1.2rem}
+  #hero-title{font-size:clamp(3.2rem,17vw,4.5rem)}
+  #hero-cta{gap:.75rem;flex-direction:column;align-items:center}
+  /* Buttons touch-friendly */
+  .btn-primary,.btn-outline{font-size:.65rem;padding:.9rem 1.6rem;min-height:48px;width:min(100%,240px)}
+  /* Typography */
+  .section-tag{font-size:.55rem}
+  .section-sub{font-size:.82rem}
+  .cpill{font-size:.55rem}
+  .clients-label{font-size:.5rem}
+  /* Layout */
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-columns:1fr}
+  .about-inner{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:3.5rem 1.2rem}
+  /* Product cards */
+  .btn-cart{padding:.75rem 1rem;font-size:1.1rem;min-width:44px;min-height:44px}
+  .btn-view{padding:.75rem;min-height:44px}
+  /* Cart page */
+  .cart-item{grid-template-columns:80px 1fr;gap:.8rem}
+  .cart-item-right{display:none}
+  /* Checkout */
+  .form-grid{grid-template-columns:1fr}
+  .step-line{width:40px}
+  /* Catalog page */
+  .catalog-layout{padding:2rem 1rem}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  #hero-title{font-size:clamp(2.8rem,20vw,4rem)}
+  .cats-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .pcard-body h3{font-size:.78rem}
+  .pprice{font-size:1rem}
+  section{padding:3rem 1rem}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ── FLOATING WHATSAPP ──────────────────────── */
+#wa-fab{position:fixed;bottom:1.8rem;right:1.2rem;z-index:990;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;font-size:1.5rem}
+#wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+#wa-fab-tooltip{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  background:rgba(5,5,12,.92);color:#fff;font-size:.55rem;letter-spacing:.12em;
+  text-transform:uppercase;font-variation-settings:'wght' 700;
+  white-space:nowrap;padding:.4rem .9rem;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:var(--fn)}
+#wa-fab:hover #wa-fab-tooltip{opacity:1}
+
+/* ── BACK TO TOP ────────────────────────────── */
+#btt{position:fixed;bottom:1.8rem;left:1.2rem;z-index:990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(49,190,240,.12);border:1px solid rgba(49,190,240,.3);
+  color:var(--c);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:.9rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:rgba(49,190,240,.22);transform:translateY(-2px)}
+
+/* ── GLOBAL MOBILE TEXT SAFETY ─────────────────── */
+*,*::before,*::after{overflow-wrap:break-word;word-break:break-word}
+img,svg,canvas{word-break:normal;overflow-wrap:normal}
+h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="heading"]{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+/* ── READABILITY: body text minimum sizes ── */
+.fdesc{font-size:.75rem}
+.fcontact p{font-size:.72rem}
+.fc ul li a{font-size:.72rem}
+
+@media(max-width:768px){
+  /* iOS Safari: prevent auto-zoom on form focus (requires ≥16px = 1rem) */
+  input,select,textarea,.form-input,.form-select,.form-textarea{font-size:1rem!important}
+}
+
+@media(max-width:480px){
+  /* Headings */
+  h1{font-size:clamp(1.4rem,7.5vw,2.8rem)}
+  h2{font-size:clamp(1.2rem,6.5vw,2rem)}
+  h3{font-size:clamp(1rem,5.5vw,1.5rem)}
+  /* Page-level hero headings */
+  .about-hero h1{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  .contact-hero-title{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  /* Section titles */
+  .section-h2,.sec-title,.page-header h1{font-size:clamp(1.2rem,6.5vw,2rem)!important}
+  /* Conferma heading */
+  .confirm-h1{font-size:clamp(1.1rem,7vw,1.8rem)!important;font-variation-settings:'wght' 900,'wdth' 100!important;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+  /* Reduce excessive letter-spacing */
+  .section-tag,.hero-kicker,.hero-tag,.sidebar-title,.pcat-tag,
+  .clients-label,.hero-scroll,.foot-bottom p{letter-spacing:.12em!important}
+  /* Section padding */
+  section{padding:3rem 1rem!important}
+  /* Page wraps */
+  .page-wrap,.checkout-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* About hero */
+  .about-hero-content{padding:0 1rem!important}
+  /* Contact hero */
+  .contact-hero,.contact-hero-inner{padding-left:1rem!important;padding-right:1rem!important}
+  /* Product detail page */
+  .product-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* Breadcrumb */
+  .breadcrumb{font-size:.5rem;letter-spacing:.08em}
+  /* Chips/pills on gallery */
+  .filter-btn,.cpill{font-size:.52rem;letter-spacing:.1em;padding:.4rem .7rem}
+  /* Cart */
+  .cart-item{gap:.6rem}
+  /* Checkout steps */
+  .step-label{font-size:.4rem;letter-spacing:.08em}
+  /* Form labels */
+  .form-label{font-size:.5rem;letter-spacing:.12em}
+  /* Buttons width */
+  .hero-ctas,.btn-hero,.btn-ghost{width:100%;max-width:260px}
+}
+
+@media(max-width:360px){
+  h1{font-size:clamp(1.2rem,7vw,2rem)!important}
+  h2,.section-h2,.sec-title{font-size:clamp(1.1rem,6.5vw,1.8rem)!important}
+  .nlogo{font-size:.78rem}
+  .nbrand{font-size:.78rem}
+  section{padding:2.5rem .85rem!important}
+  .page-wrap,.checkout-wrap{padding-left:.85rem!important;padding-right:.85rem!important}
+  .about-hero-content{padding:0 .85rem!important}
+  .hero-kicker,.hero-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .section-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .btn-primary,.btn-outline{font-size:.6rem!important;padding:.85rem 1rem!important}
+  .gallery-filter-bar{gap:.4rem}
+  .filter-btn{font-size:.48rem!important;padding:.35rem .55rem!important}
+}
+
+@media(max-width:320px){
+  h1{font-size:clamp(1.1rem,7.5vw,1.8rem)!important}
+  h2{font-size:clamp(1rem,7vw,1.6rem)!important}
+  .nlogo{font-size:.7rem}
+  #nav{padding:0 .7rem}
+  section{padding:2rem .75rem!important}
+}
+
+</style>
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nlogo">
+    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+  <ul class="nlinks">
+    <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">Chi siamo</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="ncart" onclick="location.href='carrello.html'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count">0</span>
+    </button>
+    <button class="hambtn" id="hambtn" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating WhatsApp -->
+<a id="wa-fab" href="https://wa.me/393933350212" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  💬<span id="wa-fab-tooltip">Scrivici su WhatsApp</span>
+</a>
+<!-- Back to top -->
+<button id="btt" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="mnav" role="dialog" aria-modal="true" aria-label="Menu principale">
+  <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
+  <a href="index.html" class="mnav-link">Home</a>
+  <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="about.html" class="mnav-link">Chi siamo</a>
+  <a href="contatti.html" class="mnav-link">Contatti</a>
+  <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
+</div>
+
+<div class="confirm-page">
+  <div class="confirm-card">
+    <div class="check-circle">
+      <div class="check-ring"></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <div class="confirm-tag">Pagamento ricevuto</div>
+    <h1 class="confirm-h1">Ordine confermato!</h1>
+    <p class="confirm-sub">Grazie per il tuo acquisto. Ti invieremo una conferma via email a breve.<br>Il nostro team ti contatterà per tutti i dettagli di produzione e consegna.</p>
+
+    <div class="order-num-box">
+      <div class="order-num-lbl">Numero ordine</div>
+      <div class="order-num" id="order-number">SWA-XXXXX</div>
+    </div>
+
+    <div class="timeline-box">
+      <div class="tl-title">Cosa succede adesso</div>
+      <div class="tl-steps">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div class="tl-info">
+            <div class="tl-step-name">Conferma via email</div>
+            <div class="tl-step-desc">Riceverai un'email di conferma con il riepilogo dell'ordine entro pochi minuti.</div>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div class="tl-info">
+            <div class="tl-step-name">Contatto del nostro team</div>
+            <div class="tl-step-desc">Uno specialista Space World Air ti contatterà entro 24 ore per definire i dettagli di personalizzazione.</div>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot muted"></div>
+          <div class="tl-info">
+            <div class="tl-step-name">Produzione personalizzata</div>
+            <div class="tl-step-desc">Tempi di produzione: 2–4 settimane dalla conferma d'ordine e approvazione della grafica.</div>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot muted"></div>
+          <div class="tl-info">
+            <div class="tl-step-name">Consegna in tutta Italia</div>
+            <div class="tl-step-desc">Il prodotto verrà spedito al tuo indirizzo con tracking completo. Montaggio disponibile su richiesta.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-btns">
+      <a href="prodotti.html" class="btn-primary">Torna al catalogo</a>
+      <a href="contatti.html" class="btn-outline">Contattaci</a>
+    </div>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="foot-grid">
+    <div class="fc">
+      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
+      <div class="fcontact">
+        <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
+        <p>📞 +39 393.3350212</p>
+        <p>📠 +39 0543 728277</p>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Navigazione</h4>
+      <ul><li><a href="index.html">Home</a></li><li><a href="prodotti.html">Prodotti</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">Chi siamo</a></li><li><a href="contatti.html">Contatti</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Categorie</h4>
+      <ul><li><a href="prodotti.html?cat=personalizzati">Gonfiabili Personalizzati</a></li><li><a href="prodotti.html?cat=giochi">Giochi Gonfiabili</a></li><li><a href="prodotti.html?cat=stand">Stand Gonfiabili</a></li><li><a href="prodotti.html?cat=effetti">Effetti Speciali</a></li><li><a href="prodotti.html?cat=stagionale">Stagionale</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Pagamento sicuro</h4>
+      <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" style="max-width:220px;opacity:.8;margin-bottom:1rem" loading="lazy">
+      <p style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Pagamenti sicuri SSL · IVA inclusa</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── MOBILE NAV ────────────────────────────────── */
+(function(){
+  var btn=document.getElementById('hambtn');
+  var nav=document.getElementById('mnav');
+  var cls=document.getElementById('mnav-close');
+  function openNav(){
+    if(!nav||!btn)return;
+    nav.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    var sp=btn.querySelectorAll('span');
+    if(sp[0])sp[0].style.transform='translateY(7px) rotate(45deg)';
+    if(sp[1])sp[1].style.opacity='0';
+    if(sp[2])sp[2].style.transform='translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    if(!nav||!btn)return;
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+    document.body.style.overflow='';
+  }
+  if(btn)btn.addEventListener('click',function(){if(nav&&nav.classList.contains('open'))closeNav();else openNav();});
+  if(cls)cls.addEventListener('click',closeNav);
+  if(nav)nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeNav);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
+
+const SWA_PRODUCTS = [];
+// Read order number from URL
+const params = new URLSearchParams(window.location.search);
+const orderNum = params.get('order') || 'SWA-' + Math.floor(10000+Math.random()*90000);
+document.getElementById('order-number').textContent = orderNum;
+
+// Confetti burst
+const colors = ['#31BEF0','#FFB320','#FF3D8E','#00C864','#ffffff'];
+const confettiEl = document.getElementById('confetti');
+for(let i=0;i<50;i++){
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  dot.style.cssText = `left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.8}s;width:${4+Math.random()*8}px;height:${4+Math.random()*8}px`;
+  confettiEl.appendChild(dot);
+}
+setTimeout(()=>confettiEl.remove(),4000);
+
+function updateCartBadge(){
+  const cart=JSON.parse(localStorage.getItem('swa_cart')||'[]');
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const el=document.getElementById('cart-count');
+  if(el){el.textContent=total;el.style.display=total>0?'flex':'none';}
+}
+updateCartBadge();
+
+/* ── BACK TO TOP ────────────────────── */
+(function(){
+  var btt=document.getElementById('btt');
+  if(!btt)return;
+  window.addEventListener('scroll',function(){
+    btt.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

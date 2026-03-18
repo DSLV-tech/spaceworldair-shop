@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space World Air — Gonfiabili per eventi dal 1997</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{--c:#31BEF0;--ck:#0097C4;--y:#FFB320;--p:#FF3D8E;--g:#00C864;--bg:#07070f;--bg2:#0d0d1b;--bg3:#13132a;--bdr:rgba(49,190,240,.1);--txt:rgba(255,255,255,.9);--muted:rgba(255,255,255,.38);--fn:'Anybody',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fn);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fn)}
+
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c),var(--p));z-index:9999;width:0;transition:width .1s linear}
+
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 2rem;height:62px;display:flex;align-items:center;gap:2rem;transition:background .3s,backdrop-filter .3s}
+#nav.on{background:rgba(7,7,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
+.nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
+.ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
+.ncart:hover{border-color:var(--c);color:var(--c)}
+#cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
+
+/* ── STAR CANVAS ─────────────────────────────── */
+#star-canvas{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.18}
+
+/* ── HERO SLIDESHOW ──────────────────────────── */
+.hero{position:relative;height:100vh;min-height:620px;display:flex;
+  align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-slides{position:absolute;inset:0;z-index:0}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease;will-change:opacity}
+.hero-slide.active{opacity:1}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;
+  filter:brightness(.32) saturate(.85);
+  animation:heroZoom 7s ease forwards}
+@keyframes heroZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-overlay{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(5,5,12,.96) 0%,rgba(5,5,12,.35) 50%,rgba(5,5,12,.5) 100%)}
+.hero-overlay2{position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(49,190,240,.07),transparent 65%)}
+/* grid lines overlay */
+.hero-grid{position:absolute;inset:0;z-index:1;
+  background-image:linear-gradient(rgba(49,190,240,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(49,190,240,.03) 1px,transparent 1px);
+  background-size:55px 55px;
+  mask-image:radial-gradient(ellipse at center,black 20%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center,black 20%,transparent 70%)}
+
+/* ── HERO CONTENT ────────────────────────────── */
+.hero-inner{position:relative;z-index:3;max-width:1100px;width:100%;padding:0 5vw}
+.hero-kicker{display:inline-flex;align-items:center;gap:.7rem;
+  font-size:.52rem;font-variation-settings:'wght' 100,'wdth' 75;letter-spacing:.55em;
+  text-transform:uppercase;color:var(--c);margin-bottom:2.5rem;
+  border:1px solid rgba(49,190,240,.2);padding:.4rem 1.2rem;border-radius:100px}
+.hero-kicker::before{content:'●';font-size:.4rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+#hero-h1{font-size:clamp(2.8rem,7.5vw,8.5rem);
+  font-variation-settings:'wght' 900,'wdth' 125;
+  text-transform:uppercase;letter-spacing:-.04em;line-height:.88;
+  margin-bottom:1.5rem;user-select:none}
+.hero-accent{color:var(--c);display:block}
+#hero-sub{font-size:clamp(.78rem,1.3vw,.95rem);
+  font-variation-settings:'wght' 300,'wdth' 88;
+  color:rgba(255,255,255,.5);line-height:1.7;
+  max-width:52ch;margin:0 auto 2.5rem;opacity:0;transition:opacity .8s ease .6s}
+#hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;transition:opacity .8s ease 1s}
+.hero-cta-visible{opacity:1!important}
+.btn-primary{display:inline-block;background:var(--c);color:#000;padding:.9rem 2.2rem;
+  font-family:var(--fn);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  font-variation-settings:'wght' 800;border:none;border-radius:3px;
+  box-shadow:0 4px 28px rgba(49,190,240,.3);transition:background .2s,transform .15s,box-shadow .2s}
+.btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 36px rgba(49,190,240,.4)}
+.btn-outline{display:inline-block;background:none;color:var(--txt);padding:.9rem 2.2rem;
+  font-family:var(--fn);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  font-variation-settings:'wght' 300,'wdth' 90;border:1px solid rgba(255,255,255,.18);
+  border-radius:3px;transition:border-color .2s,background .2s}
+.btn-outline:hover{border-color:var(--c);background:rgba(49,190,240,.07);color:var(--c)}
+/* slide dots */
+.hero-dots{position:absolute;bottom:4.5rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:.5rem;z-index:4}
+.hero-dot{width:6px;height:6px;border-radius:50%;border:none;padding:0;
+  background:rgba(255,255,255,.25);cursor:pointer;transition:background .3s,width .3s}
+.hero-dot.active{background:var(--c);width:20px;border-radius:3px}
+.hero-scroll{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  color:var(--muted);font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;
+  animation:bob 2s ease-in-out infinite;z-index:4}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+.clients-strip{background:#0a0a18;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1.4rem 2rem;text-align:center}
+.clients-label{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);font-variation-settings:'wght' 600;margin-bottom:1rem}
+.clients-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem}
+.cpill{font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:rgba(255,255,255,.5);padding:.4rem 1.1rem;border:1px solid rgba(255,255,255,.08);border-radius:2px;transition:color .2s,border-color .2s}
+.cpill:hover{color:var(--c);border-color:rgba(49,190,240,.25)}
+
+section{padding:5rem 2rem}
+.section-tag{display:inline-block;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:.8rem}
+.section-h2{font-size:clamp(1.8rem,4vw,2.8rem);font-variation-settings:'wght' 900,'wdth' 110;text-transform:uppercase;margin-bottom:.6rem;line-height:1.1}
+.section-sub{color:var(--muted);font-size:.85rem;max-width:520px;margin-bottom:2.5rem}
+
+.cats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:1200px;margin:0 auto}
+.cat-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;cursor:pointer}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;filter:brightness(.6)}
+.cat-card:hover img{transform:scale(1.05)}
+.cat-card-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%)}
+.cat-card-name{font-size:.8rem;font-variation-settings:'wght' 800,'wdth' 110;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+.cat-card-count{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
+
+.featured-section{background:var(--bg2)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;max-width:1200px;margin:0 auto}
+.pcard{background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.pcard-img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.pcard-body{padding:1.1rem}
+.pcat-tag{display:inline-block;font-size:.4rem;letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);background:rgba(49,190,240,.1);border:1px solid rgba(49,190,240,.2);padding:.25rem .6rem;border-radius:2px;margin-bottom:.6rem}
+.pcard-body h3{font-size:.85rem;font-variation-settings:'wght' 700;margin-bottom:.5rem;line-height:1.3}
+.pcard-body h3 a:hover{color:var(--c)}
+.pprice{font-size:1.1rem;font-variation-settings:'wght' 800;color:var(--c);margin-bottom:.8rem}
+.pfrom{font-size:.55rem;font-variation-settings:'wght' 400;color:var(--muted);margin-right:.3rem}
+.pcard-actions{display:flex;gap:.5rem;align-items:center}
+.btn-view{flex:1;background:none;border:1px solid var(--bdr);color:var(--txt);padding:.55rem .8rem;font-family:var(--fn);font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;font-variation-settings:'wght' 700;border-radius:3px;text-align:center;transition:border-color .2s,color .2s;display:block;white-space:nowrap;word-break:normal;overflow:hidden;text-overflow:ellipsis}
+.btn-view:hover{border-color:var(--c);color:var(--c)}
+.btn-cart{background:var(--c);border:none;color:#000;padding:.55rem .8rem;border-radius:3px;font-size:.9rem;transition:background .2s,transform .15s}
+.btn-cart:hover{background:var(--ck);transform:scale(1.05)}
+
+.gallery-teaser{text-align:center}
+.gallery-teaser .section-sub{margin:0 auto 2rem}
+.gal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;max-width:1000px;margin:0 auto 2.5rem}
+.gal-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;cursor:pointer}
+.gal-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:brightness(.7)}
+.gal-card:hover img{transform:scale(1.05)}
+.gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem}
+.gal-name{font-size:.75rem;font-variation-settings:'wght' 700;text-transform:uppercase;letter-spacing:.08em}
+.gal-type{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c);margin-top:.2rem}
+.text-center{text-align:center}
+
+.about-strip{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-text .section-sub{max-width:none}
+.about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0}
+.stat-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center}
+.stat-num{font-size:2rem;font-variation-settings:'wght' 900,'wdth' 120;color:var(--c);line-height:1}
+.stat-lbl{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.about-img{border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+.about-img img{width:100%;height:100%;object-fit:cover}
+
+.payment-strip{padding:3rem 2rem;text-align:center;border-top:1px solid var(--bdr)}
+.pay-label{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.pay-img{max-width:280px;margin:0 auto;opacity:.7}
+
+footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo .nbrand>span{color:var(--c)}
+.fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
+.fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:.5rem}
+.fc ul li a{font-size:.65rem;color:var(--muted);transition:color .2s}
+.fc ul li a:hover{color:var(--c)}
+.foot-bottom{border-top:1px solid var(--bdr);padding-top:2rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-bottom p{font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.foot-bottom a{color:rgba(255,255,255,.3);transition:color .2s}
+.foot-bottom a:hover{color:var(--c)}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--g);color:#000;padding:.75rem 1.8rem;border-radius:4px;font-size:.6rem;font-variation-settings:'wght' 700;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .25s,transform .25s;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.sr{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.sr.visible{opacity:1;transform:none}
+
+/* ── HAMBURGER / MOBILE NAV ──────────────────── */
+.hambtn{display:none;background:none;border:none;color:var(--txt);
+  padding:.5rem;cursor:pointer;flex-direction:column;gap:5px;margin-left:.5rem;
+  flex-shrink:0}
+.hambtn span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .3s,opacity .3s;height:2.5px}
+#mnav{position:fixed;inset:0;z-index:998;
+  background:rgba(5,5,12,.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:2rem}
+#mnav.open{opacity:1;pointer-events:all}
+.mnav-link{font-size:clamp(1.8rem,8vw,2.5rem);font-variation-settings:'wght' 800,'wdth' 110;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--txt);
+  transition:color .2s;text-align:center;display:block}
+.mnav-link:hover{color:var(--c)}
+.mnav-cart-btn{display:inline-block;margin-top:1rem;padding:.75rem 2.5rem;
+  border:1px solid var(--c);border-radius:4px;color:var(--c);font-size:.75rem;
+  letter-spacing:.2em;text-transform:uppercase;font-variation-settings:'wght' 700;
+  text-align:center;transition:background .2s}
+.mnav-cart-btn:hover{background:rgba(49,190,240,.1)}
+.mnav-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;padding:.5rem;
+  transition:color .2s;line-height:1;font-family:var(--fn)}
+.mnav-close:hover{color:var(--txt)}
+@media(max-width:768px){.mnav-close{display:none}}
+
+@media(max-width:900px){
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .checkout-layout{grid-template-columns:1fr}
+  .checkout-summary{position:static;order:-1}
+  .cart-layout{grid-template-columns:1fr}
+  .order-summary{position:static}
+}
+@media(max-width:768px){
+  .hambtn{display:flex}
+  #nav{gap:.5rem}
+  .nlogo{font-size:.9rem}
+  .nlinks{display:none}
+  /* Hero fixes */
+  #hero-sub{font-size:.75rem;letter-spacing:.2em}
+  .hero-tag{font-size:.6rem;letter-spacing:.15em;margin-bottom:1.2rem}
+  #hero-h1{font-size:clamp(1.8rem,9.5vw,3.2rem);line-height:.9}
+  .hero-inner{padding:0 1.2rem}
+  .hero-kicker{font-size:.48rem;margin-bottom:1.5rem}
+  #hero-cta{gap:.75rem;flex-direction:column;align-items:center}
+  /* Buttons touch-friendly */
+  .btn-primary,.btn-outline{font-size:.65rem;padding:.9rem 1.6rem;min-height:48px;width:min(100%,240px)}
+  /* Typography */
+  .section-tag{font-size:.55rem}
+  .section-sub{font-size:.82rem}
+  .cpill{font-size:.55rem}
+  .clients-label{font-size:.5rem}
+  /* Layout */
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-columns:1fr}
+  .about-inner{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:3.5rem 1.2rem}
+  /* Product cards */
+  .btn-cart{padding:.75rem 1rem;font-size:1.1rem;min-width:44px;min-height:44px}
+  .btn-view{padding:.75rem;min-height:44px}
+  /* Cart page */
+  .cart-item{grid-template-columns:80px 1fr;gap:.8rem}
+  .cart-item-right{display:none}
+  /* Checkout */
+  .form-grid{grid-template-columns:1fr}
+  .step-line{width:40px}
+  /* Catalog page */
+  .catalog-layout{padding:2rem 1rem}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  #hero-h1{font-size:clamp(1.6rem,8.5vw,2.4rem)}
+  .cats-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .pcard-body h3{font-size:.78rem}
+  .pprice{font-size:1rem}
+  section{padding:3rem 1rem}
+  .foot-grid{grid-template-columns:1fr}
+}
+
+/* ── FLOATING WHATSAPP ──────────────────────── */
+#wa-fab{position:fixed;bottom:1.8rem;right:1.2rem;z-index:990;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;font-size:1.5rem}
+#wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.55)}
+#wa-fab-tooltip{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  background:rgba(5,5,12,.92);color:#fff;font-size:.55rem;letter-spacing:.12em;
+  text-transform:uppercase;font-variation-settings:'wght' 700;
+  white-space:nowrap;padding:.4rem .9rem;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:var(--fn)}
+#wa-fab:hover #wa-fab-tooltip{opacity:1}
+
+/* ── BACK TO TOP ────────────────────────────── */
+#btt{position:fixed;bottom:1.8rem;left:1.2rem;z-index:990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(49,190,240,.12);border:1px solid rgba(49,190,240,.3);
+  color:var(--c);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:.9rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:rgba(49,190,240,.22);transform:translateY(-2px)}
+
+/* ── GLOBAL MOBILE TEXT SAFETY ─────────────────── */
+*,*::before,*::after{overflow-wrap:break-word;word-break:break-word}
+img,svg,canvas{word-break:normal;overflow-wrap:normal}
+h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="heading"]{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+/* ── READABILITY: body text minimum sizes ── */
+.fdesc{font-size:.75rem}
+.fcontact p{font-size:.72rem}
+.fc ul li a{font-size:.72rem}
+
+@media(max-width:768px){
+  /* iOS Safari: prevent auto-zoom on form focus (requires ≥16px = 1rem) */
+  input,select,textarea,.form-input,.form-select,.form-textarea{font-size:1rem!important}
+}
+
+@media(max-width:480px){
+  /* Headings */
+  h1{font-size:clamp(1.4rem,7.5vw,2.8rem)}
+  h2{font-size:clamp(1.2rem,6.5vw,2rem)}
+  h3{font-size:clamp(1rem,5.5vw,1.5rem)}
+  /* Page-level hero headings */
+  .about-hero h1{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  .contact-hero-title{font-size:clamp(1.3rem,6.5vw,2rem)!important}
+  /* Section titles */
+  .section-h2,.sec-title,.page-header h1{font-size:clamp(1.2rem,6.5vw,2rem)!important}
+  /* Reduce excessive letter-spacing */
+  .section-tag,.hero-kicker,.hero-tag,.sidebar-title,.pcat-tag,
+  .clients-label,.hero-scroll,.foot-bottom p{letter-spacing:.12em!important}
+  /* Section padding */
+  section{padding:3rem 1rem!important}
+  /* Page wraps */
+  .page-wrap,.checkout-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* About hero */
+  .about-hero-content{padding:0 1rem!important}
+  /* Contact hero */
+  .contact-hero,.contact-hero-inner{padding-left:1rem!important;padding-right:1rem!important}
+  /* Product detail page */
+  .product-wrap{padding-left:1rem!important;padding-right:1rem!important}
+  /* Breadcrumb */
+  .breadcrumb{font-size:.5rem;letter-spacing:.08em}
+  /* Chips/pills on gallery */
+  .filter-btn,.cpill{font-size:.52rem;letter-spacing:.1em;padding:.4rem .7rem}
+  /* Cart */
+  .cart-item{gap:.6rem}
+  /* Checkout steps */
+  .step-label{font-size:.4rem;letter-spacing:.08em}
+  /* Form labels */
+  .form-label{font-size:.5rem;letter-spacing:.12em}
+  /* Buttons width */
+  .hero-ctas,.btn-hero,.btn-ghost{width:100%;max-width:260px}
+}
+
+@media(max-width:360px){
+  h1{font-size:clamp(1.2rem,7vw,2rem)!important}
+  h2,.section-h2,.sec-title{font-size:clamp(1.1rem,6.5vw,1.8rem)!important}
+  .nlogo{font-size:.78rem}
+  .nbrand{font-size:.78rem}
+  section{padding:2.5rem .85rem!important}
+  .page-wrap,.checkout-wrap{padding-left:.85rem!important;padding-right:.85rem!important}
+  .about-hero-content{padding:0 .85rem!important}
+  .hero-kicker,.hero-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .section-tag{font-size:.44rem!important;letter-spacing:.1em!important}
+  .btn-primary,.btn-outline{font-size:.6rem!important;padding:.85rem 1rem!important}
+  .gallery-filter-bar{gap:.4rem}
+  .filter-btn{font-size:.48rem!important;padding:.35rem .55rem!important}
+}
+
+@media(max-width:320px){
+  h1{font-size:clamp(1.1rem,7.5vw,1.8rem)!important}
+  h2{font-size:clamp(1rem,7vw,1.6rem)!important}
+  .nlogo{font-size:.7rem}
+  #nav{padding:0 .7rem}
+  section{padding:2rem .75rem!important}
+}
+
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div id="prog"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nlogo">
+    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+  <ul class="nlinks">
+    <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">Chi siamo</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="ncart" onclick="location.href='carrello.html'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count">0</span>
+    </button>
+    <button class="hambtn" id="hambtn" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating WhatsApp -->
+<a id="wa-fab" href="https://wa.me/393933350212" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  💬<span id="wa-fab-tooltip">Scrivici su WhatsApp</span>
+</a>
+<!-- Back to top -->
+<button id="btt" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="mnav" role="dialog" aria-modal="true" aria-label="Menu principale">
+  <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
+  <a href="index.html" class="mnav-link">Home</a>
+  <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="about.html" class="mnav-link">Chi siamo</a>
+  <a href="contatti.html" class="mnav-link">Contatti</a>
+  <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Slideshow images -->
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide active">
+      <img src="https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg" alt="Red Bull White Party Rimini" loading="eager">
+    </div>
+    <div class="hero-slide">
+      <img src="https://spaceworldair.com/media/wysiwyg/GALACTICA/galactica_party_prima_foto_gallery.jpg" alt="Galactica Party Capri" loading="lazy">
+    </div>
+    <div class="hero-slide">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg" alt="Elenissima Party Milano" loading="lazy">
+    </div>
+    <div class="hero-slide">
+      <img src="https://spaceworldair.com/media/wysiwyg/WORLCUP/WORLD_CUP_DUBAI.jpeg" alt="World Cup Dubai" loading="lazy">
+    </div>
+    <div class="hero-slide">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/prima_foto_pool_party.jpg" alt="Pool Party" loading="lazy">
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay2"></div>
+  <div class="hero-grid"></div>
+  <!-- Content -->
+  <div class="hero-inner">
+    <div class="hero-kicker">Dal 1997 · Forlì · Italy</div>
+    <h1 id="hero-h1">
+      <span>GONFIABILI</span>
+      <span class="hero-accent">SU MISURA</span>
+      <span>PER IL TUO EVENTO</span>
+    </h1>
+    <p id="hero-sub">Dalla brand activation ai grandi festival — creiamo allestimenti gonfiabili che trasformano gli spazi e amplificano le emozioni.</p>
+    <div id="hero-cta">
+      <a href="prodotti.html" class="btn-primary">Esplora il catalogo</a>
+      <a href="contatti.html" class="btn-outline">Richiedi preventivo</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="hero-dots"></div>
+  <div class="hero-scroll">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scorri
+  </div>
+</section>
+
+<!-- CLIENTS STRIP -->
+<div class="clients-strip">
+  <p class="clients-label">Hanno scelto Space World Air</p>
+  <div class="clients-pills">
+    <span class="cpill">Google</span>
+    <span class="cpill">Red Bull</span>
+    <span class="cpill">UEFA</span>
+    <span class="cpill">Philipp Plein</span>
+    <span class="cpill">McDonald's</span>
+    <span class="cpill">Jägermeister</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section>
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="sr">
+      <div class="section-tag">Cosa facciamo</div>
+      <h2 class="section-h2">Sfoglia per categoria</h2>
+      <p class="section-sub">224+ prodotti gonfiabili per ogni esigenza. Personalizzazione totale, consegna in tutta Italia ed Europa.</p>
+    </div>
+    <div class="cats-grid sr">
+      <a href="prodotti.html?cat=personalizzati" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg" alt="Gonfiabili Personalizzati" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Gonfiabili Personalizzati</div>
+          <div class="cat-card-count">Archi · Bottiglie · Sky Dancer · Brand</div>
+        </div>
+      </a>
+      <a href="prodotti.html?cat=giochi" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/circus1.jpg" alt="Giochi Gonfiabili" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Giochi Gonfiabili</div>
+          <div class="cat-card-count">Castelli · Bumper Ball · Bolle</div>
+        </div>
+      </a>
+      <a href="prodotti.html?cat=stand" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg" alt="Stand Gonfiabili" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Stand Gonfiabili</div>
+          <div class="cat-card-count">Bar · A-Stand · Casette · Big House</div>
+        </div>
+      </a>
+      <a href="prodotti.html?cat=effetti" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg" alt="Effetti Speciali" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Effetti Speciali</div>
+          <div class="cat-card-count">CO₂ · Bolle di Neve · LED</div>
+        </div>
+      </a>
+      <a href="prodotti.html?cat=stagionale" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg" alt="Stagionale" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Stagionale</div>
+          <div class="cat-card-count">Natale · Alberi · Casette</div>
+        </div>
+      </a>
+      <a href="gallery.html" class="cat-card">
+        <img src="https://spaceworldair.com/media/wysiwyg/uefa1.jpg" alt="Gallery Events" loading="lazy">
+        <div class="cat-card-body">
+          <div class="cat-card-name">Gallery Events</div>
+          <div class="cat-card-count">1000+ eventi in tutta Europa</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured-section">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="sr" style="text-align:center;margin-bottom:2.5rem">
+      <div class="section-tag">Bestseller</div>
+      <h2 class="section-h2">Prodotti in evidenza</h2>
+      <p class="section-sub" style="margin:0 auto">I nostri gonfiabili più richiesti per eventi, brand activation e allestimenti.</p>
+    </div>
+    <div class="products-grid sr" id="featured-grid"></div>
+    <div style="text-align:center;margin-top:2.5rem" class="sr">
+      <a href="prodotti.html" class="btn-primary">Vedi tutto il catalogo</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY TEASER -->
+<section class="gallery-teaser">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="sr">
+      <div class="section-tag">I nostri eventi</div>
+      <h2 class="section-h2">Dove siamo stati</h2>
+      <p class="section-sub">Da UEFA Euro 2020 al Salzburger Festspiele, i nostri gonfiabili hanno fatto la storia di eventi iconici.</p>
+    </div>
+    <div class="gal-grid sr">
+      <div class="gal-card"><img src="https://spaceworldair.com/media/wysiwyg/uefa1.jpg" alt="UEFA Euro 2020" loading="lazy"><div class="gal-overlay"><div class="gal-name">UEFA Euro 2020 — Opening Show</div><div class="gal-type">Sport</div></div></div>
+      <div class="gal-card"><img src="https://spaceworldair.com/media/wysiwyg/PHILIPPPLEIN/download-2.jpeg" alt="Philipp Plein" loading="lazy"><div class="gal-overlay"><div class="gal-name">Philipp Plein Fashion Show</div><div class="gal-type">Moda</div></div></div>
+      <div class="gal-card"><img src="https://spaceworldair.com/media/wysiwyg/moon_motogp.jpg" alt="Moto GP" loading="lazy"><div class="gal-overlay"><div class="gal-name">Moto GP After Party</div><div class="gal-type">Sport</div></div></div>
+      <div class="gal-card"><img src="https://spaceworldair.com/media/wysiwyg/GALACTICA/galactica_party_prima_foto_gallery.jpg" alt="Galactica Party" loading="lazy"><div class="gal-overlay"><div class="gal-name">Galactica Party — Capri</div><div class="gal-type">Party</div></div></div>
+    </div>
+    <div class="text-center sr">
+      <a href="gallery.html" class="btn-primary">Vedi tutta la gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip">
+  <div class="about-inner">
+    <div class="about-text sr">
+      <div class="section-tag">La nostra storia</div>
+      <h2 class="section-h2">Dal 1997,<br>Forlì</h2>
+      <p class="section-sub">Danilo Del Testa ha fondato Space World Air a 21 anni portando lo Sky Dancer per la prima volta in Italia. Da allora, abbiamo rivoluzionato il settore dei gonfiabili promozionali con tecnologia e design all'avanguardia.</p>
+      <div class="about-stats">
+        <div class="stat-box"><div class="stat-num">1997</div><div class="stat-lbl">Anno fondazione</div></div>
+        <div class="stat-box"><div class="stat-num">224+</div><div class="stat-lbl">Prodotti</div></div>
+        <div class="stat-box"><div class="stat-num">1000+</div><div class="stat-lbl">Eventi</div></div>
+        <div class="stat-box"><div class="stat-num">7+</div><div class="stat-lbl">Paesi</div></div>
+      </div>
+      <a href="about.html" class="btn-primary">Scopri chi siamo</a>
+    </div>
+    <div class="about-img sr">
+      <img src="https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg" alt="Gazometro Roma" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT STRIP -->
+<div class="payment-strip sr">
+  <p class="pay-label">Pagamento sicuro</p>
+  <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" class="pay-img" loading="lazy">
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="foot-grid">
+    <div class="fc">
+      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
+      <div class="fcontact">
+        <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
+        <p>📞 +39 393.3350212</p>
+        <p>📠 +39 0543 728277</p>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Navigazione</h4>
+      <ul><li><a href="index.html">Home</a></li><li><a href="prodotti.html">Prodotti</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">Chi siamo</a></li><li><a href="contatti.html">Contatti</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Categorie</h4>
+      <ul><li><a href="prodotti.html?cat=personalizzati">Gonfiabili Personalizzati</a></li><li><a href="prodotti.html?cat=giochi">Giochi Gonfiabili</a></li><li><a href="prodotti.html?cat=stand">Stand Gonfiabili</a></li><li><a href="prodotti.html?cat=effetti">Effetti Speciali</a></li><li><a href="prodotti.html?cat=stagionale">Stagionale</a></li></ul>
+    </div>
+    <div class="fc">
+      <h4>Pagamento sicuro</h4>
+      <img src="https://spaceworldair.com/media/wysiwyg/foxer/static_block/payment.png" alt="Metodi di pagamento" style="max-width:220px;opacity:.8;margin-bottom:1rem" loading="lazy">
+      <p style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Pagamenti sicuri SSL · IVA inclusa</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── MOBILE NAV ────────────────────────────────── */
+(function(){
+  var btn=document.getElementById('hambtn');
+  var nav=document.getElementById('mnav');
+  var cls=document.getElementById('mnav-close');
+  function openNav(){
+    if(!nav||!btn)return;
+    nav.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    var sp=btn.querySelectorAll('span');
+    if(sp[0])sp[0].style.transform='translateY(7px) rotate(45deg)';
+    if(sp[1])sp[1].style.opacity='0';
+    if(sp[2])sp[2].style.transform='translateY(-7px) rotate(-45deg)';
+    document.body.style.overflow='hidden';
+  }
+  function closeNav(){
+    if(!nav||!btn)return;
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+    document.body.style.overflow='';
+  }
+  if(btn)btn.addEventListener('click',function(){if(nav&&nav.classList.contains('open'))closeNav();else openNav();});
+  if(cls)cls.addEventListener('click',closeNav);
+  if(nav)nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeNav);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
+
+const SWA_PRODUCTS = [
+  {id:1,slug:'arco-circolare',name:'Arco Circolare',cat:'personalizzati',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg',desc:'Arco gonfiabile circolare personalizzabile con logo aziendale full-color. Ideale per ingressi eventi, photobooth, brand activation. Dimensioni su richiesta.',specs:{altezza:'2–5 m',materiale:'PVC 0.55mm',stampa:'Full-color 4 colori',gonfiatore:'Incluso'}},
+  {id:2,slug:'arco-rettangolo',name:'Arco Rettangolo',cat:'personalizzati',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg',desc:'Arco rettangolare brandizzato per eventi e sport. Struttura stabile, stampa 4 colori, consegna disponibile in tutta Italia.',specs:{altezza:'2–4 m',materiale:'PVC 0.55mm',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:3,slug:'arco-decagono',name:'Arco Decagono',cat:'personalizzati',price:975,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/r/arco_circolare_spaceworldair__2.jpg',desc:'Arco decagonale per allestimenti premium. Forma geometrica unica, 10 lati, massimo impatto visivo su palchi e ingressi.',specs:{altezza:'2–5 m',materiale:'PVC 0.55mm',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:4,slug:'bottiglia-gigante',name:'Bottiglia Gigante',cat:'personalizzati',price:690,from:true,img:'https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg',desc:'Riproduzione gonfiabile di bottiglie (acqua, birra, champagne, vino). Da 1,5 a 7 metri, grafica full-color. Perfetta per eventi promozionali e brand activation.',specs:{altezza:'1.5–7 m',varianti:'Acqua, Birra, Champagne, Vino',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:5,slug:'cactus-3m',name:'Cactus Gonfiabile 3M',cat:'personalizzati',price:600,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/LITTLE_ITALY_OK__1.jpg',desc:'Decorazione gonfiabile a forma di cactus, alta 3 metri. Ideale per eventi a tema estivo, stand fieristici, allestimenti originali.',specs:{altezza:'3 m',materiale:'PVC 0.55mm',colori:'Verde standard o custom',gonfiatore:'Incluso'}},
+  {id:6,slug:'stand-pressurizzato',name:'A-Stand Pressurizzato',cat:'stand',price:685,from:true,img:'https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png',desc:'Stand gonfiabile a pressione continua. Struttura professionale stabile per fiere, eventi, punti vendita. Personalizzabile con logo e grafica.',specs:{altezza:'2–4 m',pressione:'Continua',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:7,slug:'castello-giraffa',name:'Castello Giraffa',cat:'giochi',price:198,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/9/4/9403.jpg',desc:'Castello gonfiabile a tema giraffa per bambini. Struttura sicura, materiali certificati EN14960. Gonfiatore incluso. Perfetto per feste e parchi giochi.',specs:{altezza:'4 m',certificazione:'EN14960',materiale:'PVC 0.55mm',gonfiatore:'Incluso'}},
+  {id:8,slug:'castello-draghetto',name:'Castello Draghetto',cat:'giochi',price:478,from:false,img:'https://spaceworldair.com/media/wysiwyg/circus1.jpg',desc:'Castello gonfiabile con tema drago. Pareti scalabili, scivolo integrato. Per feste, parchi giochi, noleggio eventi.',specs:{altezza:'5 m',certificazione:'EN14960',materiale:'PVC 0.55mm',scivolo:'Integrato'}},
+  {id:9,slug:'castello-jungle',name:'Castello Jungle',cat:'giochi',price:650,from:false,img:'https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG',desc:'Castello gonfiabile tema jungle. Grafiche vivaci, struttura robusta. Superficie di gioco ampia, sicura per bambini dai 3 anni.',specs:{altezza:'5 m',certificazione:'EN14960',materiale:'PVC 0.55mm',gonfiatore:'Incluso'}},
+  {id:10,slug:'castello-medioevo',name:'Castello Medioevo',cat:'giochi',price:690,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/9/0/9021_u8wqvjot.jpg',desc:'Castello gonfiabile medievale con torri e merli. Grande impatto visivo, percorso di gioco completo. Ideale per eventi e feste a tema.',specs:{altezza:'5.5 m',certificazione:'EN14960',materiale:'PVC 0.55mm',gonfiatore:'Incluso'}},
+  {id:11,slug:'castello-bunker',name:'Castello Bunker',cat:'giochi',price:265,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg',desc:'Mini castello gonfiabile compatto. Leggero, facile da trasportare. Ideale per garden party, feste private, noleggio breve.',specs:{altezza:'3.5 m',certificazione:'EN14960',materiale:'PVC 0.55mm',gonfiatore:'Incluso'}},
+  {id:12,slug:'castello-bunker-xxl',name:'Castello Bunker XXL',cat:'giochi',price:722,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg',desc:'Versione XL del Bunker. Maggiore superficie di gioco, scivolo e pareti ad ostacoli. Per eventi più strutturati.',specs:{altezza:'5 m',certificazione:'EN14960',materiale:'PVC 0.55mm',scivolo:'Sì'}},
+  {id:13,slug:'bumper-ball',name:'Bumper Ball',cat:'giochi',price:300,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/i/m/img_2573a_87jlj6ez.jpg',desc:'Sfera gonfiabile per bubble football. Materiale TPU trasparente, resistente. Disponibile in set da 4 o 8 pezzi.',specs:{altezza:'1.2 m',materiale:'TPU trasparente',set:'Singolo / set da 4-8',gonfiatore:'Con pompa manuale'}},
+  {id:14,slug:'bubble-ring',name:'Bubble Ring',cat:'giochi',price:14300,from:false,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg',desc:'Struttura gonfiabile monumentale a forma di anello. Attrazione premium per parchi, festival, installazioni artistiche. Dimensione: diametro 5m.',specs:{diametro:'5 m',materiale:'PVC 0.9mm',gonfiatore:'Incluso (industriale)',utilizzo:'Permanente / evento'}},
+  {id:15,slug:'bolla-con-tunnel',name:'Bolla con Tunnel',cat:'giochi',price:4160,from:true,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg',desc:'Bolla gonfiabile pressurizzata con tunnel di accesso. Ambiente trasparente unico. Ideale per eventi esclusivi, installazioni e garden design.',specs:{diametro:'4–6 m',materiale:'PVC trasparente',tunnel:'1 ingresso',gonfiatore:'Incluso'}},
+  {id:16,slug:'bar-pub-gonfiabile',name:'Bar Pub Gonfiabile 8×4m',cat:'stand',price:3315,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/prima_foto_pool_party.jpg',desc:'Bar gonfiabile completo 8×4 metri. Bancone integrato, spazio interno accessibile, personalizzabile con logo. Per festival e eventi outdoor.',specs:{dimensioni:'8×4 m',altezza:'3 m',materiale:'PVC 0.55mm',stampa:'Full-color'}},
+  {id:17,slug:'bar-desk',name:'Bar Desk Gonfiabile',cat:'stand',price:640,from:true,img:'https://spaceworldair.com/media/wysiwyg/mirror1.jpg',desc:'Banco bar gonfiabile compatto. Leggero, trasportabile, brandizzabile. Perfetto per stand fieristici e punti ristoro mobili.',specs:{altezza:'1.1 m',materiale:'PVC 0.55mm',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:18,slug:'big-house',name:'Big House',cat:'stand',price:595,from:false,img:'https://spaceworldair.com/media/wysiwyg/GAZOMETRO_ROMA_VIDEO_CITTA10.jpg',desc:'Stand gonfiabile a forma di casa. Spazio espositivo personalizzabile, facile da montare. Utilizzabile come punto informazioni o merchandising.',specs:{altezza:'3 m',materiale:'PVC 0.55mm',stampa:'Full-color',gonfiatore:'Incluso'}},
+  {id:19,slug:'casetta-base',name:'Casetta Base 3×3m',cat:'stand',price:3350,from:true,img:'https://spaceworldair.com/media/wysiwyg/Misano/bolla_B.jpg',desc:'Gazebo gonfiabile 3×3 metri. Struttura professionale per eventi outdoor, mercati, fiere. Con o senza pareti laterali.',specs:{dimensioni:'3×3 m oppure 4×4 m',altezza:'3 m',materiale:'PVC 0.55mm',gonfiatore:'Incluso'}},
+  {id:20,slug:'casetta-natalizia',name:'Casetta Natalizia',cat:'stagionale',price:2965,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/l/albero_di_natale_in_oxford_spaceworldair_1.jpg',desc:'Casetta gonfiabile a tema natalizio. Decorazione premium per centri commerciali, piazze, eventi invernali. Illuminazione LED interna opzionale.',specs:{dimensioni:'3×3 m',altezza:'3.5 m',materiale:'PVC 0.55mm',luci:'LED opzionale'}},
+  {id:21,slug:'cannone-co2',name:'Cannone CO₂ Fisso',cat:'effetti',price:420,from:false,img:'https://spaceworldair.com/media/wysiwyg/redbull/RedbullWhiteParty-EmbassyRimini-4.jpeg',desc:'Cannone CO₂ a effetto jet. Getto di vapore bianco ad alta pressione. Ideale per concerti, DJ set, aperture palco. Compatibile con bombolette standard.',specs:{gittata:'4–6 m',alimentazione:'Bomboletta CO₂',controllo:'Manuale / DMX',peso:'3.2 kg'}},
+  {id:22,slug:'bolla-neve-pneumatica',name:'Bolla di Neve Pneumatica',cat:'effetti',price:2990,from:false,img:'https://spaceworldair.com/media/wysiwyg/bolla_B.jpeg',desc:'Snow globe gonfiabile con base pneumatica. Neve artificiale all\'interno. Attrazione irresistibile per eventi natalizi e centri commerciali.',specs:{diametro:'2.5 m',base:'Pneumatica',neve:'Artificiale (inclusa)',gonfiatore:'Incluso'}},
+  {id:23,slug:'bolla-neve-legno',name:'Bolla di Neve Base Legno',cat:'effetti',price:3900,from:false,img:'https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg',desc:'Snow globe con base in legno massello. Versione premium con struttura stabile e finitura superiore. Effetto neve integrato.',specs:{diametro:'2.5 m',base:'Legno massello',neve:'Artificiale (inclusa)',gonfiatore:'Incluso'}},
+  {id:24,slug:'barra-led',name:'Barra LED RGB',cat:'arredamenti',price:105,from:false,img:'https://spaceworldair.com/media/wysiwyg/archiluminosi/Immagine_2025-02-04_120910_1.png',desc:'Barra luminosa LED con cambiacolore RGB. Per illuminare allestimenti gonfiabili, scenografie, eventi. Telecomando incluso.',specs:{lunghezza:'1 m',colori:'RGB (16 milioni)',alimentazione:'220V',controllo:'Telecomando'}},
+  {id:25,slug:'albero-natale',name:'Albero di Natale Gonfiabile',cat:'stagionale',price:730,from:true,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/a/l/albero_di_natale_in_oxford_spaceworldair_1.jpg',desc:'Albero di Natale gonfiabile da interno/esterno. Da 2 a 6 metri. Illuminazione LED integrata disponibile. Ideale per centri commerciali, piazze e vetrine.',specs:{altezza:'2–6 m',materiale:'PVC Oxford 600D',luci:'LED opzionale',gonfiatore:'Incluso'}},
+  {id:26,slug:'bomboletta-gas',name:'Bomboletta Gas Elio (Ricarica)',cat:'elio',price:10,from:false,img:'https://spaceworldair.com/media/wysiwyg/love1.jpg',desc:'Ricarica gas elio per palloni e gonfiabili. Compatibile con tutti i palloni standard. Disponibile in diverse capacità.',specs:{volume:'Variable',gas:'Elio puro',valvola:'Standard',utilizzo:'Singola ricarica'}},
+  {id:27,slug:'arena-gonfiabile',name:'Arena Gonfiabile Completa',cat:'giochi',price:16510,from:false,img:'https://spaceworldair.com/media/catalog/product/cache/6e064ddfbc3fe27a8d49f2b0772ad2a4/r/e/render_arena_quadrata.jpg',desc:'Arena gonfiabile professionale completa. Struttura modulare per eventi sportivi, competizioni, spettacoli. Capienza fino a 50+ persone. Chiavi in mano.',specs:{dimensioni:'15×15 m',altezza:'4 m',materiale:'PVC 0.9mm',certificazione:'CE/EN'}},
+  {id:28,slug:'bandiera-vela',name:'Bandiera Vela Piuma S/M/L/XL',cat:'strutture',price:280,from:true,img:'https://spaceworldair.com/media/wysiwyg/redbullinflatable1.jpg',desc:'Bandiera a vela in alluminio con stampa full-color. Base piana/croce/acqua. Disponibile in 4 taglie. Consegna in 7 giorni lavorativi.',specs:{altezze:'2/3/4/6 m',materiale:'Alluminio + poliestere',stampa:'Full-color',base:'Piana / Croce / Acqua'}},
+  {id:29,slug:'bretzel-gonfiabile',name:'Bretzel Gonfiabile',cat:'personalizzati',price:29,from:false,img:'https://spaceworldair.com/media/wysiwyg/IMG_8123.JPG',desc:'Pallone gonfiabile a forma di Bretzel. Ideale per eventi food, birrerie, stand gastronomici. Colori vivaci, facile da gonfiare.',specs:{altezza:'1.2 m',materiale:'PVC',gonfiaggio:'A bocca / pompa',utilizzo:'Decorativo'}},
+  {id:30,slug:'sky-dancer',name:'Sky Dancer (Air Dancer)',cat:'personalizzati',price:320,from:true,img:'https://spaceworldair.com/media/wysiwyg/P1066124.jpg',desc:'Il prodotto con cui Space World Air è nata nel 1997. Tubo gonfiabile danzante, personalizzabile con colori e logo. Massima visibilità per autosaloni, saldi e aperture.',specs:{altezza:'3–6 m',materiale:'Nylon',gonfiatore:'Incluso (motore elettrico)',stampa:'Serigrafata'}},
+];
+
+// Render featured products
+const featuredIds = [1,7,13,21,27,30];
+const grid = document.getElementById('featured-grid');
+const catLabels = {personalizzati:'Personalizzati',giochi:'Giochi',stand:'Stand',effetti:'Effetti Speciali',stagionale:'Stagionale',strutture:'Strutture',arredamenti:'Arredamenti',elio:'Elio'};
+featuredIds.forEach(id=>{
+  const p = SWA_PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  const el = document.createElement('div');
+  el.className='pcard';
+  el.innerHTML=`<a href="prodotto.html?id=${p.id}"><img src="${p.img}" alt="${p.name}" class="pcard-img" loading="lazy"></a>
+  <div class="pcard-body">
+    <span class="pcat-tag">${catLabels[p.cat]||p.cat}</span>
+    <h3><a href="prodotto.html?id=${p.id}">${p.name}</a></h3>
+    <div class="pprice">${p.from?'<span class="pfrom">da</span>':''} €${p.price.toLocaleString('it-IT')}</div>
+    <div class="pcard-actions">
+      <a href="prodotto.html?id=${p.id}" class="btn-view">Vedi prodotto</a>
+      <button class="btn-cart" onclick="addToCart(${p.id})">🛒</button>
+    </div>
+  </div>`;
+  grid.appendChild(el);
+});
+
+function addToCart(id,qty=1){
+  const product=SWA_PRODUCTS.find(p=>p.id===id);
+  if(!product)return;
+  let cart=JSON.parse(localStorage.getItem('swa_cart')||'[]');
+  const existing=cart.find(i=>i.id===id);
+  if(existing){existing.qty+=qty;}else{cart.push({id,qty,name:product.name,price:product.price,from:product.from,img:product.img});}
+  localStorage.setItem('swa_cart',JSON.stringify(cart));
+  updateCartBadge();
+  showToast(product.name+' aggiunto al carrello');
+}
+function showToast(msg){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),50);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300);},2500);
+}
+function updateCartBadge(){
+  const cart=JSON.parse(localStorage.getItem('swa_cart')||'[]');
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const el=document.getElementById('cart-count');
+  if(el){el.textContent=total;el.style.display=total>0?'flex':'none';}
+}
+updateCartBadge();
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('on',scrollY>40);
+  const p=document.getElementById('prog');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(h>0?(scrollY/h*100):0)+'%';
+});
+
+// Scroll reveal
+const srObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.sr').forEach(el=>srObserver.observe(el));
+
+/* ── STAR CANVAS (ambient) ───────────────────────── */
+(function initStars(){
+  const cv=document.getElementById('star-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let W,H;
+  const stars=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  for(let i=0;i<80;i++) stars.push({
+    x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
+    vx:(Math.random()-.5)*.12, vy:(Math.random()-.5)*.12, r:Math.random()*1.4+.3
+  });
+  (function tick(){
+    requestAnimationFrame(tick);
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.x+=s.vx; s.y+=s.vy;
+      if(s.x<0)s.x=W; if(s.x>W)s.x=0;
+      if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(49,190,240,.6)';ctx.fill();
+    });
+  })();
+})();
+
+/* ── HERO SLIDESHOW ──────────────────────────────── */
+(function initSlideshow(){
+  const slides=document.querySelectorAll('.hero-slide');
+  const dotsCont=document.getElementById('hero-dots');
+  let cur=0, timer=null;
+  if(!slides.length)return;
+  // Build dots
+  slides.forEach(function(_,i){
+    const d=document.createElement('button');
+    d.className='hero-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label','Slide '+(i+1));
+    d.addEventListener('click',function(){goTo(i);resetTimer();});
+    if(dotsCont)dotsCont.appendChild(d);
+  });
+  function goTo(n){
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.hero-dot')[cur]&&document.querySelectorAll('.hero-dot')[cur].classList.remove('active');
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('active');
+    // Reset zoom animation
+    const img=slides[cur].querySelector('img');
+    if(img){img.style.animation='none';void img.offsetHeight;img.style.animation='heroZoom 7s ease forwards';}
+    document.querySelectorAll('.hero-dot')[cur]&&document.querySelectorAll('.hero-dot')[cur].classList.add('active');
+  }
+  function resetTimer(){clearInterval(timer);timer=setInterval(function(){goTo(cur+1);},5500);}
+  resetTimer();
+  // Reveal text
+  setTimeout(function(){
+    const sub=document.getElementById('hero-sub');
+    const cta=document.getElementById('hero-cta');
+    if(sub)sub.style.opacity='1';
+    if(cta)cta.style.opacity='1';
+  },400);
+})();
+
+/* ── BACK TO TOP ────────────────────── */
+(function(){
+  var btt=document.getElementById('btt');
+  if(!btt)return;
+  window.addEventListener('scroll',function(){
+    btt.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
