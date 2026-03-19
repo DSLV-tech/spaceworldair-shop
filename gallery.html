@@ -16,18 +16,23 @@ button{cursor:pointer;font-family:var(--fn)}
 
 #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c),var(--p));z-index:9999;width:0}
 
-#nav{position:fixed;top:3px;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
-.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+#nav{position:fixed;top:3px;left:0;right:0;z-index:999;height:62px;padding:0 2rem;display:flex;align-items:center;gap:2rem;background:rgba(7,7,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 900,'wdth' 75;letter-spacing:.04em;white-space:nowrap}
 .nlogo .nbrand>span{color:var(--c)}
+.nlogo .nbrand{display:flex;flex-direction:column;gap:.12rem}
+.ntagline{font-size:.38rem;letter-spacing:.26em;text-transform:uppercase;font-variation-settings:'wght' 300,'wdth' 110;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.15);padding-top:2px;line-height:1}
 .nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
 .nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
 .nlinks a:hover{color:var(--c)}
+.nlinks a.nav-active{color:var(--c);font-variation-settings:'wght' 800}
+.mnav-link.nav-active{color:var(--c)}
 .nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
 .ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
 .ncart:hover{border-color:var(--c);color:var(--c)}
 #cart-count{background:var(--p);color:#fff;font-size:.45rem;font-variation-settings:'wght' 800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px}
 
-.page-header{padding:7rem 2rem 3rem;background:var(--bg2);border-bottom:1px solid var(--bdr);text-align:center}
+.page-header{padding:7rem 2rem 3rem;background:var(--bg2);border-bottom:1px solid var(--bdr);text-align:center;position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(49,190,240,.06) 0%,transparent 65%);pointer-events:none}
 .breadcrumb{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
 .breadcrumb a{color:var(--muted);transition:color .2s}
 .breadcrumb a:hover{color:var(--c)}
@@ -47,7 +52,7 @@ button{cursor:pointer;font-family:var(--fn)}
 .count-bar span{color:var(--c);font-variation-settings:'wght' 700}
 
 .gallery-grid{columns:4 260px;gap:1rem}
-.gallery-card{break-inside:avoid;margin-bottom:1rem;position:relative;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid transparent;transition:border-color .2s}
+.gallery-card{break-inside:avoid;margin-bottom:1rem;position:relative;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid transparent;transition:border-color .2s,box-shadow .2s}.gallery-card:hover{border-color:rgba(49,190,240,.3);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 20px rgba(49,190,240,.06)}
 .gallery-card.hidden{display:none}
 .gallery-card:hover{border-color:rgba(49,190,240,.2)}
 .gallery-card img{width:100%;display:block;object-fit:cover;transition:transform .5s,filter .3s;filter:brightness(.85)}
@@ -82,8 +87,9 @@ button{cursor:pointer;font-family:var(--fn)}
 
 footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
 .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
-.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 900,'wdth' 75;margin-bottom:.8rem}
 .flogo .nbrand>span{color:var(--c)}
+.flogo .nbrand{display:flex;flex-direction:column;gap:.14rem}
 .fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
 .fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
 .fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
@@ -287,10 +293,18 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
 
 <nav id="nav">
   <a href="index.html" class="nlogo">
-    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+    <svg viewBox="0 0 42 42" width="36" height="36" fill="none" aria-hidden="true">
+      <circle cx="21" cy="21" r="19" stroke="#31BEF0" stroke-width="1.2"/>
+      <ellipse cx="21" cy="21" rx="7" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".7"/>
+      <ellipse cx="21" cy="21" rx="14" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+      <ellipse cx="21" cy="21" rx="19" ry="5.5" stroke="#31BEF0" stroke-width=".9" opacity=".6"/>
+      <ellipse cx="21" cy="21" rx="19" ry="11" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+      <line x1="21" y1="2" x2="21" y2="40" stroke="#31BEF0" stroke-width=".9" opacity=".4"/>
+    </svg>
+    <div class="nbrand">SPACE WORLD <span>AIR</span><span class="ntagline">INFLATABLE FURNITURE</span></div></a>
   <ul class="nlinks">
     <li><a href="prodotti.html">Prodotti</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="gallery.html" class="nav-active">Gallery</a></li>
     <li><a href="about.html">Chi siamo</a></li>
     <li><a href="contatti.html">Contatti</a></li>
   </ul>
@@ -316,7 +330,7 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
   <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
   <a href="index.html" class="mnav-link">Home</a>
   <a href="prodotti.html" class="mnav-link">Prodotti</a>
-  <a href="gallery.html" class="mnav-link">Gallery</a>
+  <a href="gallery.html" class="mnav-link nav-active">Gallery</a>
   <a href="about.html" class="mnav-link">Chi siamo</a>
   <a href="contatti.html" class="mnav-link">Contatti</a>
   <a href="carrello.html" class="mnav-cart-btn">&#x1F6D2; Carrello</a>
@@ -473,7 +487,15 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
 <footer id="footer">
   <div class="foot-grid">
     <div class="fc">
-      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <div class="flogo"><svg viewBox="0 0 42 42" width="34" height="34" fill="none" aria-hidden="true">
+        <circle cx="21" cy="21" r="19" stroke="#31BEF0" stroke-width="1.2"/>
+        <ellipse cx="21" cy="21" rx="7" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".7"/>
+        <ellipse cx="21" cy="21" rx="14" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="21" cy="21" rx="19" ry="5.5" stroke="#31BEF0" stroke-width=".9" opacity=".6"/>
+        <ellipse cx="21" cy="21" rx="19" ry="11" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+        <line x1="21" y1="2" x2="21" y2="40" stroke="#31BEF0" stroke-width=".9" opacity=".4"/>
+      </svg>
+      <div class="nbrand">SPACE WORLD <span>AIR</span><span class="ntagline">INFLATABLE FURNITURE</span></div></div>
       <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
       <div class="fcontact">
         <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
@@ -497,7 +519,7 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
   </div>
   <div class="foot-bottom">
     <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
-    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a> · <a href="brand-kit.html">Brand Kit</a></p>
   </div>
 </footer>
 

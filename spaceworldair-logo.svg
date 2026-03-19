@@ -1,116 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-  <defs>
-    <!-- Sphere Body Gradient -->
-    <radialGradient id="sphereGrad" cx="35" cy="30" r="70" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#D4F7FF"/> <!-- bright white-cyan highlight -->
-      <stop offset="25%" stop-color="#31BEF0"/> <!-- brand cyan -->
-      <stop offset="55%" stop-color="#8026C6"/> <!-- purple transit -->
-      <stop offset="85%" stop-color="#FF3D8E"/> <!-- brand magenta deep shadow -->
-      <stop offset="100%" stop-color="#021526"/> <!-- dark space core -->
-    </radialGradient>
-
-    <!-- Glossy Glint for Inflatable / High-Tech Glass feel -->
-    <radialGradient id="sphereGlint" cx="35" cy="25" r="25" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
-      <stop offset="35%" stop-color="rgba(255,255,255,0.2)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    
-    <!-- Bounce Light Glow (underneath) -->
-    <radialGradient id="bounceLight" cx="70" cy="80" r="35" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="rgba(255,61,142,0.8)"/>
-      <stop offset="100%" stop-color="rgba(255,61,142,0)"/>
-    </radialGradient>
-
-    <!-- Cyan Orbit Front Line -->
-    <linearGradient id="orbitFront1" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="rgba(49,190,240,0)"/>
-      <stop offset="15%" stop-color="#31BEF0"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="85%" stop-color="#31BEF0"/>
-      <stop offset="100%" stop-color="rgba(49,190,240,0)"/>
-    </linearGradient>
-
-    <!-- Magenta Orbit Front Line -->
-    <linearGradient id="orbitFront2" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="rgba(255,61,142,0)"/>
-      <stop offset="20%" stop-color="#FF3D8E"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="80%" stop-color="#FF3D8E"/>
-      <stop offset="100%" stop-color="rgba(255,61,142,0)"/>
-    </linearGradient>
-
-    <!-- Deep Neon Glows -->
-    <filter id="glowCyan" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#31BEF0" flood-opacity="0.9"/>
-    </filter>
-    <filter id="glowMagenta" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FF3D8E" flood-opacity="0.9"/>
-    </filter>
-  </defs>
-
-  <!-- ===============================
-       SPACE PARTICLES / STARS
-  ================================= -->
-  <circle cx="15" cy="20" r="1.2" fill="#31BEF0" opacity="0.6"/>
-  <circle cx="85" cy="28" r="0.8" fill="#FF3D8E"/>
-  <circle cx="78" cy="82" r="1.5" fill="#31BEF0" opacity="0.4"/>
-  <circle cx="22" cy="75" r="0.8" fill="#FFFFFF" opacity="0.5"/>
-  <path d="M 85 85 L 87 87 M 87 85 L 85 87" stroke="#FF3D8E" stroke-width="0.8" opacity="0.7"/>
-
-
-  <!-- ===============================
-       BACKGROUND ORBITS (Behind Planet)
-  ================================= -->
-  <!-- Cyan Orbit Back Arc -->
-  <g transform="rotate(25 50 50)">
-    <path d="M 6 50 A 44 14 0 0 1 94 50" fill="none" stroke="rgba(49,190,240,0.4)" stroke-width="1.5" stroke-dasharray="2 4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" fill="none">
+  <!-- ICON: Premium Wireframe Globe -->
+  <g stroke="#FFFFFF" stroke-width="0.8" opacity="0.9">
+    <circle cx="50" cy="60" r="45" />
+    <ellipse cx="50" cy="60" rx="10" ry="45" opacity="0.6"/>
+    <ellipse cx="50" cy="60" rx="22" ry="45" />
+    <ellipse cx="50" cy="60" rx="34" ry="45" opacity="0.6"/>
+    <ellipse cx="50" cy="60" rx="45" ry="10" opacity="0.6"/>
+    <ellipse cx="50" cy="60" rx="45" ry="22" />
+    <ellipse cx="50" cy="60" rx="45" ry="34" opacity="0.6"/>
+    <line x1="50" y1="15" x2="50" y2="105" />
+    <line x1="5" y1="60" x2="95" y2="60" />
   </g>
 
-  <!-- Magenta Orbit Back Arc -->
-  <g transform="rotate(-15 50 50)">
-    <path d="M 12 50 A 38 10 0 0 1 88 50" fill="none" stroke="rgba(255,61,142,0.3)" stroke-width="1.2"/>
-  </g>
-
-
-  <!-- ===============================
-       PLANET SPHERE (Inflatable Core)
-  ================================= -->
-  <!-- Main Sphere -->
-  <circle cx="50" cy="50" r="28" fill="url(#sphereGrad)"/>
+  <!-- TEXT: Main Brand — SPACE WORLD white, AIR cyan -->
+  <text x="115" y="54" style="font-family:'Anybody', sans-serif; font-variation-settings: 'wght' 900, 'wdth' 110; font-size:42px; text-transform:uppercase;">
+    <tspan fill="#FFFFFF">SPACE WORLD </tspan><tspan fill="#31BEF0">AIR</tspan>
+  </text>
   
-  <!-- Subsurface bounce light on the shadowed rim -->
-  <circle cx="50" cy="50" r="28" fill="url(#bounceLight)"/>
-
-  <!-- Inflatable internal seam/rim light for volume -->
-  <circle cx="50" cy="50" r="27.4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-  <circle cx="50" cy="50" r="28" fill="none" stroke="#010a14" stroke-width="1" opacity="0.6"/>
-
-  <!-- Top Glass/Plastic Glint -->
-  <circle cx="50" cy="50" r="28" fill="url(#sphereGlint)"/>
-
-
-  <!-- ===============================
-       FRONT ORBITS (In Front of Planet)
-  ================================= -->
-  <!-- Magenta Orbit Front Arc -->
-  <g transform="rotate(-15 50 50)">
-    <!-- Base Glow -->
-    <path d="M 88 50 A 38 10 0 0 1 12 50" fill="none" stroke="url(#orbitFront2)" stroke-width="2.5" filter="url(#glowMagenta)"/>
-    <!-- Intense Beam -->
-    <path d="M 88 50 A 38 10 0 0 1 12 50" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
-    <!-- Energy Node / Satellite -->
-    <circle cx="30" cy="58.5" r="1.5" fill="#FFFFFF" filter="url(#glowMagenta)"/>
-  </g>
-
-  <!-- Cyan Orbit Front Arc -->
-  <g transform="rotate(25 50 50)">
-    <!-- Base Glow -->
-    <path d="M 94 50 A 44 14 0 0 1 6 50" fill="none" stroke="url(#orbitFront1)" stroke-width="3.5" filter="url(#glowCyan)"/>
-    <!-- Intense Beam -->
-    <path d="M 94 50 A 44 14 0 0 1 6 50" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
-    <!-- Energy Node / Satellite -->
-    <circle cx="78" cy="60.8" r="2" fill="#FFFFFF" filter="url(#glowCyan)"/>
-  </g>
-
+  <!-- SEPARATOR: Matches exact text width estimation -->
+  <rect x="115" y="64" width="400" height="1.5" fill="#FFFFFF" opacity="0.8" />
+  
+  <!-- SUBTITLE: Inflatable Furniture -->
+  <text x="115" y="94" fill="#FFFFFF" style="font-family:'Anybody', sans-serif; font-variation-settings: 'wght' 300, 'wdth' 90; font-size:20px; letter-spacing:0.24em; text-transform:uppercase;">INFLATABLE FURNITURE</text>
 </svg>

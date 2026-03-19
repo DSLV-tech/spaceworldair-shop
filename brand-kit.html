@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space World Air — Brand Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,75..125,100..900;1,75..125,100..900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c:#31BEF0;
+  --ck:#0097C4;
+  --y:#FFB320;
+  --p:#FF3D8E;
+  --g:#00C864;
+  --bg:#07070f;
+  --bg2:#0d0d1b;
+  --bg3:#13132a;
+  --white:#ffffff;
+  --gray1:#e8eaf0;
+  --gray2:#a0a8c0;
+  --gray3:#505878;
+  --font:'Anybody',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--white);
+  font-variation-settings:'wght' 400,'wdth' 100;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ─── TYPOGRAPHY HELPERS ─── */
+.f-100{font-variation-settings:'wght' 100,'wdth' 100}
+.f-200{font-variation-settings:'wght' 200,'wdth' 100}
+.f-300{font-variation-settings:'wght' 300,'wdth' 100}
+.f-400{font-variation-settings:'wght' 400,'wdth' 100}
+.f-500{font-variation-settings:'wght' 500,'wdth' 100}
+.f-600{font-variation-settings:'wght' 600,'wdth' 100}
+.f-700{font-variation-settings:'wght' 700,'wdth' 100}
+.f-800{font-variation-settings:'wght' 800,'wdth' 100}
+.f-900{font-variation-settings:'wght' 900,'wdth' 100}
+.f-cond{font-variation-settings:'wght' 700,'wdth' 75}
+.f-wide{font-variation-settings:'wght' 300,'wdth' 125}
+
+/* ─── LAYOUT ─── */
+.bk-section{
+  max-width:1100px;
+  margin:0 auto;
+  padding:80px 2rem;
+}
+.bk-section + .bk-section{
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.section-label{
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--c);
+  margin-bottom:.75rem;
+  font-variation-settings:'wght' 600,'wdth' 100;
+}
+.section-title{
+  font-size:2.2rem;
+  font-variation-settings:'wght' 800,'wdth' 75;
+  line-height:1.1;
+  margin-bottom:.5rem;
+}
+.section-sub{
+  font-size:.95rem;
+  color:var(--gray2);
+  max-width:520px;
+  margin-bottom:3rem;
+  font-variation-settings:'wght' 300,'wdth' 100;
+}
+hr.rule{border:none;border-top:1px solid rgba(255,255,255,.06);margin:0}
+
+/* ─── COVER ─── */
+#cover{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:var(--bg);
+}
+#cover-canvas{position:absolute;inset:0;opacity:.25}
+.cover-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2rem;
+}
+.cover-badge{
+  display:inline-block;
+  font-size:.65rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--c);
+  border:1px solid rgba(49,190,240,.35);
+  padding:.4rem 1.2rem;
+  border-radius:100px;
+  font-variation-settings:'wght' 600,'wdth' 100;
+}
+.cover-wordmark{
+  font-size:clamp(2.4rem,7vw,5.5rem);
+  font-variation-settings:'wght' 900,'wdth' 75;
+  letter-spacing:-.01em;
+  line-height:.95;
+}
+.cover-wordmark span{color:var(--c)}
+.cover-sub{
+  font-size:.9rem;
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--gray2);
+  font-variation-settings:'wght' 300,'wdth' 110;
+}
+.cover-divider{
+  width:64px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--c),transparent);
+}
+.cover-meta{
+  font-size:.78rem;
+  color:var(--gray3);
+  letter-spacing:.12em;
+  font-variation-settings:'wght' 300,'wdth' 100;
+}
+
+/* ─── LOGO SECTION ─── */
+.logo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;
+  margin-top:2.5rem;
+}
+.logo-box{
+  border-radius:12px;
+  padding:3rem 2.5rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.logo-box.dark{background:var(--bg2);border:1px solid rgba(255,255,255,.06)}
+.logo-box.light{background:#f0f2f8;border:1px solid rgba(0,0,0,.08)}
+.logo-box.cyan{background:linear-gradient(135deg,#0d2a38,#0a1f2e);border:1px solid rgba(49,190,240,.2)}
+.logo-box.icon-only-dark{background:var(--bg3);border:1px solid rgba(255,255,255,.06)}
+.logo-box-label{
+  font-size:.65rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gray3);
+  font-variation-settings:'wght' 500,'wdth' 100;
+}
+.logo-box.light .logo-box-label{color:#888}
+
+/* SVG Logo */
+.swa-logo{display:flex;align-items:center;gap:1.2rem}
+.swa-logo-text{display:flex;flex-direction:column;gap:.18rem}
+.swa-logo-brand{
+  font-size:1.35rem;
+  font-variation-settings:'wght' 900,'wdth' 75;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  line-height:1;
+}
+.swa-logo-tagline{
+  font-size:.52rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  font-variation-settings:'wght' 300,'wdth' 115;
+  line-height:1;
+  padding-top:4px;
+  border-top:1px solid currentColor;
+  opacity:.7;
+}
+.logo-box.light .swa-logo-brand,
+.logo-box.light .swa-logo-tagline{color:#07070f}
+.logo-box.light .globe-line{stroke:#07070f!important}
+
+/* Large version */
+.swa-logo.lg{gap:1.6rem}
+.swa-logo.lg .swa-logo-brand{font-size:1.9rem}
+.swa-logo.lg .swa-logo-tagline{font-size:.65rem}
+
+/* ─── GLOBE SVG ─── */
+.globe-svg{flex-shrink:0}
+
+/* ─── COLORS ─── */
+.colors-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem;
+  margin-top:2.5rem;
+}
+.color-swatch{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+}
+.swatch-block{height:110px;width:100%;display:flex;align-items:flex-end;padding:.75rem}
+.swatch-block-inner{
+  font-size:.6rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-variation-settings:'wght' 700,'wdth' 100;
+  opacity:.65;
+}
+.swatch-info{
+  background:var(--bg2);
+  padding:.9rem 1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.3rem;
+}
+.swatch-name{
+  font-size:.8rem;
+  font-variation-settings:'wght' 700,'wdth' 100;
+}
+.swatch-hex{
+  font-size:.72rem;
+  color:var(--gray2);
+  font-variation-settings:'wght' 400,'wdth' 100;
+  font-family:monospace;
+}
+.swatch-rgb{
+  font-size:.68rem;
+  color:var(--gray3);
+  font-variation-settings:'wght' 400,'wdth' 100;
+  font-family:monospace;
+}
+
+/* ─── TYPOGRAPHY ─── */
+.type-specimen{
+  margin-top:2.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+}
+.type-row{
+  display:flex;
+  align-items:center;
+  gap:2rem;
+  padding:1.5rem;
+  background:var(--bg2);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.05);
+  flex-wrap:wrap;
+}
+.type-row-label{
+  min-width:160px;
+  display:flex;
+  flex-direction:column;
+  gap:.25rem;
+}
+.type-row-name{
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--c);
+  font-variation-settings:'wght' 600,'wdth' 100;
+}
+.type-row-spec{
+  font-size:.68rem;
+  color:var(--gray3);
+  font-family:monospace;
+}
+.type-sample{flex:1;min-width:200px}
+
+/* ─── PALETTE COMBOS ─── */
+.combos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+  margin-top:2.5rem;
+}
+.combo-card{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+}
+.combo-top{
+  height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  padding:1rem;
+}
+.combo-dot{
+  width:36px;height:36px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.combo-bottom{
+  background:var(--bg2);
+  padding:.8rem 1rem;
+}
+.combo-title{
+  font-size:.75rem;
+  font-variation-settings:'wght' 700,'wdth' 100;
+  margin-bottom:.2rem;
+}
+.combo-desc{
+  font-size:.65rem;
+  color:var(--gray3);
+  font-variation-settings:'wght' 300,'wdth' 100;
+}
+
+/* ─── USAGE RULES ─── */
+.rules-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+  margin-top:2.5rem;
+}
+.rule-card{
+  border-radius:12px;
+  padding:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+  border:1px solid rgba(255,255,255,.06);
+  background:var(--bg2);
+}
+.rule-card.do{border-top:3px solid var(--g)}
+.rule-card.dont{border-top:3px solid var(--p)}
+.rule-tag{
+  font-size:.62rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-variation-settings:'wght' 700,'wdth' 100;
+}
+.rule-tag.do-tag{color:var(--g)}
+.rule-tag.dont-tag{color:var(--p)}
+.rule-card p{
+  font-size:.82rem;
+  color:var(--gray2);
+  font-variation-settings:'wght' 300,'wdth' 100;
+  line-height:1.55;
+}
+.rule-icon{
+  width:40px;height:40px;
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.rule-card.do .rule-icon{background:rgba(0,200,100,.1)}
+.rule-card.dont .rule-icon{background:rgba(255,61,142,.1)}
+
+/* ─── GRAPHIC ELEMENTS ─── */
+.elements-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1rem;
+  margin-top:2.5rem;
+}
+.elem-card{
+  background:var(--bg2);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:2.5rem 1.5rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+}
+.elem-label{
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gray3);
+  font-variation-settings:'wght' 500,'wdth' 100;
+  text-align:center;
+}
+
+/* ─── PHOTOGRAPHY ─── */
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+  margin-top:2.5rem;
+}
+.photo-card{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  background:var(--bg2);
+  aspect-ratio:16/10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.photo-card img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.photo-card-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(7,7,15,.85));
+  padding:.75rem 1rem;
+}
+.photo-card-label{
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gray2);
+  font-variation-settings:'wght' 500,'wdth' 100;
+}
+
+/* ─── TONE OF VOICE ─── */
+.tone-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1rem;
+  margin-top:2.5rem;
+}
+.tone-card{
+  background:var(--bg2);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+}
+.tone-num{
+  font-size:2rem;
+  font-variation-settings:'wght' 900,'wdth' 75;
+  color:var(--bg3);
+  line-height:1;
+}
+.tone-title{
+  font-size:.9rem;
+  font-variation-settings:'wght' 700,'wdth' 100;
+  color:var(--c);
+}
+.tone-body{
+  font-size:.8rem;
+  color:var(--gray2);
+  font-variation-settings:'wght' 300,'wdth' 100;
+  line-height:1.55;
+}
+
+/* ─── TAGLINE SHOWCASE ─── */
+.taglines-list{
+  margin-top:2.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.tagline-row{
+  padding:1.5rem 2rem;
+  background:var(--bg2);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.05);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.tagline-text{
+  font-size:1.4rem;
+  font-variation-settings:'wght' 700,'wdth' 75;
+  letter-spacing:-.01em;
+}
+.tagline-text em{color:var(--c);font-style:normal}
+.tagline-context{
+  font-size:.7rem;
+  color:var(--gray3);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-variation-settings:'wght' 500,'wdth' 100;
+}
+
+/* ─── PRINT BTN ─── */
+.print-btn{
+  position:fixed;
+  bottom:2rem;right:2rem;
+  background:var(--c);
+  color:var(--bg);
+  border:none;
+  border-radius:100px;
+  padding:.8rem 1.8rem;
+  font-family:var(--font);
+  font-variation-settings:'wght' 700,'wdth' 100;
+  font-size:.85rem;
+  cursor:pointer;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  z-index:999;
+  box-shadow:0 4px 24px rgba(49,190,240,.3);
+  transition:transform .2s,box-shadow .2s;
+}
+.print-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(49,190,240,.45)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  .logo-grid,.colors-grid,.combos-grid,.rules-grid,.elements-grid,.photo-grid,.tone-grid{
+    grid-template-columns:1fr;
+  }
+  .type-row{flex-direction:column;align-items:flex-start}
+  .type-row-label{min-width:auto}
+  .section-title{font-size:1.6rem}
+}
+@media print{
+  .print-btn{display:none}
+  #cover{min-height:auto;padding:4rem 2rem}
+  body{background:#fff;color:#07070f}
+  .bk-section{padding:3rem 2rem}
+  .logo-box.dark,.logo-box.cyan,.logo-box.icon-only-dark{background:#f5f5f8}
+  .swatch-info,.combo-bottom,.rule-card,.type-row,.elem-card,.tone-card{background:#f0f2f8}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── COVER ─── -->
+<section id="cover">
+  <canvas id="cover-canvas"></canvas>
+  <div class="cover-inner">
+    <span class="cover-badge">Brand Guidelines 2026</span>
+
+    <!-- Main logo -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem">
+      <svg viewBox="0 0 80 80" width="96" height="96" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Globe wireframe -->
+        <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+        <!-- Meridians -->
+        <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+        <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+        <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+        <!-- Parallels -->
+        <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <!-- Poles -->
+        <ellipse cx="40" cy="16" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+        <ellipse cx="40" cy="64" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+      </svg>
+
+      <div class="cover-wordmark">
+        SPACE WORLD <span style="color:var(--c)">AIR</span>
+      </div>
+      <div class="cover-divider"></div>
+      <div class="cover-sub">Inflatable Furniture &amp; Event Decoration</div>
+    </div>
+
+    <div class="cover-meta">Forlì, Italia · Est. 1997 · spaceworldair.com</div>
+  </div>
+</section>
+
+<!-- ─── LOGO ─── -->
+<section class="bk-section">
+  <div class="section-label">01 — Identità visiva</div>
+  <h2 class="section-title">Logo & Marchio</h2>
+  <p class="section-sub">Il logo è composto dal globo wireframe e dal logotipo condensed bold. Usare sempre le varianti ufficiali, mai ricreare gli elementi separatamente.</p>
+
+  <div class="logo-grid">
+    <!-- Primary dark -->
+    <div class="logo-box dark">
+      <div class="swa-logo lg">
+        <svg viewBox="0 0 80 80" width="64" height="64" class="globe-svg" fill="none">
+          <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+          <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+          <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+          <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+          <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="16" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+          <ellipse cx="40" cy="64" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+        </svg>
+        <div class="swa-logo-text">
+          <div class="swa-logo-brand" style="color:#fff">SPACE WORLD <span style="color:#31BEF0">AIR</span></div>
+          <div class="swa-logo-tagline" style="color:#fff">INFLATABLE FURNITURE</div>
+        </div>
+      </div>
+      <span class="logo-box-label">Primario — sfondo scuro</span>
+    </div>
+
+    <!-- Primary light -->
+    <div class="logo-box light">
+      <div class="swa-logo lg">
+        <svg viewBox="0 0 80 80" width="64" height="64" class="globe-svg" fill="none">
+          <circle cx="40" cy="40" r="36" stroke="#07070f" stroke-width="1.5" fill="none"/>
+          <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#07070f" stroke-width="1" fill="none" opacity=".7"/>
+          <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#07070f" stroke-width="1" fill="none" opacity=".5"/>
+          <line x1="40" y1="4" x2="40" y2="76" stroke="#07070f" stroke-width="1" opacity=".4"/>
+          <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#07070f" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#07070f" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#07070f" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="16" rx="18" ry="4" stroke="#07070f" stroke-width="1" fill="none" opacity=".4"/>
+          <ellipse cx="40" cy="64" rx="18" ry="4" stroke="#07070f" stroke-width="1" fill="none" opacity=".4"/>
+        </svg>
+        <div class="swa-logo-text">
+          <div class="swa-logo-brand" style="color:#07070f">SPACE WORLD <span style="color:#0097C4">AIR</span></div>
+          <div class="swa-logo-tagline" style="color:#07070f">INFLATABLE FURNITURE</div>
+        </div>
+      </div>
+      <span class="logo-box-label" style="color:#888">Secondario — sfondo chiaro</span>
+    </div>
+
+    <!-- Cyan accent -->
+    <div class="logo-box cyan">
+      <div class="swa-logo lg">
+        <svg viewBox="0 0 80 80" width="64" height="64" class="globe-svg" fill="none">
+          <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+          <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+          <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+          <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+          <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="16" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+          <ellipse cx="40" cy="64" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+        </svg>
+        <div class="swa-logo-text">
+          <div class="swa-logo-brand" style="color:#fff">SPACE WORLD <span style="color:#31BEF0">AIR</span></div>
+          <div class="swa-logo-tagline" style="color:rgba(255,255,255,.6)">INFLATABLE FURNITURE</div>
+        </div>
+      </div>
+      <span class="logo-box-label">Accento — sfondo sfumato</span>
+    </div>
+
+    <!-- Icon only -->
+    <div class="logo-box icon-only-dark">
+      <svg viewBox="0 0 80 80" width="90" height="90" fill="none">
+        <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+        <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+        <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+        <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+        <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="16" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+        <ellipse cx="40" cy="64" rx="18" ry="4" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+      </svg>
+      <span class="logo-box-label">Solo icona</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── COLORS ─── -->
+<section class="bk-section">
+  <div class="section-label">02 — Palette cromatica</div>
+  <h2 class="section-title">Colori del Brand</h2>
+  <p class="section-sub">Cinque colori di accento su una base spaziale scura. Il Cyan è il colore principale; gli altri fungono da supporto semantico e decorativo.</p>
+
+  <div class="colors-grid">
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#31BEF0">
+        <span class="swatch-block-inner" style="color:#07070f">Primary</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Electric Cyan</div>
+        <div class="swatch-hex">#31BEF0</div>
+        <div class="swatch-rgb">RGB 49 · 190 · 240</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#0097C4">
+        <span class="swatch-block-inner" style="color:#fff">Deep</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Deep Cyan</div>
+        <div class="swatch-hex">#0097C4</div>
+        <div class="swatch-rgb">RGB 0 · 151 · 196</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#FFB320">
+        <span class="swatch-block-inner" style="color:#07070f">Accent</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Solar Amber</div>
+        <div class="swatch-hex">#FFB320</div>
+        <div class="swatch-rgb">RGB 255 · 179 · 32</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#FF3D8E">
+        <span class="swatch-block-inner" style="color:#fff">Energy</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Neon Pink</div>
+        <div class="swatch-hex">#FF3D8E</div>
+        <div class="swatch-rgb">RGB 255 · 61 · 142</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#00C864">
+        <span class="swatch-block-inner" style="color:#07070f">Active</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cosmic Green</div>
+        <div class="swatch-hex">#00C864</div>
+        <div class="swatch-rgb">RGB 0 · 200 · 100</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#07070f;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span class="swatch-block-inner" style="color:rgba(255,255,255,.3)">Base</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Space Black</div>
+        <div class="swatch-hex">#07070F</div>
+        <div class="swatch-rgb">RGB 7 · 7 · 15</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#0d0d1b;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span class="swatch-block-inner" style="color:rgba(255,255,255,.3)">BG 2</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Deep Space</div>
+        <div class="swatch-hex">#0D0D1B</div>
+        <div class="swatch-rgb">RGB 13 · 13 · 27</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#13132a;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span class="swatch-block-inner" style="color:rgba(255,255,255,.3)">BG 3</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Nebula</div>
+        <div class="swatch-hex">#13132A</div>
+        <div class="swatch-rgb">RGB 19 · 19 · 42</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color combos -->
+  <div style="margin-top:3rem">
+    <div class="section-label" style="margin-bottom:1rem">Combinazioni raccomandate</div>
+    <div class="combos-grid">
+      <div class="combo-card">
+        <div class="combo-top" style="background:#07070f">
+          <div class="combo-dot" style="background:#31BEF0"></div>
+          <div style="font-size:.9rem;font-variation-settings:'wght' 700,'wdth' 75;color:#fff">Testo bianco</div>
+        </div>
+        <div class="combo-bottom">
+          <div class="combo-title">Primary CTA</div>
+          <div class="combo-desc">Cyan su sfondo scuro — hero, bottoni, link principali</div>
+        </div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-top" style="background:#31BEF0">
+          <div style="font-size:.9rem;font-variation-settings:'wght' 800,'wdth' 75;color:#07070f">ACQUISTA ORA</div>
+        </div>
+        <div class="combo-bottom">
+          <div class="combo-title">Button filled</div>
+          <div class="combo-desc">Testo scuro su sfondo cyan — contrasto massimo</div>
+        </div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-top" style="background:#0d0d1b">
+          <div class="combo-dot" style="background:#FFB320"></div>
+          <div class="combo-dot" style="background:#FF3D8E"></div>
+          <div class="combo-dot" style="background:#00C864"></div>
+        </div>
+        <div class="combo-bottom">
+          <div class="combo-title">Badge & Tag</div>
+          <div class="combo-desc">Amber = promo, Pink = esclusivo, Green = disponibile</div>
+        </div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-top" style="background:linear-gradient(135deg,#07070f,#13132a)">
+          <svg viewBox="0 0 50 50" width="50" height="50" fill="none" opacity=".4">
+            <circle cx="25" cy="25" r="22" stroke="#31BEF0" stroke-width="1" fill="none"/>
+            <ellipse cx="25" cy="25" rx="9" ry="22" stroke="#31BEF0" stroke-width="1" fill="none"/>
+            <line x1="25" y1="3" x2="25" y2="47" stroke="#31BEF0" stroke-width="1"/>
+            <ellipse cx="25" cy="25" rx="22" ry="5" stroke="#31BEF0" stroke-width="1" fill="none"/>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:.2rem">
+            <div style="font-size:.6rem;letter-spacing:.2em;color:#31BEF0;font-variation-settings:'wght' 600">SPACE WORLD</div>
+            <div style="font-size:.45rem;letter-spacing:.2em;color:#a0a8c0;font-variation-settings:'wght' 300">INFLATABLE FURNITURE</div>
+          </div>
+        </div>
+        <div class="combo-bottom">
+          <div class="combo-title">Brand gradient</div>
+          <div class="combo-desc">Logo + globe su sfondo spaziale sfumato</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── TYPOGRAPHY ─── -->
+<section class="bk-section">
+  <div class="section-label">03 — Tipografia</div>
+  <h2 class="section-title">Anybody Variable Font</h2>
+  <p class="section-sub">Un unico typeface variable con due assi — peso (100–900) e larghezza (75–125). Questa flessibilità permette di passare da titoli ultra-condensed a testo wide senza mai cambiare font.</p>
+
+  <div class="type-specimen">
+    <!-- Display -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Display</span>
+        <span class="type-row-spec">wght:900 · wdth:75</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:2.8rem;font-variation-settings:'wght' 900,'wdth' 75;line-height:1;color:#fff">SPACE WORLD <span style="color:#31BEF0">AIR</span></div>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Headline</span>
+        <span class="type-row-spec">wght:800 · wdth:85</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:1.9rem;font-variation-settings:'wght' 800,'wdth' 85;line-height:1.1;color:#fff">Arredamento Gonfiabile<br><span style="color:var(--c)">di Qualità</span></div>
+      </div>
+    </div>
+
+    <!-- Subheading -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Subheading</span>
+        <span class="type-row-spec">wght:600 · wdth:100</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:1.2rem;font-variation-settings:'wght' 600,'wdth' 100;color:#fff">Prodotti per eventi, feste e allestimenti speciali</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Body</span>
+        <span class="type-row-spec">wght:300 · wdth:100</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:.95rem;font-variation-settings:'wght' 300,'wdth' 100;color:#a0a8c0;line-height:1.7">Dal 1997 Space World Air progetta e produce arredamento gonfiabile per eventi, spettacoli e installazioni. I nostri palloni luminosi, planetari e strutture decorative trasformano qualsiasi spazio in un'esperienza indimenticabile.</div>
+      </div>
+    </div>
+
+    <!-- Label -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Label / Tag</span>
+        <span class="type-row-spec">wght:600 · wdth:100 · caps</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;font-variation-settings:'wght' 600,'wdth' 100;color:var(--c)">Categoria prodotto · Sezione · Navigazione</div>
+      </div>
+    </div>
+
+    <!-- Tagline -->
+    <div class="type-row">
+      <div class="type-row-label">
+        <span class="type-row-name">Tagline / Fino</span>
+        <span class="type-row-spec">wght:200 · wdth:115</span>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:1rem;font-variation-settings:'wght' 200,'wdth' 115;letter-spacing:.08em;color:#e8eaf0">INFLATABLE FURNITURE &amp; EVENT DECORATION</div>
+      </div>
+    </div>
+
+    <!-- Weight scale -->
+    <div style="padding:2rem;background:var(--bg2);border-radius:12px;border:1px solid rgba(255,255,255,.05)">
+      <div class="section-label" style="margin-bottom:1.5rem">Scala pesi disponibili — wdth:100</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;align-items:baseline;gap:1.5rem">
+          <span style="font-size:.65rem;color:var(--gray3);min-width:40px;font-family:monospace">100</span>
+          <span style="font-size:1.4rem;font-variation-settings:'wght' 100,'wdth' 100;color:#fff">Space World Air — Thin</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:1.5rem">
+          <span style="font-size:.65rem;color:var(--gray3);min-width:40px;font-family:monospace">300</span>
+          <span style="font-size:1.4rem;font-variation-settings:'wght' 300,'wdth' 100;color:#fff">Space World Air — Light</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:1.5rem">
+          <span style="font-size:.65rem;color:var(--gray3);min-width:40px;font-family:monospace">500</span>
+          <span style="font-size:1.4rem;font-variation-settings:'wght' 500,'wdth' 100;color:#fff">Space World Air — Medium</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:1.5rem">
+          <span style="font-size:.65rem;color:var(--gray3);min-width:40px;font-family:monospace">700</span>
+          <span style="font-size:1.4rem;font-variation-settings:'wght' 700,'wdth' 100;color:#fff">Space World Air — Bold</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:1.5rem">
+          <span style="font-size:.65rem;color:var(--gray3);min-width:40px;font-family:monospace">900</span>
+          <span style="font-size:1.4rem;font-variation-settings:'wght' 900,'wdth' 100;color:#fff">Space World Air — Black</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── GRAPHIC ELEMENTS ─── -->
+<section class="bk-section">
+  <div class="section-label">04 — Elementi grafici</div>
+  <h2 class="section-title">Motivi & Texture</h2>
+  <p class="section-sub">Il globo wireframe è il simbolo centrale. Linee, griglie e pattern cosmici supportano la comunicazione visiva del brand.</p>
+
+  <div class="elements-grid">
+    <!-- Globe sizes -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 80" width="72" height="72" fill="none">
+        <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+        <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+        <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+        <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+        <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+      </svg>
+      <span class="elem-label">Globe Wireframe<br>Simbolo principale</span>
+    </div>
+
+    <!-- Grid pattern -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 80" width="72" height="72" fill="none">
+        <defs>
+          <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+            <path d="M16 0L0 0 0 16" fill="none" stroke="#31BEF0" stroke-width=".6" opacity=".4"/>
+          </pattern>
+        </defs>
+        <rect width="80" height="80" fill="url(#grid)"/>
+        <circle cx="40" cy="40" r="2" fill="#31BEF0"/>
+      </svg>
+      <span class="elem-label">Grid Pattern<br>Sfondo & texture</span>
+    </div>
+
+    <!-- Star field -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 80" width="72" height="72" fill="none">
+        <circle cx="12" cy="8" r="1" fill="#fff" opacity=".8"/>
+        <circle cx="34" cy="5" r=".7" fill="#fff" opacity=".5"/>
+        <circle cx="58" cy="12" r="1.2" fill="#31BEF0" opacity=".9"/>
+        <circle cx="70" cy="4" r=".6" fill="#fff" opacity=".6"/>
+        <circle cx="5" cy="30" r=".8" fill="#fff" opacity=".4"/>
+        <circle cx="24" cy="22" r="1" fill="#fff" opacity=".7"/>
+        <circle cx="46" cy="18" r=".7" fill="#FFB320" opacity=".8"/>
+        <circle cx="65" cy="28" r=".9" fill="#fff" opacity=".5"/>
+        <circle cx="75" cy="40" r="1" fill="#31BEF0" opacity=".6"/>
+        <circle cx="15" cy="50" r=".6" fill="#fff" opacity=".7"/>
+        <circle cx="36" cy="45" r="1.1" fill="#fff" opacity=".4"/>
+        <circle cx="55" cy="55" r=".8" fill="#FF3D8E" opacity=".7"/>
+        <circle cx="72" cy="60" r="1" fill="#fff" opacity=".5"/>
+        <circle cx="8" cy="68" r=".7" fill="#fff" opacity=".6"/>
+        <circle cx="28" cy="72" r="1" fill="#31BEF0" opacity=".8"/>
+        <circle cx="50" cy="70" r=".6" fill="#fff" opacity=".5"/>
+        <circle cx="68" cy="75" r=".9" fill="#fff" opacity=".4"/>
+        <circle cx="42" cy="35" r="1.5" fill="#fff" opacity=".9"/>
+      </svg>
+      <span class="elem-label">Star Field<br>Effetti hero & canvas</span>
+    </div>
+
+    <!-- Gradient globe glow -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 80" width="72" height="72" fill="none">
+        <defs>
+          <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#31BEF0" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#31BEF0" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="40" cy="40" r="38" fill="url(#glow1)"/>
+        <circle cx="40" cy="40" r="28" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".4"/>
+        <circle cx="40" cy="40" r="18" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".3"/>
+        <circle cx="40" cy="40" r="6" fill="#31BEF0" opacity=".8"/>
+      </svg>
+      <span class="elem-label">Radial Glow<br>Highlight & focus</span>
+    </div>
+
+    <!-- Line accent -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 40" width="80" height="40" fill="none">
+        <line x1="0" y1="20" x2="20" y2="20" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <line x1="26" y1="20" x2="54" y2="20" stroke="#31BEF0" stroke-width="1"/>
+        <line x1="60" y1="20" x2="80" y2="20" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <circle cx="25" cy="20" r="2" fill="#31BEF0"/>
+        <circle cx="55" cy="20" r="2" fill="#31BEF0"/>
+      </svg>
+      <span class="elem-label">Divisore linea<br>Separatore sezioni</span>
+    </div>
+
+    <!-- Planet rings -->
+    <div class="elem-card">
+      <svg viewBox="0 0 80 80" width="72" height="72" fill="none">
+        <circle cx="40" cy="40" r="20" stroke="#FFB320" stroke-width="1.2" fill="none" opacity=".8"/>
+        <ellipse cx="40" cy="40" rx="36" ry="10" stroke="#FFB320" stroke-width="1" fill="none" opacity=".5"/>
+        <ellipse cx="40" cy="40" rx="30" ry="8" stroke="#FFB320" stroke-width=".7" fill="none" opacity=".3"/>
+      </svg>
+      <span class="elem-label">Anelli planetari<br>Decorativo evento</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── TAGLINES ─── -->
+<section class="bk-section">
+  <div class="section-label">05 — Messaggi chiave</div>
+  <h2 class="section-title">Tono di Voce & Tagline</h2>
+  <p class="section-sub">Space World Air parla il linguaggio dell'emozione e dello spettacolo. Il tono è professionale ma entusiasta, capace di evocare meraviglia.</p>
+
+  <div class="taglines-list">
+    <div class="tagline-row">
+      <div class="tagline-text">Trasforma ogni spazio in un <em>universo</em></div>
+      <div class="tagline-context">Headline principale</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">Gonfiabile. <em>Indimenticabile.</em></div>
+      <div class="tagline-context">Payoff breve</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">Dal 1997, <em>arredatori di sogni</em></div>
+      <div class="tagline-context">Heritage</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">Ogni evento merita un <em>pianeta</em> tutto suo</div>
+      <div class="tagline-context">Evento & party</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text" style="font-size:1.1rem">Inflatable Furniture <em>&amp;</em> Event Decoration<br>
+        <span style="font-size:.7rem;letter-spacing:.25em;font-variation-settings:'wght' 300,'wdth' 115;color:var(--gray2)">SPACE WORLD AIR · FORLÌ · ITALY</span>
+      </div>
+      <div class="tagline-context">Firma istituzionale</div>
+    </div>
+  </div>
+
+  <!-- Tone cards -->
+  <div class="tone-grid" style="margin-top:2.5rem">
+    <div class="tone-card">
+      <div class="tone-num">01</div>
+      <div class="tone-title">Entusiasta</div>
+      <div class="tone-body">Il brand parla con energia e passione. Ogni prodotto è presentato come un'opportunità per creare qualcosa di straordinario.</div>
+    </div>
+    <div class="tone-card">
+      <div class="tone-num">02</div>
+      <div class="tone-title">Professionale</div>
+      <div class="tone-body">Oltre 25 anni di esperienza nel settore. I messaggi riflettono competenza tecnica e affidabilità senza essere freddi o distaccati.</div>
+    </div>
+    <div class="tone-card">
+      <div class="tone-num">03</div>
+      <div class="tone-title">Evocativo</div>
+      <div class="tone-body">Spazio, pianeti, stelle — il brand usa metafore cosmiche per far percepire la grandiosità dei propri prodotti. Visionario ma concreto.</div>
+    </div>
+    <div class="tone-card">
+      <div class="tone-num">04</div>
+      <div class="tone-title">Accessibile</div>
+      <div class="tone-body">Rivolto sia a privati che a event planner professionisti. Il tono si adatta al canale: più ludico sui social, più tecnico nei preventivi.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── USAGE RULES ─── -->
+<section class="bk-section">
+  <div class="section-label">06 — Utilizzo corretto</div>
+  <h2 class="section-title">Regole d'Uso del Logo</h2>
+  <p class="section-sub">Il logo deve essere sempre chiaramente leggibile. Rispettare le zone di protezione e non modificare proporzioni, colori o elementi.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card do">
+      <div class="rule-icon">✓</div>
+      <span class="rule-tag do-tag">✓ Corretto</span>
+      <p>Usare il logo bianco su sfondi scuri (#07070f, #0d0d1b, immagini scure)</p>
+    </div>
+    <div class="rule-card do">
+      <div class="rule-icon">✓</div>
+      <span class="rule-tag do-tag">✓ Corretto</span>
+      <p>Usare il logo versione scura su sfondi bianchi o chiari con buon contrasto</p>
+    </div>
+    <div class="rule-card do">
+      <div class="rule-icon">✓</div>
+      <span class="rule-tag do-tag">✓ Corretto</span>
+      <p>Mantenere uno spazio di protezione pari all'altezza della lettera "S" attorno al logo</p>
+    </div>
+    <div class="rule-card do">
+      <div class="rule-icon">✓</div>
+      <span class="rule-tag do-tag">✓ Corretto</span>
+      <p>Variare il peso del font nei titoli tra 700 e 900 per gerarchia visiva nei materiali promozionali</p>
+    </div>
+    <div class="rule-card dont">
+      <div class="rule-icon">✗</div>
+      <span class="rule-tag dont-tag">✗ Non fare</span>
+      <p>Non deformare, ruotare o scalare proporzionalmente solo l'icona globo separata dal logotipo</p>
+    </div>
+    <div class="rule-card dont">
+      <div class="rule-icon">✗</div>
+      <span class="rule-tag dont-tag">✗ Non fare</span>
+      <p>Non cambiare il colore del globo wireframe in tonalità non previste dalla palette ufficiale</p>
+    </div>
+    <div class="rule-card dont">
+      <div class="rule-icon">✗</div>
+      <span class="rule-tag dont-tag">✗ Non fare</span>
+      <p>Non aggiungere ombra, effetti drop-shadow o filtri che alterino la semplicità del marchio</p>
+    </div>
+    <div class="rule-card dont">
+      <div class="rule-icon">✗</div>
+      <span class="rule-tag dont-tag">✗ Non fare</span>
+      <p>Non usare il font Anybody con wdth inferiore a 75 — il condensato massimo è 75, non scendere oltre</p>
+    </div>
+  </div>
+
+  <!-- Clear space diagram -->
+  <div style="margin-top:3rem;background:var(--bg2);border-radius:12px;padding:2.5rem;border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;gap:1.5rem">
+    <div class="section-label" style="margin:0">Zona di protezione</div>
+    <div style="position:relative;display:inline-flex;align-items:center;justify-content:center;padding:2.5rem">
+      <!-- Dashed border -->
+      <div style="position:absolute;inset:0;border:1px dashed rgba(49,190,240,.3);border-radius:4px"></div>
+      <!-- Corner markers -->
+      <div style="position:absolute;top:8px;left:8px;font-size:.55rem;color:var(--c);letter-spacing:.1em;font-variation-settings:'wght' 600">S</div>
+      <div style="position:absolute;top:8px;right:8px;font-size:.55rem;color:var(--c);letter-spacing:.1em;font-variation-settings:'wght' 600">S</div>
+      <div style="position:absolute;bottom:8px;left:8px;font-size:.55rem;color:var(--c);letter-spacing:.1em;font-variation-settings:'wght' 600">S</div>
+      <div style="position:absolute;bottom:8px;right:8px;font-size:.55rem;color:var(--c);letter-spacing:.1em;font-variation-settings:'wght' 600">S</div>
+      <div class="swa-logo">
+        <svg viewBox="0 0 80 80" width="44" height="44" fill="none">
+          <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+          <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+          <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+          <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+          <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+          <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        </svg>
+        <div class="swa-logo-text">
+          <div class="swa-logo-brand" style="color:#fff;font-size:1.1rem">SPACE WORLD <span style="color:#31BEF0">AIR</span></div>
+          <div class="swa-logo-tagline" style="color:#fff;font-size:.48rem">INFLATABLE FURNITURE</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:var(--gray3);text-align:center;max-width:360px;font-variation-settings:'wght' 300">La zona di protezione (marcata con <span style="color:var(--c);font-variation-settings:'wght' 700">S</span>) equivale all'altezza della lettera «S» di SPACE. Nessun elemento grafico deve invadere questa area.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── PHOTOGRAPHY ─── -->
+<section class="bk-section">
+  <div class="section-label">07 — Fotografia</div>
+  <h2 class="section-title">Direzione Fotografica</h2>
+  <p class="section-sub">Le immagini del brand devono comunicare spettacolarità, scala e magia. Preferire scatti ambientali con i prodotti in uso durante eventi reali.</p>
+
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/ELENISSIMA.jpg" alt="Evento Space World Air" loading="lazy" onerror="this.style.display='none'">
+      <div class="photo-card-overlay">
+        <div class="photo-card-label">Planetari in evento</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/LUNA.jpg" alt="Luna gonfiabile" loading="lazy" onerror="this.style.display='none'">
+      <div class="photo-card-overlay">
+        <div class="photo-card-label">Luna — dettaglio prodotto</div>
+      </div>
+    </div>
+    <div class="photo-card" style="aspect-ratio:unset;min-height:180px">
+      <img src="https://spaceworldair.com/media/wysiwyg/gallery/MARTE.jpg" alt="Marte gonfiabile" loading="lazy" onerror="this.style.display='none'">
+      <div class="photo-card-overlay">
+        <div class="photo-card-label">Pianeti — scala umana</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo guidelines -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem">
+    <div style="background:var(--bg2);border-radius:12px;padding:1.5rem;border:1px solid rgba(0,200,100,.15)">
+      <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:.75rem;font-variation-settings:'wght' 600">Preferire</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem">
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Ambientazioni notturne o al tramonto</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Persone che interagiscono con i prodotti</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Scatti che comunicano la scala reale</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Luci colorate che valorizzano le sfere</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Allestimenti completi (non solo il prodotto)</li>
+      </ul>
+    </div>
+    <div style="background:var(--bg2);border-radius:12px;padding:1.5rem;border:1px solid rgba(255,61,142,.15)">
+      <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--p);margin-bottom:.75rem;font-variation-settings:'wght' 600">Evitare</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem">
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Sfondi bianchi o neutri da catalogo</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Immagini sgranate o sottoesposte</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Angolazioni che non mostrano la 3D</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Post-produzione eccessiva o filtri social</li>
+        <li style="font-size:.82rem;color:var(--gray2);font-variation-settings:'wght' 300">→ Scatti di magazzino o pre-montaggio</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ─── DIGITAL APPLICATIONS ─── -->
+<section class="bk-section">
+  <div class="section-label">08 — Applicazioni digitali</div>
+  <h2 class="section-title">CSS & Codice</h2>
+  <p class="section-sub">Variabili CSS pronte all'uso per la coerenza su tutti i touchpoint digitali del brand.</p>
+
+  <div style="background:var(--bg2);border-radius:12px;padding:2rem;border:1px solid rgba(255,255,255,.06);overflow-x:auto;margin-top:2.5rem">
+    <pre style="font-family:'Courier New',monospace;font-size:.8rem;color:#a0a8c0;line-height:1.8;tab-size:2"><span style="color:#505878">/* Space World Air — CSS Variables */</span>
+<span style="color:var(--c)">:root</span> {
+  <span style="color:#505878">/* Colori primari */</span>
+  <span style="color:#e8eaf0">--swa-cyan</span>:    <span style="color:var(--c)">#31BEF0</span>;
+  <span style="color:#e8eaf0">--swa-cyan-dk</span>: <span style="color:var(--ck)">#0097C4</span>;
+  <span style="color:#e8eaf0">--swa-amber</span>:   <span style="color:var(--y)">#FFB320</span>;
+  <span style="color:#e8eaf0">--swa-pink</span>:    <span style="color:var(--p)">#FF3D8E</span>;
+  <span style="color:#e8eaf0">--swa-green</span>:   <span style="color:var(--g)">#00C864</span>;
+
+  <span style="color:#505878">/* Sfondi */</span>
+  <span style="color:#e8eaf0">--swa-bg</span>:      <span style="color:#aaa">#07070F</span>;
+  <span style="color:#e8eaf0">--swa-bg2</span>:     <span style="color:#aaa">#0D0D1B</span>;
+  <span style="color:#e8eaf0">--swa-bg3</span>:     <span style="color:#aaa">#13132A</span>;
+
+  <span style="color:#505878">/* Tipografia */</span>
+  <span style="color:#e8eaf0">--swa-font</span>:    <span style="color:#aaa">'Anybody', sans-serif</span>;
+
+  <span style="color:#505878">/* Stili predefiniti */</span>
+  <span style="color:#e8eaf0">--swa-display</span>: <span style="color:#aaa">'wght' 900, 'wdth' 75</span>;
+  <span style="color:#e8eaf0">--swa-body</span>:    <span style="color:#aaa">'wght' 300, 'wdth' 100</span>;
+  <span style="color:#e8eaf0">--swa-label</span>:   <span style="color:#aaa">'wght' 600, 'wdth' 100</span>;
+}</pre>
+  </div>
+
+  <!-- Font import -->
+  <div style="background:var(--bg2);border-radius:12px;padding:2rem;border:1px solid rgba(255,255,255,.06);overflow-x:auto;margin-top:1rem">
+    <pre style="font-family:'Courier New',monospace;font-size:.8rem;color:#a0a8c0;line-height:1.8"><span style="color:#505878">/* Google Fonts import */</span>
+<span style="color:var(--c)">@import</span> url(<span style="color:var(--y)">'https://fonts.googleapis.com/css2?
+  family=Anybody:ital,wdth,wght@
+    0,75..125,100..900;
+    1,75..125,100..900
+  &display=swap'</span>);</pre>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer style="background:var(--bg2);border-top:1px solid rgba(255,255,255,.05);padding:3rem 2rem;text-align:center">
+  <div style="max-width:480px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.2rem">
+    <div class="swa-logo">
+      <svg viewBox="0 0 80 80" width="32" height="32" fill="none">
+        <circle cx="40" cy="40" r="36" stroke="#31BEF0" stroke-width="1.5" fill="none"/>
+        <ellipse cx="40" cy="40" rx="14" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".7"/>
+        <ellipse cx="40" cy="40" rx="26" ry="36" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".5"/>
+        <line x1="40" y1="4" x2="40" y2="76" stroke="#31BEF0" stroke-width="1" opacity=".4"/>
+        <ellipse cx="40" cy="28" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="40" rx="36" ry="6" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+        <ellipse cx="40" cy="52" rx="33" ry="7.5" stroke="#31BEF0" stroke-width="1" fill="none" opacity=".6"/>
+      </svg>
+      <div class="swa-logo-text">
+        <div class="swa-logo-brand" style="color:#fff;font-size:.9rem">SPACE WORLD <span style="color:#31BEF0">AIR</span></div>
+        <div class="swa-logo-tagline" style="color:#fff;font-size:.4rem">INFLATABLE FURNITURE</div>
+      </div>
+    </div>
+    <p style="font-size:.75rem;color:var(--gray3);font-variation-settings:'wght' 300">Brand Kit 2026 · Uso interno &amp; partner autorizzati · Per domande contattare info@spaceworldair.com</p>
+    <p style="font-size:.65rem;color:var(--gray3);font-variation-settings:'wght' 300;opacity:.5">© 1997–2026 Space World Air S.r.l. · Forlì, Italia</p>
+  </div>
+</footer>
+
+<button class="print-btn" onclick="window.print()">Stampa / Salva PDF</button>
+
+<script>
+// ─── COVER CANVAS STARS ───
+const cvs = document.getElementById('cover-canvas');
+const ctx = cvs.getContext('2d');
+let W,H,stars=[];
+
+function resize(){
+  W=cvs.width=window.innerWidth;
+  H=cvs.height=window.innerHeight;
+  stars=[];
+  for(let i=0;i<220;i++){
+    stars.push({
+      x:Math.random()*W,
+      y:Math.random()*H,
+      r:Math.random()*1.4+.3,
+      o:Math.random()*.8+.2,
+      s:Math.random()*.6+.3,
+      t:Math.random()*Math.PI*2
+    });
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const t=Date.now()/2000;
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(t*s.s+s.t))})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize',resize);
+resize();
+draw();
+</script>
+</body>
+</html>

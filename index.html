@@ -18,11 +18,15 @@ button{cursor:pointer;font-family:var(--fn)}
 
 #nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 2rem;height:62px;display:flex;align-items:center;gap:2rem;transition:background .3s,backdrop-filter .3s}
 #nav.on{background:rgba(7,7,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
-.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 800,'wdth' 110;letter-spacing:.05em;white-space:nowrap}
+.nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 900,'wdth' 75;letter-spacing:.04em;white-space:nowrap}
 .nlogo .nbrand>span{color:var(--c)}
+.nlogo .nbrand{display:flex;flex-direction:column;gap:.12rem}
+.ntagline{font-size:.38rem;letter-spacing:.26em;text-transform:uppercase;font-variation-settings:'wght' 300,'wdth' 110;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.15);padding-top:2px;line-height:1}
 .nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
 .nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
 .nlinks a:hover{color:var(--c)}
+.nlinks a.nav-active{color:var(--c);font-variation-settings:'wght' 800}
+.mnav-link.nav-active{color:var(--c)}
 .nav-right{display:flex;align-items:center;gap:1rem;margin-left:1rem}
 .ncart{background:none;border:1px solid var(--bdr);color:var(--txt);padding:.5rem .9rem;border-radius:4px;display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.15em;transition:border-color .2s,color .2s}
 .ncart:hover{border-color:var(--c);color:var(--c)}
@@ -109,7 +113,9 @@ section{padding:5rem 2rem}
 .cats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:1200px;margin:0 auto}
 .cat-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;cursor:pointer}
 .cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;filter:brightness(.6)}
-.cat-card:hover img{transform:scale(1.05)}
+.cat-card:hover img{transform:scale(1.06)}
+.cat-card::after{content:'';position:absolute;inset:0;border:2px solid transparent;border-radius:8px;transition:border-color .3s}
+.cat-card:hover::after{border-color:rgba(49,190,240,.3)}
 .cat-card-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%)}
 .cat-card-name{font-size:.8rem;font-variation-settings:'wght' 800,'wdth' 110;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
 .cat-card-count{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
@@ -142,11 +148,11 @@ section{padding:5rem 2rem}
 .gal-type{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c);margin-top:.2rem}
 .text-center{text-align:center}
 
-.about-strip{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.about-strip{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);position:relative;overflow:hidden}.about-strip::before{content:'';position:absolute;top:50%;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(49,190,240,.04) 0%,transparent 65%);pointer-events:none}
 .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .about-text .section-sub{max-width:none}
 .about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0}
-.stat-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center}
+.stat-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem;text-align:center;transition:border-color .25s,box-shadow .25s}.stat-box:hover{border-color:rgba(49,190,240,.3);box-shadow:0 0 20px rgba(49,190,240,.08)}
 .stat-num{font-size:2rem;font-variation-settings:'wght' 900,'wdth' 120;color:var(--c);line-height:1}
 .stat-lbl{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
 .about-img{border-radius:10px;overflow:hidden;aspect-ratio:4/3}
@@ -158,8 +164,9 @@ section{padding:5rem 2rem}
 
 footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem}
 .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
-.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 800;margin-bottom:.8rem}
+.flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 900,'wdth' 75;margin-bottom:.8rem}
 .flogo .nbrand>span{color:var(--c)}
+.flogo .nbrand{display:flex;flex-direction:column;gap:.14rem}
 .fdesc{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
 .fcontact p{font-size:.65rem;color:var(--muted);margin-bottom:.3rem}
 .fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
@@ -372,9 +379,18 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
 
 <nav id="nav">
   <a href="index.html" class="nlogo">
-    <img src="spaceworldair-logo.svg" alt="Space World Air" height="34" style="display:block"><span class="nbrand">SPACE<span>WORLD</span>AIR</span></a>
+    <svg viewBox="0 0 42 42" width="36" height="36" fill="none" aria-hidden="true">
+      <circle cx="21" cy="21" r="19" stroke="#31BEF0" stroke-width="1.2"/>
+      <ellipse cx="21" cy="21" rx="7" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".7"/>
+      <ellipse cx="21" cy="21" rx="14" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+      <ellipse cx="21" cy="21" rx="19" ry="5.5" stroke="#31BEF0" stroke-width=".9" opacity=".6"/>
+      <ellipse cx="21" cy="21" rx="19" ry="11" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+      <line x1="21" y1="2" x2="21" y2="40" stroke="#31BEF0" stroke-width=".9" opacity=".4"/>
+    </svg>
+    <div class="nbrand">SPACE WORLD <span>AIR</span><span class="ntagline">INFLATABLE FURNITURE</span></div></a>
   <ul class="nlinks">
     <li><a href="prodotti.html">Prodotti</a></li>
+    <li><a href="pianeti.html">Pianeti</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="about.html">Chi siamo</a></li>
     <li><a href="contatti.html">Contatti</a></li>
@@ -401,6 +417,7 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
   <button class="mnav-close" id="mnav-close" aria-label="Chiudi menu">&#x2715;</button>
   <a href="index.html" class="mnav-link">Home</a>
   <a href="prodotti.html" class="mnav-link">Prodotti</a>
+  <a href="pianeti.html" class="mnav-link">Pianeti</a>
   <a href="gallery.html" class="mnav-link">Gallery</a>
   <a href="about.html" class="mnav-link">Chi siamo</a>
   <a href="contatti.html" class="mnav-link">Contatti</a>
@@ -501,11 +518,11 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
           <div class="cat-card-count">CO₂ · Bolle di Neve · LED</div>
         </div>
       </a>
-      <a href="prodotti.html?cat=stagionale" class="cat-card">
-        <img src="https://spaceworldair.com/media/wysiwyg/gallery/LV_XMAS_DINNER2019__MALALA_-8.jpeg" alt="Stagionale" loading="lazy">
+      <a href="pianeti.html" class="cat-card">
+        <img src="hero_inflatable_planets_1773945233633.png" alt="Pianeti Gonfiabili" loading="lazy">
         <div class="cat-card-body">
-          <div class="cat-card-name">Stagionale</div>
-          <div class="cat-card-count">Natale · Alberi · Casette</div>
+          <div class="cat-card-name">Pianeti Gonfiabili</div>
+          <div class="cat-card-count">Luna · Terra · Saturno · LED</div>
         </div>
       </a>
       <a href="gallery.html" class="cat-card">
@@ -585,7 +602,15 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
 <footer id="footer">
   <div class="foot-grid">
     <div class="fc">
-      <div class="flogo"><img src="spaceworldair-logo.svg" height="40" alt=""><span class="nbrand">SPACE<span>WORLD</span>AIR</span></div>
+      <div class="flogo"><svg viewBox="0 0 42 42" width="34" height="34" fill="none" aria-hidden="true">
+        <circle cx="21" cy="21" r="19" stroke="#31BEF0" stroke-width="1.2"/>
+        <ellipse cx="21" cy="21" rx="7" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".7"/>
+        <ellipse cx="21" cy="21" rx="14" ry="19" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="21" cy="21" rx="19" ry="5.5" stroke="#31BEF0" stroke-width=".9" opacity=".6"/>
+        <ellipse cx="21" cy="21" rx="19" ry="11" stroke="#31BEF0" stroke-width=".9" opacity=".5"/>
+        <line x1="21" y1="2" x2="21" y2="40" stroke="#31BEF0" stroke-width=".9" opacity=".4"/>
+      </svg>
+      <div class="nbrand">SPACE WORLD <span>AIR</span><span class="ntagline">INFLATABLE FURNITURE</span></div></div>
       <p class="fdesc">L'infrastruttura gonfiabile per eventi, brand activation e allestimenti. Dal 1997, Forlì.</p>
       <div class="fcontact">
         <p>📍 Via Cervese 238, 47010 Carpinello (FC)</p>
@@ -609,7 +634,7 @@ h1,h2,h3,h4,h5,h6,[class*="-h1"],[class*="-h2"],[class*="title"],[class*="headin
   </div>
   <div class="foot-bottom">
     <p>© 2025 Space World Air Srl · P.IVA 00000000000 · Via Cervese 238, Carpinello (FC)</p>
-    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a></p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a> · <a href="#">Termini di servizio</a> · <a href="brand-kit.html">Brand Kit</a></p>
   </div>
 </footer>
 
@@ -803,5 +828,6 @@ document.querySelectorAll('.sr').forEach(el=>srObserver.observe(el));
   },{passive:true});
 })();
 </script>
+
 </body>
 </html>
