@@ -21,6 +21,9 @@ button{cursor:pointer;font-family:var(--fn)}
 #nav{position:fixed;top:3px;left:0;right:0;z-index:999;padding:0 2rem;height:62px;display:flex;align-items:center;gap:2rem;transition:background .3s,backdrop-filter .3s,border-color .3s}
 #nav.on{background:rgba(7,7,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
 .nlogo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;font-variation-settings:'wght' 900,'wdth' 75;letter-spacing:.04em;white-space:nowrap}
+.nlogo .nbrand>span{color:var(--c)}
+.nlogo .nbrand{display:flex;flex-direction:column;gap:.12rem}
+.ntagline{font-size:.38rem;letter-spacing:.26em;text-transform:uppercase;font-variation-settings:'wght' 300,'wdth' 110;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.15);padding-top:2px;line-height:1}
 .nlogo img{display:block}
 .nlinks{list-style:none;display:flex;gap:1.8rem;margin-left:auto}
 .nlinks a{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-variation-settings:'wght' 600;color:var(--muted);transition:color .2s}
@@ -138,7 +141,7 @@ footer{background:#050509;border-top:1px solid var(--bdr);padding:4rem 2rem 2rem
 .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
 .flogo{display:flex;align-items:center;gap:.7rem;font-size:1rem;font-variation-settings:'wght' 900,'wdth' 75;margin-bottom:.8rem}
 .flogo .nbrand>span{color:var(--c)}
-.flogo .nbrand{display:flex;flex-direction:column;gap:.14rem}
+.flogo .nbrand{display:flex;flex-direction:column;gap:.12rem}
 .fdesc{font-size:.75rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
 .fcontact p{font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
 .fc h4{font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;font-variation-settings:'wght' 700;color:var(--c);margin-bottom:1rem}
